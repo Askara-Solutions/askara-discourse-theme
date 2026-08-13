@@ -12,11 +12,11 @@ palettes + fonts + a few brand accents.
 Three named schemes ship in [`about.json`](about.json) `color_schemes`, all built from the brand
 palette. Phosphor green (`#8dff35`) is deliberately absent from every scheme — see governance below.
 
-| Scheme | Page background | Character |
-|---|---|---|
-| **Askara Light** (default) | Parchment 1 `#fdf7ed` (the brand's lightest "page canvas") | soft warm canvas, not stark white |
-| **Askara Parchment** | Parchment 2 `#f5ead4` (a distinctly warmer parchment) | deliberately distinct from Light — a warmer, richer mood |
-| **Askara Dark** | Espresso `#1a1814` | warm near-black, cream text |
+| Scheme                     | Page background                                            | Character                                                |
+| -------------------------- | ---------------------------------------------------------- | -------------------------------------------------------- |
+| **Askara Light** (default) | Parchment 1 `#fdf7ed` (the brand's lightest "page canvas") | soft warm canvas, not stark white                        |
+| **Askara Parchment**       | Parchment 2 `#f5ead4` (a distinctly warmer parchment)      | deliberately distinct from Light — a warmer, richer mood |
+| **Askara Dark**            | Espresso `#1a1814`                                         | warm near-black, cream text                              |
 
 All three share the navy header (`#003049`), compliance-green links/CTAs (`#3db54a`), and the
 destructive red (`#ff6666`) for error states.
