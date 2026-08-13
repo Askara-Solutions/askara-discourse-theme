@@ -5,15 +5,15 @@ This file provides guidance to Claude Code when working in this repository.
 ## Project
 
 - **Repo:** Askara-Solutions/askara-discourse-theme (public)
-- **What it is:** a Discourse **theme component** that applies the Askara brand to the community hub at `community.askara.solutions` (Communiteq-hosted, Starter tier).
+- **What it is:** a Discourse **theme** (full theme, not a component) that applies the Askara brand to the community hub at `community.askara.solutions` (Communiteq-hosted, Starter tier), and is set as the site's default theme.
 - **Part of:** the CX Minimal Viable Community project — Linear team **Business Development**, issue prefix **BDEV**. Theme work is tracked in the same Linear project as `askara-community`; this is where the deployable theme code lives (kept out of the coordination repo).
 - **Config:** `.claude/askara-workflow.local.md`
 
 ## Stack
 
-Discourse theme component installed via git import (`POST /admin/themes/import` → the repo URL).
+Discourse theme installed via git import (`POST /admin/themes/import` → the repo URL).
 
-- `about.json` — `component: true`, three named `color_schemes` (Askara Light / Dark / Parchment), and the `assets` map (SCSS var → font file).
+- `about.json` — `component: false` (full theme — a component does NOT register `color_schemes` on current Discourse), three named `color_schemes` (Askara Light / Dark / Parchment), and the `assets` map (SCSS var → font file).
 - `common/common.scss` — `@font-face` declarations, `--font-family`/`--heading-font-family` overrides, and the phosphor hover/CTA rules.
 - `assets/` — self-hosted WOFF2 fonts + their `OFL.txt` licenses.
 - `.github/workflows/discourse-theme.yml` — the official `discourse/.github` reusable CI (Prettier/Stylelint/locale lint; self-skips JS/Ruby).

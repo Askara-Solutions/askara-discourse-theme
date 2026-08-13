@@ -1,6 +1,6 @@
 {
   "name": "Askara Brand",
-  "component": true,
+  "component": false,
   "authors": "Askara Solutions",
   "about_url": "https://github.com/Askara-Solutions/askara-discourse-theme",
   "license_url": "https://github.com/Askara-Solutions/askara-discourse-theme/blob/main/LICENSE",

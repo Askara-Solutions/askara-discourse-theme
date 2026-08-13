@@ -1,11 +1,14 @@
 # Askara Discourse theme
 
-A Discourse **theme component** that applies the [Askara brand](https://brand.askara.solutions/) to
+A Discourse **theme** that applies the [Askara brand](https://brand.askara.solutions/) to
 the community hub at `community.askara.solutions` — self-hosted brand fonts and three brand colour
-schemes, installed via Discourse's "install from a git repository" flow.
+palettes, installed via Discourse's "install from a git repository" flow.
 
-It is a **component** (not a full theme): it layers onto whatever base theme is active, contributing
-palettes + fonts + a few brand accents.
+It is a **full theme** (not a component): Discourse's canonical primitive for shipping a branded
+look with selectable colour palettes. It ships the brand fonts, three palettes (Light / Dark /
+Parchment), and brand accents, and is set as the site's default theme. (A component was tried first
+but current Discourse doesn't register `about.json` `color_schemes` from a component — see
+CHANGELOG.)
 
 ## Colour schemes
 

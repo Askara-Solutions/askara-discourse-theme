@@ -6,6 +6,17 @@ entries — if an entry turns out wrong, add a new one correcting it, don't rewr
 
 Trigger: [CLAUDE.md § Rules](../CLAUDE.md).
 
+## [2026-08-13] fix | Convert component -> full theme so colour palettes register (BDEV-210)
+
+Installing the component on the live instance revealed that current Discourse (2026, post-Horizon)
+does NOT register `about.json` `color_schemes` from a theme _component_ — the imported component
+reported `color_schemes: []`. Discourse's own docs describing component colour schemes are stale
+(last reviewed 2022). Switched `about.json` `component` to `false` (full theme) so the three brand
+palettes (Askara Light / Dark / Parchment) register and one can be set as the site default. Same
+fonts + SCSS + phosphor governance otherwise. A standalone hand-made "Askara brand color palette"
+already on the instance (with phosphor wrongly mapped to quaternary/highlight) is to be deleted once
+the theme's palettes are in.
+
 ## [2026-08-13] chore | Repo bootstrap (BDEV-210)
 
 Created `askara-discourse-theme` as a public standalone repo for the Askara Discourse theme
