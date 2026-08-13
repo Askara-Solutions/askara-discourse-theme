@@ -1,0 +1,34 @@
+name: Lint
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+# This is a config-only Discourse theme (SCSS + palette + fonts, no JS/Ruby).
+# Discourse's reusable theme workflow gates its Prettier/Stylelint on a JS package
+# manager and always runs `bundle install` in the discourse_test container, so it
+# lints nothing here and breaks on upstream container regressions. This checks what
+# we actually ship instead.
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Prettier (formatting)
+        run: npx --yes prettier@3 --check "about.json" "common/**/*.scss" "*.md" "agent_docs/*.md" ".github/**/*.yml"
+
+      - name: Validate about.json
+        run: node -e "JSON.parse(require('fs').readFileSync('about.json','utf8')); console.log('about.json is valid JSON')"
+
+      - name: Phosphor governance
+        run: |
+          if grep -qi '8dff35' about.json; then
+            echo "Phosphor #8dff35 must not appear in about.json color_schemes — it is hover/CTA/logo only (in SCSS)."
+            exit 1
+          fi
+          echo "governance OK: phosphor absent from about.json color_schemes"
