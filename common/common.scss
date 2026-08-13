@@ -1,0 +1,89 @@
+/* =============================================================================
+ * Askara brand theme component — typography + brand accents.
+ *
+ * Colours are defined in about.json `color_schemes` (Askara Light / Dark /
+ * Parchment). This file handles: self-hosted fonts, the type overrides, the
+ * phosphor hover/CTA governance rule, and monospaced brand labels.
+ *
+ * Brand source of truth (pinned):
+ *   Askara-Solutions/brand.askara.solutions @ 1dd6e28f23d33587a72b04b3d7e6bce204a6c2de
+ *     fonts   -> docs/fonts/                (vendored into assets/)
+ *     colours -> docs/brand/css/brand.css :root
+ *
+ * GOVERNANCE: phosphor #8dff35 is the brand's own `--green-hover` token — it is
+ * HOVER / FOCUS / CTA / LOGO ONLY. It is deliberately NOT a color_schemes value,
+ * so it can never leak into --tertiary, links, or general accents.
+ * ========================================================================== */
+
+/* Scheme-independent brand constant — lives here, never in a palette. */
+$phosphor: #8dff35;
+
+/* ---- Self-hosted fonts (WOFF2 vendored in assets/, referenced via about.json $vars) ---- */
+@font-face {
+  font-family: "Plus Jakarta Sans";
+  src: url($pjs) format("woff2");
+  font-weight: 300 800; /* variable weight axis */
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Plus Jakarta Sans";
+  src: url($pjs_italic) format("woff2");
+  font-weight: 300 800;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: "IBM Plex Mono";
+  src: url($plex_mono_regular) format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "IBM Plex Mono";
+  src: url($plex_mono_medium) format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ---- Type: Plus Jakarta Sans for UI / body / headings ---- */
+:root {
+  --font-family: "Plus Jakarta Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --heading-font-family: "Plus Jakarta Sans", system-ui, sans-serif;
+}
+
+/* IBM Plex Mono for code + monospaced contexts. */
+code,
+pre,
+kbd,
+.hashtag-cooked {
+  font-family: "IBM Plex Mono", ui-monospace, "SFMono-Regular", monospace;
+}
+
+/* ---- Phosphor governance: hover / focus / CTA only ---- */
+/* Primary CTA hover flips to phosphor with espresso text for readable contrast. */
+.btn-primary:hover,
+.btn-primary:focus {
+  background: $phosphor;
+  color: #1a1814; /* espresso */
+  border-color: $phosphor;
+}
+
+/* Subtle phosphor focus ring on interactive elements. */
+.btn:focus-visible,
+a.btn:focus-visible {
+  box-shadow: 0 0 0 2px rgba(141, 255, 53, 0.55);
+}
+
+/* ---- Optional: monospaced brand labels (uppercase + wide tracking is the brand device).
+ * Discourse nav/label selectors shift between versions — enable after visual QA.
+ *
+ * .nav-pills > li > a,
+ * .badge-category__name {
+ *   font-family: "IBM Plex Mono", ui-monospace, monospace;
+ *   text-transform: uppercase;
+ *   letter-spacing: 0.04em;
+ * }
+ * -------------------------------------------------------------------------- */

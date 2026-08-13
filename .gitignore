@@ -1,0 +1,11 @@
+.DS_Store
+*.log
+.vscode/
+
+# Local credentials — never committed. Convention: one `.env.<service>` file per
+# external service, sourced by shell commands, never read back into chat/logs.
+.env
+.env.*
+
+# Loop runtime state (ralph-loop / askara-workflow) — local only, never committed.
+.loop/
