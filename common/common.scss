@@ -168,9 +168,14 @@ kbd,
   color: $navy;
 }
 
-// Header auth buttons (Log In / Sign Up): the icon follows the label colour, not the header's white.
-.d-header .btn .d-icon {
-  color: currentcolor;
+// Primary-button icon always follows the navy label — fixes it turning white on hover
+// (Discourse recolours button icons on :hover independently of the label).
+.btn-primary .d-icon,
+.btn-primary:hover .d-icon,
+.btn-primary:focus .d-icon,
+.btn-primary:active .d-icon {
+  color: $navy !important;
+  fill: $navy !important;
 }
 
 /* ---- Default buttons: brass outline + warm (not grey) hover ---- */
@@ -279,12 +284,12 @@ $card-glow-hover:
   overflow: visible;
 }
 
-// Badge/group icons keep their own (medal) colour, with a subtle same-colour glow (currentColor)
-// so they float a little on the card.
+// Badge/group icons keep their own (medal) colour, lifted with a subtle BRASS glow so they float
+// on the card. (A same-colour glow blurred the icon's edges; brass keeps it crisp + on-brand.)
 #main-outlet .badge-card .d-icon,
 #main-outlet .user-badge .d-icon,
 #main-outlet .group-box .d-icon {
-  filter: drop-shadow(0 2px 6px currentcolor);
+  filter: drop-shadow(0 2px 6px rgba(144, 104, 53, 0.45));
 }
 
 /* ---- Containers (topic list, composer) — subtle brass hairline, not a full card ---- */
