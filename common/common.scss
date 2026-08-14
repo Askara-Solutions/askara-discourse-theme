@@ -87,8 +87,19 @@ h4,
 .cooked h2,
 .cooked h3,
 .cooked h4,
+.cooked h5,
+.cooked h6,
 #topic-title .fancy-title,
 .topic-title {
+  color: var(--quaternary);
+}
+// Cooked headings are wrapped in anchor links — keep the text the heading colour, not the brass link colour.
+.cooked h1 a,
+.cooked h2 a,
+.cooked h3 a,
+.cooked h4 a,
+.cooked h5 a,
+.cooked h6 a {
   color: var(--quaternary);
 }
 
@@ -109,7 +120,6 @@ kbd,
 .topic-list .likes,
 .topic-list-item .link-bottom-line,
 .relative-date,
-.badge-category__name,
 .discourse-tag,
 .topic-map .number,
 .topic-timeline .timeline-replies,
@@ -151,6 +161,11 @@ kbd,
   color: $navy;
 }
 
+// Header auth buttons (Log In / Sign Up): the icon follows the label colour, not the header's white.
+.d-header .btn .d-icon {
+  color: currentcolor;
+}
+
 /* ---- Default buttons: brass outline + warm (not grey) hover ---- */
 .btn-default {
   border: 1px solid $brass-outline;
@@ -161,6 +176,15 @@ kbd,
 }
 .btn-default:hover,
 .btn-default:focus {
+  background: $warm-hover;
+}
+
+// Dropdowns / filters (category, tags, select-kit) — consistent brass outline + warm hover, not grey.
+.select-kit.combo-box .select-kit-header,
+.select-kit-header.btn {
+  border: 1px solid $brass-outline;
+}
+.select-kit.combo-box .select-kit-header:hover {
   background: $warm-hover;
 }
 
@@ -183,21 +207,73 @@ textarea:focus-visible {
   color: var(--quaternary);
 }
 
-/* ---- Panels: brass 40% outline + 8px radius + subtle brass glow on hoverable cards ---- */
-.category-list,
+/* ---- Cards: the website glossary-card style (askara-web Panel variant="parchment-3"
+   + glow="brass-interactive"): parchment-3 fill, no border, 10px radius, brass glow,
+   navy heading + navy/70 body. Scheme-independent warm card (navy on parchment-3 = 9.5:1 AAA). ---- */
+$card-fill: #e8d4ad; // parchment-3
+$card-body: rgba(0, 48, 73, 0.7); // navy / 70
+$card-glow:
+  0 4px 10px rgba(144, 104, 53, 0.6),
+  0 8px 24px rgba(144, 104, 53, 0.4),
+  0 16px 48px rgba(120, 82, 30, 0.22);
+$card-glow-hover:
+  0 4px 12px rgba(144, 104, 53, 0.75),
+  0 10px 32px rgba(144, 104, 53, 0.55),
+  0 20px 56px rgba(120, 82, 30, 0.35),
+  0 28px 80px rgba(120, 82, 30, 0.18);
+
 .category-boxes .category-box,
+.subcategory-list-item,
+.badge-card,
+.user-badge,
+.group-box {
+  background: $card-fill;
+  border: none;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: $card-glow;
+  transition: box-shadow 0.2s ease;
+
+  h3,
+  h4,
+  .category-name,
+  .badge-card__title,
+  .group-box-name {
+    color: $navy;
+    font-weight: 700;
+  }
+  p,
+  .category-description,
+  .badge-card__description {
+    color: $card-body;
+  }
+}
+.category-boxes .category-box:hover,
+.subcategory-list-item:hover,
+.badge-card:hover,
+.group-box:hover {
+  box-shadow: $card-glow-hover;
+
+  h3,
+  h4,
+  .category-name {
+    color: #7a6030; // brass-deep on hover
+  }
+}
+
+// Badge / group card icons → brand brass (category boxes keep their own category colour).
+.badge-card .d-icon,
+.user-badge .d-icon,
+.group-box .d-icon {
+  color: var(--tertiary);
+}
+
+/* ---- Containers (topic list, composer) — subtle brass hairline, not a full card ---- */
+.category-list,
 .d-editor,
 #reply-control .reply-area {
   border: 1px solid $brass-outline;
   border-radius: 8px;
-}
-.category-boxes .category-box,
-.latest-topic-list .latest-topic-list-item {
-  transition: box-shadow 0.18s ease;
-}
-.category-boxes .category-box:hover,
-.latest-topic-list .latest-topic-list-item:hover {
-  box-shadow: $brass-glow;
 }
 
 /* ---- Sidebar hover / selected — direct selectors (warm, not grey), matching the
