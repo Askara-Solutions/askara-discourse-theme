@@ -284,12 +284,15 @@ $card-glow-hover:
   overflow: visible;
 }
 
-// Badge/group icons keep their own (medal) colour, lifted with a subtle BRASS glow so they float
-// on the card. (A same-colour glow blurred the icon's edges; brass keeps it crisp + on-brand.)
+// Badge/group icons keep their own (medal) colour, lifted with the brand brass glow
+// (the exact --glow-brass-rest layers from the website design system, applied as chained
+// drop-shadows so they follow the icon shape). Same recipe as the cards.
 #main-outlet .badge-card .d-icon,
 #main-outlet .user-badge .d-icon,
 #main-outlet .group-box .d-icon {
-  filter: drop-shadow(0 2px 6px rgba(144, 104, 53, 0.45));
+  filter: drop-shadow(0 4px 10px rgba(144, 104, 53, 0.6))
+    drop-shadow(0 8px 24px rgba(144, 104, 53, 0.4))
+    drop-shadow(0 16px 48px rgba(120, 82, 30, 0.22));
 }
 
 /* ---- Containers (topic list, composer) — subtle brass hairline, not a full card ---- */
