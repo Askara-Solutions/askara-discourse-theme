@@ -4,7 +4,7 @@
   "authors": "Askara Solutions",
   "about_url": "https://github.com/Askara-Solutions/askara-discourse-theme",
   "license_url": "https://github.com/Askara-Solutions/askara-discourse-theme/blob/main/LICENSE",
-  "theme_version": "0.1.0",
+  "theme_version": "0.2.0",
   "minimum_discourse_version": null,
   "maximum_discourse_version": null,
   "assets": {
@@ -17,19 +17,19 @@
     "Askara Light": {
       "primary": "1a1814",
       "secondary": "fdf7ed",
-      "tertiary": "3db54a",
+      "tertiary": "906835",
       "quaternary": "003049",
       "header_background": "003049",
       "header_primary": "faf8f5",
       "highlight": "e8d0a0",
       "danger": "ff6666",
-      "success": "3db54a"
+      "success": "267632"
     },
     "Askara Dark": {
       "primary": "faf8f5",
       "secondary": "1a1814",
-      "tertiary": "3db54a",
-      "quaternary": "c8a868",
+      "tertiary": "e8d0a0",
+      "quaternary": "ffffff",
       "header_background": "003049",
       "header_primary": "faf8f5",
       "highlight": "906835",
@@ -39,13 +39,13 @@
     "Askara Parchment": {
       "primary": "1a1814",
       "secondary": "f5ead4",
-      "tertiary": "3db54a",
-      "quaternary": "7a6030",
+      "tertiary": "7a6030",
+      "quaternary": "003049",
       "header_background": "003049",
       "header_primary": "faf8f5",
       "highlight": "e8d4ad",
       "danger": "ff6666",
-      "success": "3db54a"
+      "success": "267632"
     }
   },
   "modifiers": {}
