@@ -19,6 +19,7 @@ const HEX = {
   brassLight: "#e8d0a0",
   parchment1: "#fdf7ed",
   parchment2: "#f5ead4",
+  parchment3: "#e8d4ad",
   espresso: "#1a1814",
   cream: "#faf8f5",
   lightGrey: "#d9d9d9",
@@ -75,6 +76,8 @@ const COMBOS = [
   ],
   [HEX.navy, HEX.parchment2, 3.0, "parchment: heading (navy/parchment-2)"],
   [HEX.slate, HEX.parchment2, 4.5, "parchment: meta (slate/parchment-2)"],
+  // --- Cards (glossary style: parchment-3 fill) ---
+  [HEX.navy, HEX.parchment3, 4.5, "card: navy heading on parchment-3"],
   // --- CTA button ---
   [HEX.navy, HEX.green, 4.5, "cta: navy text on green fill"],
   [HEX.navy, HEX.phosphor, 4.5, "cta-hover: navy text on phosphor fill"],
