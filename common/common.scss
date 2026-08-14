@@ -67,8 +67,29 @@ $brass-glow: 0 4px 18px rgba(200, 168, 104, 0.18);
     "Plus Jakarta Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
   --heading-font-family: "Plus Jakarta Sans", system-ui, sans-serif;
 
-  // Warm the derived neutral so separators/dividers read as a brand hairline, not grey.
+  // ===== Discourse token → Askara brand map =====
+  // (Functional tokens are deliberately left as Discourse defines them: hljs code colours,
+  //  social-login brand colours, gold/silver/bronze medals, and shadows.)
+
+  // Neutral lines / dividers / borders → warm brass hairline (scheme-aware brass + bg).
+  --primary-very-low: #{$warm-hairline};
   --primary-low: #{$warm-hairline};
+  --primary-50: #{$warm-hairline};
+  --primary-100: #{$warm-hairline};
+  --primary-200: #{$warm-hairline};
+  --content-border-color: #{$warm-hairline};
+  --table-border-color: #{$warm-hairline};
+  --input-border-color: #{$warm-hairline};
+  --topic-timeline-border-color: #{$warm-hairline};
+
+  // Interactive surfaces → brand.
+  --d-hover: #{$warm-hover};
+  --d-selected: var(--highlight); // brass-light selected surface
+  --d-link-color: var(--tertiary); // brass links
+  --topic-timeline-handle-color: var(--tertiary); // brass timeline handle
+
+  // Titles → brand heading colour (navy on light/parchment, white on dark).
+  --title-color: var(--quaternary);
 
   // Sidebar hover/selected — token overrides (backed up by direct selectors below).
   --d-sidebar-highlight-background: #{$warm-hover};
