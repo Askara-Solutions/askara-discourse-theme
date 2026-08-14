@@ -2,29 +2,28 @@
  * Askara brand theme — typography, colour, panels, and brand chrome.
  *
  * Colour palettes live in about.json color_schemes (Askara Light / Dark / Parchment).
- * This file handles: self-hosted fonts, brand headings, mono metadata/labels, links,
- * the primary CTA + phosphor hover, the focus ring, brass-accent panels + a subtle
- * brass glow, and the sidebar hover/selected recolour.
- *
  * Aligned with the Askara website design system (askara-web, "Design System 3.0")
  * and pinned brand source Askara-Solutions/brand.askara.solutions @ 1dd6e28.
- * Every colour is an existing brand/web token — no invented values. Enforced by
- * scripts/check-contrast.mjs (WCAG AA, CI) and scripts/check-phosphor.mjs (governance).
+ *
+ * Every colour is an existing brand/web token. Warm hairlines and hover tints use
+ * color-mix() of brand tokens (the same technique the website design system uses) so
+ * they stay scheme-aware — no invented colours. Enforced by scripts/check-contrast.mjs
+ * (WCAG AA) and scripts/check-phosphor.mjs (phosphor governance).
  *
  * GOVERNANCE: phosphor #8dff35 (--green-hover) = CTA hover / focus / logo only.
  * ========================================================================== */
 
-// Brand / web tokens used directly here (scheme values live in about.json).
 $phosphor: #8dff35; // CTA hover only
 $green: #3db54a; // CTA fill
 $navy: #003049;
-$brass: #c8a868;
 
-// Brass accent for panels: brass at 40% (web Panel border="brass") + a subtle brass glow.
-$brass-outline: rgba(200, 168, 104, 0.4);
+// Brass-token tints (scheme-aware: --tertiary is brass on light, brass-light on dark).
+$brass-outline: color-mix(in srgb, var(--tertiary) 45%, var(--secondary));
+$warm-hairline: color-mix(in srgb, var(--tertiary) 16%, var(--secondary));
+$warm-hover: color-mix(in srgb, var(--tertiary) 10%, var(--secondary));
 $brass-glow: 0 4px 18px rgba(200, 168, 104, 0.18);
 
-/* ---- Self-hosted fonts (WOFF2 in assets/, referenced via about.json $vars) ---- */
+/* ---- Self-hosted fonts (WOFF2 in assets/, via about.json $vars) ---- */
 @font-face {
   font-family: "Plus Jakarta Sans";
   src: url($pjs) format("woff2");
@@ -54,32 +53,46 @@ $brass-glow: 0 4px 18px rgba(200, 168, 104, 0.18);
   font-display: swap;
 }
 
-/* ---- Type: Plus Jakarta Sans for UI / body / headings ---- */
+/* ---- Wider content layout (like meta.discourse) ---- */
+:root {
+  --d-max-width: 1500px;
+}
+.wrap {
+  max-width: var(--d-max-width);
+}
+
+/* ---- Type + warm neutrals ---- */
 :root {
   --font-family:
     "Plus Jakarta Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
   --heading-font-family: "Plus Jakarta Sans", system-ui, sans-serif;
 
-  // Sidebar hover/selected — replace Discourse's grey with parchment + brass (brand).
-  --d-sidebar-highlight-background: var(--highlight);
-  --d-sidebar-active-background: #{$brass};
-  --d-sidebar-active-color: #{$navy};
-  --d-sidebar-active-icon-color: #{$navy};
+  // Warm the derived neutral so separators/dividers read as a brand hairline, not grey.
+  --primary-low: #{$warm-hairline};
+
+  // Sidebar hover/selected — token overrides (backed up by direct selectors below).
+  --d-sidebar-highlight-background: #{$warm-hover};
+  --d-sidebar-active-background: var(--highlight);
+  --d-sidebar-active-color: var(--quaternary);
+  --d-sidebar-active-icon-color: var(--quaternary);
 }
 
-/* Headings carry the brand heading colour per scheme
-   (quaternary = navy on light/parchment, white on dark). */
+/* ---- Headings: brand navy (light/parchment) / white (dark) via --quaternary.
+   Scoped to beat Discourse's .cooked heading rules. ---- */
 h1,
 h2,
 h3,
 h4,
-.topic-title,
-.fancy-title,
-.category-title-link .category-name {
+.cooked h1,
+.cooked h2,
+.cooked h3,
+.cooked h4,
+#topic-title .fancy-title,
+.topic-title {
   color: var(--quaternary);
 }
 
-/* ---- IBM Plex Mono for code + metadata/labels (the brand's label device) ---- */
+/* ---- IBM Plex Mono: code + metadata + metadata labels ONLY (not nav tabs) ---- */
 code,
 pre,
 kbd,
@@ -87,7 +100,7 @@ kbd,
   font-family: "IBM Plex Mono", ui-monospace, "SFMono-Regular", monospace;
 }
 
-// Metadata: counts, dates, tags, category names → mono with tabular figures.
+// Metadata values → mono, tabular figures.
 .topic-list .num,
 .topic-list .posts,
 .topic-list .views,
@@ -98,33 +111,57 @@ kbd,
 .relative-date,
 .badge-category__name,
 .discourse-tag,
+.topic-map .number,
+.topic-timeline .timeline-replies,
 .category-list .stat,
-.category-boxes .stat {
+.category-boxes .stat,
+.directory-table__value,
+.directory-table__cell .number,
+.user-stat .value {
   font-family: "IBM Plex Mono", ui-monospace, monospace;
   font-feature-settings: "tnum" 1;
 }
 
-// Labels / column + section headers → mono, uppercase, wide tracking (brand eyebrow).
+// Metadata LABELS (column + section headers) → mono, uppercase, tracked (brand eyebrow).
+// NB: navigation tabs (Latest/New/Hot) stay in the body sans on purpose.
 .topic-list-header .topic-list-data,
-.sidebar-section-header-text,
-.nav-pills > li > a {
+.directory-table__column-header,
+.sidebar-section-header-text {
   font-family: "IBM Plex Mono", ui-monospace, monospace;
   text-transform: uppercase;
   letter-spacing: 0.06em;
   font-size: 0.78em;
 }
 
-/* ---- Primary CTA: green fill + navy label, phosphor on hover ---- */
+/* ---- Primary CTA: green fill + navy label + icon, phosphor on hover ---- */
 .btn-primary {
   background: $green;
-  color: $navy;
   border-color: $green;
-}
-.btn-primary:hover,
-.btn-primary:focus {
-  background: $phosphor; // phosphor = hover only
   color: $navy;
+
+  .d-icon {
+    color: currentcolor; // icon matches label
+  }
+}
+.btn.btn-primary:hover,
+.btn.btn-primary:focus,
+.btn.btn-primary:active {
+  background: $phosphor; // phosphor = hover only
   border-color: $phosphor;
+  color: $navy;
+}
+
+/* ---- Default buttons: brass outline + warm (not grey) hover ---- */
+.btn-default {
+  border: 1px solid $brass-outline;
+
+  .d-icon {
+    color: currentcolor;
+  }
+}
+.btn-default:hover,
+.btn-default:focus {
+  background: $warm-hover;
 }
 
 /* ---- Focus ring: green, matching the website --ring ---- */
@@ -139,14 +176,14 @@ textarea:focus-visible {
     0 0 0 4px $green;
 }
 
-/* ---- Links: brass at rest (via --tertiary per scheme); darken to heading colour on hover ---- */
+/* ---- Links: brass at rest (via --tertiary per scheme); heading colour on hover ---- */
 .cooked a:hover,
 .topic-list-item .title:hover,
 .category-list .category-name:hover {
   color: var(--quaternary);
 }
 
-/* ---- Panels: brass 40% outline + 8px radius, with a subtle brass glow on hoverable cards ---- */
+/* ---- Panels: brass 40% outline + 8px radius + subtle brass glow on hoverable cards ---- */
 .category-list,
 .category-boxes .category-box,
 .d-editor,
@@ -161,4 +198,19 @@ textarea:focus-visible {
 .category-boxes .category-box:hover,
 .latest-topic-list .latest-topic-list-item:hover {
   box-shadow: $brass-glow;
+}
+
+/* ---- Sidebar hover / selected — direct selectors (warm, not grey), matching the
+   website nav dropdown: subtle warm hover, brass-light selected surface, navy text. ---- */
+.sidebar-section-link-wrapper .sidebar-section-link:hover {
+  background: $warm-hover;
+}
+.sidebar-section-link-wrapper .sidebar-section-link.active,
+.sidebar-section-link-wrapper .sidebar-section-link[aria-current] {
+  background: var(--highlight);
+  color: var(--quaternary);
+
+  .d-icon {
+    color: var(--quaternary);
+  }
 }
