@@ -27,3 +27,6 @@ jobs:
 
       - name: Phosphor governance
         run: node scripts/check-phosphor.mjs
+
+      - name: Contrast (WCAG AA)
+        run: node scripts/check-contrast.mjs
