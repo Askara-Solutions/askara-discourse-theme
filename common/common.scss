@@ -287,6 +287,16 @@ $card-glow-hover:
   overflow: visible;
 }
 
+// Category-box inner element carries a grey default border/outline inside the card — remove it
+// (the parchment card fill lives on the outer .category-box).
+#main-outlet .category-box .category-box-inner,
+#main-outlet .category-box-inner {
+  border: none;
+  outline: none;
+  box-shadow: none;
+  background: transparent;
+}
+
 /* ---- Containers (topic list, composer) — subtle brass hairline, not a full card ---- */
 .category-list,
 .d-editor,
