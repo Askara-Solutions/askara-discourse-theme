@@ -279,6 +279,14 @@ $card-glow-hover:
   overflow: visible;
 }
 
+// Badge/group icons keep their own (medal) colour, with a subtle same-colour glow (currentColor)
+// so they float a little on the card.
+#main-outlet .badge-card .d-icon,
+#main-outlet .user-badge .d-icon,
+#main-outlet .group-box .d-icon {
+  filter: drop-shadow(0 2px 6px currentcolor);
+}
+
 /* ---- Containers (topic list, composer) — subtle brass hairline, not a full card ---- */
 .category-list,
 .d-editor,
