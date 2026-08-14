@@ -93,13 +93,20 @@ h4,
 .topic-title {
   color: var(--quaternary);
 }
-// Cooked headings are wrapped in anchor links — keep the text the heading colour, not the brass link colour.
+// Headings in cooked posts AND static pages (/guidelines, /about, /tos …) are wrapped in
+// anchor links — keep the text the heading colour, not the brass link colour.
 .cooked h1 a,
 .cooked h2 a,
 .cooked h3 a,
 .cooked h4 a,
 .cooked h5 a,
-.cooked h6 a {
+.cooked h6 a,
+[itemprop="mainContentOfPage"] h1 a,
+[itemprop="mainContentOfPage"] h2 a,
+[itemprop="mainContentOfPage"] h3 a,
+[itemprop="mainContentOfPage"] h4 a,
+[itemprop="mainContentOfPage"] h5 a,
+[itemprop="mainContentOfPage"] h6 a {
   color: var(--quaternary);
 }
 
@@ -222,15 +229,17 @@ $card-glow-hover:
   0 20px 56px rgba(120, 82, 30, 0.35),
   0 28px 80px rgba(120, 82, 30, 0.18);
 
-.category-boxes .category-box,
-.subcategory-list-item,
-.badge-card,
-.user-badge,
-.group-box {
+// #main-outlet (id) scope beats Discourse's own .groups-boxes/.category-boxes radius rules.
+#main-outlet .category-boxes .category-box,
+#main-outlet .subcategory-list-item,
+#main-outlet .badge-card,
+#main-outlet .user-badge,
+#main-outlet .group-box {
   background: $card-fill;
   border: none;
   border-radius: 10px;
   padding: 20px;
+  margin: 8px; // breathing room so the hover glow isn't clipped by neighbours
   box-shadow: $card-glow;
   transition: box-shadow 0.2s ease;
 
@@ -248,10 +257,10 @@ $card-glow-hover:
     color: $card-body;
   }
 }
-.category-boxes .category-box:hover,
-.subcategory-list-item:hover,
-.badge-card:hover,
-.group-box:hover {
+#main-outlet .category-boxes .category-box:hover,
+#main-outlet .subcategory-list-item:hover,
+#main-outlet .badge-card:hover,
+#main-outlet .group-box:hover {
   box-shadow: $card-glow-hover;
 
   h3,
@@ -261,11 +270,24 @@ $card-glow-hover:
   }
 }
 
-// Badge / group card icons → brand brass (category boxes keep their own category colour).
-.badge-card .d-icon,
-.user-badge .d-icon,
-.group-box .d-icon {
-  color: var(--tertiary);
+// Card grids: add gap + don't clip the glow (glossary lets the cards breathe).
+#main-outlet .category-boxes,
+#main-outlet .groups-boxes,
+#main-outlet .badge-groups,
+#main-outlet .user-badges {
+  gap: 20px;
+  overflow: visible;
+}
+
+// Badge / group card icons → brand brass (override medal colours + SVG fills for consistency).
+// Category boxes are excluded — they keep their per-category colour.
+#main-outlet .badge-card .d-icon,
+#main-outlet .badge-card .badge-icon,
+#main-outlet .badge-card svg,
+#main-outlet .user-badge .d-icon,
+#main-outlet .group-box .d-icon {
+  color: var(--tertiary) !important;
+  fill: var(--tertiary) !important;
 }
 
 /* ---- Containers (topic list, composer) — subtle brass hairline, not a full card ---- */
