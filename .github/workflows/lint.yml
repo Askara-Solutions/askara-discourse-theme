@@ -20,15 +20,10 @@ jobs:
           node-version: 20
 
       - name: Prettier (formatting)
-        run: npx --yes prettier@3 --check "about.json" "common/**/*.scss" "*.md" "agent_docs/*.md" ".github/**/*.yml"
+        run: npx --yes prettier@3 --check "about.json" "common/**/*.scss" "*.md" "agent_docs/*.md" ".github/**/*.yml" "scripts/*.mjs"
 
       - name: Validate about.json
         run: node -e "JSON.parse(require('fs').readFileSync('about.json','utf8')); console.log('about.json is valid JSON')"
 
       - name: Phosphor governance
-        run: |
-          if grep -qi '8dff35' about.json; then
-            echo "Phosphor #8dff35 must not appear in about.json color_schemes — it is hover/CTA/logo only (in SCSS)."
-            exit 1
-          fi
-          echo "governance OK: phosphor absent from about.json color_schemes"
+        run: node scripts/check-phosphor.mjs
