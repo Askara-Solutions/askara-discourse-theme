@@ -279,17 +279,6 @@ $card-glow-hover:
   overflow: visible;
 }
 
-// Badge / group card icons → brand brass (override medal colours + SVG fills for consistency).
-// Category boxes are excluded — they keep their per-category colour.
-#main-outlet .badge-card .d-icon,
-#main-outlet .badge-card .badge-icon,
-#main-outlet .badge-card svg,
-#main-outlet .user-badge .d-icon,
-#main-outlet .group-box .d-icon {
-  color: var(--tertiary) !important;
-  fill: var(--tertiary) !important;
-}
-
 /* ---- Containers (topic list, composer) — subtle brass hairline, not a full card ---- */
 .category-list,
 .d-editor,
