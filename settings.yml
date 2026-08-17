@@ -5,7 +5,7 @@
 
 homepage_hero_heading:
   type: string
-  default: "Welcome to the Askara community"
+  default: "Welcome to The Askara Assembly"
 
 homepage_hero_subheading:
   type: string
