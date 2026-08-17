@@ -40,10 +40,11 @@ Same discipline as `askara-community`:
 - **PR title:** same format — **not enforced today**: `pr-validation.sh` exists but is not wired into `hooks.json`.
 - **Valid types:** feat, fix, docs, persona, ci, refactor, test, chore, style, perf, revert (mirrored in `.claude/askara-workflow.local.md` `commit_types` — keep both in sync).
 - **Linear auto-close:** PR body must include `Closes BDEV-NNN`.
+- **Merge gate:** never merge a PR until CI is green — every configured check passing (`gh pr checks`, e.g. the theme `lint` job), never over a pending or failing one — **and** it has been reviewed. **Devin does not review this repo:** its GitHub review runs in private mode and this repo is **public**, so there is no automated Devin review here — the review half of the gate is your own self-review (plus any human review). If Devin is ever enabled for this repo, its review becomes a required part of the gate too (address every finding individually on the PR, as in `askara-community`). Any findings — from CI, self-review, or Devin if enabled — are recorded with their resolutions as a comment on the Linear issue, which is moved to **Under Review**, before `gh pr merge --merge`. **Convention only** — no repo-side hook enforces this; don't shortcut it. Same gate as `askara-community`, whose canonical wording (including the Devin step) is [its CLAUDE.md § Rules](https://github.com/Askara-Solutions/askara-community/blob/main/CLAUDE.md#rules) → `agent_docs/checklists.md § Before Merging`.
 
 ## Workflow
 
-Create/pick a Linear issue → feature branch off `main` → isolate into a worktree → commit → PR (`Closes BDEV-NNN`) → merge → clean up. Same as `askara-community`.
+Create/pick a Linear issue → feature branch off `main` → isolate into a worktree → commit → PR (`Closes BDEV-NNN`) → **clear the merge gate** (CI green + reviewed — self/human here, since Devin doesn't review this public repo — any findings resolved, recorded on the Linear issue, issue moved to **Under Review**) → merge → clean up. Same gate as `askara-community`.
 
 ## Install & verify
 
