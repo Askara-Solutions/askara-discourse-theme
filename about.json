@@ -4,7 +4,7 @@
   "authors": "Askara Solutions",
   "about_url": "https://github.com/Askara-Solutions/askara-discourse-theme",
   "license_url": "https://github.com/Askara-Solutions/askara-discourse-theme/blob/main/LICENSE",
-  "theme_version": "0.7.0",
+  "theme_version": "0.6.0",
   "minimum_discourse_version": null,
   "maximum_discourse_version": null,
   "assets": {
@@ -16,7 +16,7 @@
   "color_schemes": {
     "Askara Light": {
       "primary": "1a1814",
-      "secondary": "f5ead4",
+      "secondary": "fdf7ed",
       "tertiary": "906835",
       "quaternary": "003049",
       "header_background": "003049",
