@@ -2,6 +2,7 @@ import Component from "@glimmer/component";
 import { tracked } from "@glimmer/tracking";
 import { service } from "@ember/service";
 import icon from "discourse/helpers/d-icon";
+import List from "discourse/components/topic-list/list";
 import SolutionCards from "./solution-cards";
 
 // Curated, meta-style landing view for community.askara.solutions (BDEV-236). Rendered into
@@ -87,8 +88,11 @@ export default class AskaraHomepage extends Component {
 
   async loadFeatured() {
     try {
+      // Tag-filtered latest via params.tags (the shape Discourse's own homepage-feature
+      // component uses) — robust to the tag being empty; never references categories 12–15.
       const list = await this.store.findFiltered("topicList", {
-        filter: `tag/${this.featuredTag}/l/latest`,
+        filter: "latest",
+        params: { tags: [this.featuredTag] },
       });
       this.featuredTopics = (list?.topics || []).slice(0, 4);
     } catch {
@@ -97,6 +101,10 @@ export default class AskaraHomepage extends Component {
       this.featuredReady = true;
     }
   }
+
+  // Core <List> wants a @changeSort handler for its sortable column headers; the homepage list
+  // is a fixed snapshot, so sorting is a no-op here (headers stay inert rather than erroring).
+  noop = () => {};
 
   <template>
     <div class="askara-homepage">
@@ -122,16 +130,15 @@ export default class AskaraHomepage extends Component {
         <section class="askara-homepage__section">
           <h2 class="askara-homepage__section-title">Featured</h2>
           {{#if this.featuredTopics.length}}
-            <ul class="askara-homepage__topic-list">
-              {{#each this.featuredTopics as |topic|}}
-                <li class="askara-homepage__topic">
-                  <a
-                    class="askara-homepage__topic-link"
-                    href={{topic.url}}
-                  >{{topic.title}}</a>
-                </li>
-              {{/each}}
-            </ul>
+            <List
+              @topics={{this.featuredTopics}}
+              @showPosters={{true}}
+              @showTopicPostBadges={{true}}
+              @highlightLastVisited={{false}}
+              @changeSort={{this.noop}}
+              @discoveryList={{false}}
+              @listContext="homepage"
+            />
           {{else if this.featuredReady}}
             <a class="askara-homepage__more" href={{this.featuredTagUrl}}>
               Browse featured topics
@@ -145,16 +152,15 @@ export default class AskaraHomepage extends Component {
         <section class="askara-homepage__section">
           <h2 class="askara-homepage__section-title">Recent activity</h2>
           {{#if this.recentTopics.length}}
-            <ul class="askara-homepage__topic-list">
-              {{#each this.recentTopics as |topic|}}
-                <li class="askara-homepage__topic">
-                  <a
-                    class="askara-homepage__topic-link"
-                    href={{topic.url}}
-                  >{{topic.title}}</a>
-                </li>
-              {{/each}}
-            </ul>
+            <List
+              @topics={{this.recentTopics}}
+              @showPosters={{true}}
+              @showTopicPostBadges={{true}}
+              @highlightLastVisited={{false}}
+              @changeSort={{this.noop}}
+              @discoveryList={{false}}
+              @listContext="homepage"
+            />
           {{/if}}
           <a class="askara-homepage__more" href="/latest">
             View all latest
