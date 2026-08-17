@@ -1,0 +1,46 @@
+# Curated homepage content toggles (BDEV-236). Each section can be turned off live without a
+# code change; the two topic-list sections fail soft to a browse link if their fetch returns
+# nothing. Activation of the custom homepage itself is the `custom_homepage` modifier in
+# about.json, not a setting here.
+
+homepage_hero_heading:
+  type: string
+  default: "Welcome to the Askara community"
+
+homepage_hero_subheading:
+  type: string
+  default: "Practical security and compliance — NIS2, ISO 27001, and agentic AI — worked through together."
+
+homepage_hero_cta_label:
+  type: string
+  default: "Browse categories"
+
+homepage_hero_cta_url:
+  type: string
+  default: "/categories"
+
+homepage_show_solution_cards:
+  type: bool
+  default: true
+
+homepage_show_featured:
+  type: bool
+  default: true
+
+homepage_featured_tag:
+  type: string
+  default: "featured"
+
+homepage_show_recent_activity:
+  type: bool
+  default: true
+
+homepage_recent_activity_count:
+  type: integer
+  default: 5
+  min: 1
+  max: 12
+
+homepage_show_category_browse:
+  type: bool
+  default: true
