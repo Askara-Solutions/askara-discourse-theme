@@ -356,3 +356,38 @@ $card-glow-hover:
     filter: none;
   }
 }
+
+/* ---- Solution cards: tag-sourced entry points above the discovery list (BDEV-237).
+   Reuses the brand card style (parchment-3 fill, brass glow, navy heading). ---- */
+.solution-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+  margin: 0 0 24px;
+}
+.solution-card {
+  display: block;
+  padding: 20px;
+  background: $card-fill;
+  border-radius: 10px;
+  box-shadow: $card-glow;
+  transition: box-shadow 0.2s ease;
+  text-decoration: none;
+
+  &:hover {
+    box-shadow: $card-glow-hover;
+
+    .solution-card__title {
+      color: #7a6030; // brass-deep on hover
+    }
+  }
+}
+.solution-card__title {
+  margin: 0 0 6px;
+  color: $navy;
+  font-weight: 700;
+}
+.solution-card__subtitle {
+  margin: 0;
+  color: $card-body;
+}
