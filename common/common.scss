@@ -412,26 +412,11 @@ body.signup-page .d-header {
     margin: 0 0 20px;
   }
 
-  // Topic lists (recent activity, featured) — simple rows on warm hairlines, brass links.
-  &__topic-list {
-    list-style: none;
+  // Recent activity + Featured embed the core <List> widget (.topic-list), which already inherits
+  // the theme's global .topic-list styling (mono metadata, brass links). Just let it sit in the
+  // section rhythm — no bespoke row styling needed (BDEV-251).
+  .topic-list {
     margin: 0 0 16px;
-    padding: 0;
-  }
-  &__topic {
-    border-bottom: 1px solid $warm-hairline;
-  }
-  &__topic-link {
-    display: block;
-    padding: 12px 4px;
-    color: var(--tertiary); // brass at rest (scheme-aware)
-    font-weight: 600;
-
-    &:hover {
-      color: var(
-        --quaternary
-      ); // heading colour on hover, matching the site link behaviour
-    }
   }
 
   // "browse more" affordance — brass link with a trailing arrow.
@@ -487,4 +472,12 @@ body.signup-page .d-header {
     font-feature-settings: "tnum" 1;
     font-size: 0.85rem;
   }
+}
+
+/* ---- "Home" sidebar section pinned to the top (BDEV-251). The header-less custom section is
+   registered in api-initializers/custom-homepage.gjs; there is no sidebar ordering API, so pull it
+   above the default sections here. Effective when the sections container is a flex column
+   (Discourse default) — final placement to be confirmed on the live render. ---- */
+.sidebar-sections .sidebar-section-wrapper[data-section-name="askara-home"] {
+  order: -1;
 }
