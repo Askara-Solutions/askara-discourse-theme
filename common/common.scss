@@ -247,14 +247,15 @@ textarea:focus-visible {
    parchment-2 fill + a 1px parchment-3 hairline, NO shadow at rest; on hover the border warms
    to brass and a soft 3-layer brass glow appears. Toned down from the previous always-on glow.
    Core card surface — shared by category boxes, badges, group boxes, and the solution cards. ---- */
-$card-fill: #f5ead4; // parchment-2 (card surface)
-$card-border: #e8d4ad; // parchment-3 (hairline)
+$card-fill: #fdf7ed; // parchment-1 — lightest, so cards float on the parchment-2 canvas
 $card-body: rgba(0, 48, 73, 0.7); // navy / 70
-$card-hover-border: #c8a868; // brass
-$card-hover-glow:
-  0 4px 10px rgba(144, 104, 53, 0.6),
-  0 8px 24px rgba(144, 104, 53, 0.4),
-  0 16px 48px rgba(120, 82, 30, 0.22);
+// Soft, meta-style depth: navy-tinted low-opacity shadows, not the old always-on brass glow.
+$card-shadow:
+  0 1px 3px rgba(0, 48, 73, 0.06),
+  0 8px 20px rgba(0, 48, 73, 0.05);
+$card-shadow-hover:
+  0 3px 8px rgba(0, 48, 73, 0.09),
+  0 16px 36px rgba(0, 48, 73, 0.11);
 
 // #main-outlet (id) scope beats Discourse's own .groups-boxes/.category-boxes radius rules.
 #main-outlet .category-boxes .category-box,
@@ -264,13 +265,11 @@ $card-hover-glow:
 #main-outlet .group-box,
 #main-outlet .solution-card {
   background: $card-fill;
-  border: 1px solid $card-border;
-  border-radius: 16px;
+  border: none;
+  border-radius: 20px;
   padding: 24px;
-  box-shadow: none;
-  transition:
-    border-color 0.15s ease,
-    box-shadow 0.15s ease;
+  box-shadow: $card-shadow;
+  transition: box-shadow 0.18s ease;
 
   h3,
   h4,
@@ -293,8 +292,7 @@ $card-hover-glow:
 #main-outlet .badge-card:hover,
 #main-outlet .group-box:hover,
 #main-outlet .solution-card:hover {
-  border-color: $card-hover-border;
-  box-shadow: $card-hover-glow;
+  box-shadow: $card-shadow-hover;
 }
 
 // Card grids: add gap + don't clip the glow (glossary lets the cards breathe).
@@ -321,7 +319,7 @@ $card-hover-glow:
 .d-editor,
 #reply-control .reply-area {
   border: 1px solid $brass-outline;
-  border-radius: 8px;
+  border-radius: 14px;
 }
 
 /* ---- Sidebar hover / selected — direct selectors (warm, not grey), matching the
@@ -463,17 +461,15 @@ body.signup-page .d-header {
     flex-direction: column;
     gap: 6px;
     background: $card-fill;
-    border: 1px solid $card-border;
-    border-radius: 16px;
+    border: none;
+    border-radius: 20px;
     padding: 20px 24px;
+    box-shadow: $card-shadow;
     text-decoration: none;
-    transition:
-      border-color 0.15s ease,
-      box-shadow 0.15s ease;
+    transition: box-shadow 0.18s ease;
 
     &:hover {
-      border-color: $card-hover-border;
-      box-shadow: $card-hover-glow;
+      box-shadow: $card-shadow-hover;
     }
   }
   &__category-name {
