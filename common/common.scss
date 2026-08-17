@@ -366,3 +366,125 @@ body.signup-page .d-header {
 .solution-card__subtitle {
   margin: 0;
 }
+
+/* ---- Curated homepage: the meta-style landing view rendered in the custom-homepage outlet
+   (BDEV-236). Reuses the brand tokens + card treatment above so it reads as one system across
+   Light / Dark / Parchment; no invented colours, no phosphor (the hero CTA reuses .btn-primary,
+   which already governs its own phosphor hover). ---- */
+.askara-homepage {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 32px 20px 64px;
+
+  &__hero {
+    background: $warm-hover; // faint warm tint of the page canvas (scheme-aware)
+    border: 1px solid $warm-hairline;
+    border-radius: 16px;
+    padding: 48px 40px;
+    text-align: center;
+    margin-bottom: 48px;
+  }
+  &__hero-heading {
+    color: var(--quaternary); // navy on light/parchment, white on dark
+    font-size: 2.25rem;
+    line-height: 1.15;
+    margin: 0 0 12px;
+  }
+  &__hero-subheading {
+    color: var(--primary);
+    font-size: 1.15rem;
+    line-height: 1.5;
+    max-width: 640px;
+    margin: 0 auto 28px;
+  }
+  &__hero-cta {
+    // .btn-primary carries the green fill + navy label + phosphor hover already.
+    font-size: 1rem;
+    padding: 12px 28px;
+  }
+
+  &__section {
+    margin-bottom: 48px;
+  }
+  &__section-title {
+    color: var(--quaternary);
+    font-size: 1.5rem;
+    margin: 0 0 20px;
+  }
+
+  // Topic lists (recent activity, featured) — simple rows on warm hairlines, brass links.
+  &__topic-list {
+    list-style: none;
+    margin: 0 0 16px;
+    padding: 0;
+  }
+  &__topic {
+    border-bottom: 1px solid $warm-hairline;
+  }
+  &__topic-link {
+    display: block;
+    padding: 12px 4px;
+    color: var(--tertiary); // brass at rest (scheme-aware)
+    font-weight: 600;
+
+    &:hover {
+      color: var(
+        --quaternary
+      ); // heading colour on hover, matching the site link behaviour
+    }
+  }
+
+  // "browse more" affordance — brass link with a trailing arrow.
+  &__more {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--tertiary);
+    font-weight: 600;
+
+    .d-icon {
+      width: 0.85em;
+      height: 0.85em;
+    }
+    &:hover {
+      color: var(--quaternary);
+    }
+  }
+
+  // Category browse — the shared card treatment (parchment fill, hairline, brass hover glow).
+  &__categories {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+    margin-bottom: 16px;
+  }
+  &__category {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    background: $card-fill;
+    border: 1px solid $card-border;
+    border-radius: 16px;
+    padding: 20px 24px;
+    text-decoration: none;
+    transition:
+      border-color 0.15s ease,
+      box-shadow 0.15s ease;
+
+    &:hover {
+      border-color: $card-hover-border;
+      box-shadow: $card-hover-glow;
+    }
+  }
+  &__category-name {
+    color: $navy;
+    font-weight: 700;
+    font-size: 1.05rem;
+  }
+  &__category-count {
+    color: $card-body;
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-feature-settings: "tnum" 1;
+    font-size: 0.85rem;
+  }
+}
