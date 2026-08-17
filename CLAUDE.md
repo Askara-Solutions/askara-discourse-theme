@@ -40,10 +40,11 @@ Same discipline as `askara-community`:
 - **PR title:** same format — **not enforced today**: `pr-validation.sh` exists but is not wired into `hooks.json`.
 - **Valid types:** feat, fix, docs, persona, ci, refactor, test, chore, style, perf, revert (mirrored in `.claude/askara-workflow.local.md` `commit_types` — keep both in sync).
 - **Linear auto-close:** PR body must include `Closes BDEV-NNN`.
+- **Merge gate:** never merge a PR until **(a)** CI is green (`gh pr checks` all passing — never with checks pending or failing) **and (b)** Devin's automated review has posted (Devin auto-reviews every PR — don't merge one it hasn't reviewed yet). Then address *every* issue Devin raises — reply to each finding individually on the PR (fix + resolve the thread, or a reasoned decline), push fixes, let CI re-run green — and record the findings + resolutions as a comment on the Linear issue, moving it to **Under Review**, before `gh pr merge --merge`. **Convention only** — no repo-side hook enforces this; don't shortcut it. Mirrors `askara-community`'s canonical rule — [its CLAUDE.md § Rules](https://github.com/Askara-Solutions/askara-community/blob/main/CLAUDE.md#rules), with the step-by-step boxes in that repo's `agent_docs/checklists.md § Before Merging`.
 
 ## Workflow
 
-Create/pick a Linear issue → feature branch off `main` → isolate into a worktree → commit → PR (`Closes BDEV-NNN`) → merge → clean up. Same as `askara-community`.
+Create/pick a Linear issue → feature branch off `main` → isolate into a worktree → commit → PR (`Closes BDEV-NNN`) → **clear the merge gate** (CI green + Devin's review posted and every finding addressed, resolutions recorded on the Linear issue, issue moved to **Under Review**) → merge → clean up. Same as `askara-community`.
 
 ## Install & verify
 
