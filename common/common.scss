@@ -348,7 +348,8 @@ $card-glow-hover:
    scoped filter rather than swapping the asset. Reverted under a dark scheme, where the white
    wordmark is already correct against the dark page background. ---- */
 .logo-container .site-logo {
-  filter: brightness(0); // white wordmark → brand ink on the light auth-page background
+  // white wordmark → brand ink on the light auth-page background
+  filter: brightness(0);
 }
 @media (prefers-color-scheme: dark) {
   .logo-container .site-logo {
