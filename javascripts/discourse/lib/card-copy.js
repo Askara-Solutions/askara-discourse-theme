@@ -23,6 +23,10 @@ function prettify(tag) {
 
 // Title + subtitle for a tag card. Tags without curated copy fall back to a prettified tag name
 // and no subtitle, so a newly added tag always renders something sensible rather than a blank card.
+// `Object.hasOwn` (not plain indexing) so a tag literally named `constructor`/`toString`/etc.
+// resolves to the fallback rather than an inherited prototype member.
 export function cardCopyFor(tag) {
-  return CARD_COPY[tag] ?? { title: prettify(tag), subtitle: null };
+  return Object.hasOwn(CARD_COPY, tag)
+    ? CARD_COPY[tag]
+    : { title: prettify(tag), subtitle: null };
 }
