@@ -246,10 +246,9 @@ textarea:focus-visible {
 /* ---- Cards: the blog "Source Journal" treatment (askara-web packages/tokens/src/theme.css):
    parchment-2 fill + a 1px parchment-3 hairline, NO shadow at rest; on hover the border warms
    to brass and a soft 3-layer brass glow appears. Toned down from the previous always-on glow.
-   Core card surface — shared by category boxes, badges, group boxes, and the solution cards. ---- */
-$card-fill: #f5ead4; // parchment-2 (card surface)
-$card-border: #e8d4ad; // parchment-3 (hairline)
-$card-body: rgba(0, 48, 73, 0.7); // navy / 70
+   Core card surface — shared by category boxes, badges, group boxes, and the solution cards.
+   Fill / hairline / body-copy colours are SCHEME-AWARE via common/color_definitions.scss:
+   Light + Parchment keep this exact parchment ramp; Dark flips to an espresso ramp (BDEV-269). ---- */
 $card-hover-border: #c8a868; // brass
 $card-hover-glow:
   0 4px 10px rgba(144, 104, 53, 0.6),
@@ -263,8 +262,8 @@ $card-hover-glow:
 #main-outlet .user-badge,
 #main-outlet .group-box,
 #main-outlet .solution-card {
-  background: $card-fill;
-  border: 1px solid $card-border;
+  background: var(--card-fill);
+  border: 1px solid var(--card-border);
   border-radius: 16px;
   padding: 24px;
   box-shadow: none;
@@ -278,14 +277,14 @@ $card-hover-glow:
   .badge-card__title,
   .group-box-name,
   .solution-card__title {
-    color: $navy;
+    color: var(--quaternary); // navy on light/parchment, white on dark
     font-weight: 700;
   }
   p,
   .category-description,
   .badge-card__description,
   .solution-card__subtitle {
-    color: $card-body;
+    color: var(--card-body);
   }
 }
 #main-outlet .category-boxes .category-box:hover,
@@ -371,8 +370,8 @@ body.signup-page .d-header {
    the discovery-list-controls-above outlet, so a category page reads
    title -> description -> cards -> nav -> topic list. Uses SCHEME-AWARE palette vars, not fixed
    brand hex: this text sits on the page canvas (var(--secondary)), which flips per colour scheme,
-   so --quaternary gives brand navy on Light/Parchment and white on Dark; the cards can hardcode
-   navy only because their parchment fill is fixed. ---- */
+   so --quaternary gives brand navy on Light/Parchment and white on Dark. The cards are likewise
+   scheme-aware as of BDEV-269 (see common/color_definitions.scss). ---- */
 .category-intro {
   margin: 0 0 20px;
 }
@@ -467,8 +466,8 @@ body.signup-page .d-header {
     display: flex;
     flex-direction: column;
     gap: 6px;
-    background: $card-fill;
-    border: 1px solid $card-border;
+    background: var(--card-fill);
+    border: 1px solid var(--card-border);
     border-radius: 16px;
     padding: 20px 24px;
     text-decoration: none;
@@ -482,12 +481,12 @@ body.signup-page .d-header {
     }
   }
   &__category-name {
-    color: $navy;
+    color: var(--quaternary); // navy on light/parchment, white on dark
     font-weight: 700;
     font-size: 1.05rem;
   }
   &__category-count {
-    color: $card-body;
+    color: var(--card-body);
     font-family: "IBM Plex Mono", ui-monospace, monospace;
     font-feature-settings: "tnum" 1;
     font-size: 0.85rem;

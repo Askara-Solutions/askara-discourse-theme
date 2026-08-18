@@ -23,6 +23,11 @@ const HEX = {
   espresso: "#1a1814",
   cream: "#faf8f5",
   lightGrey: "#d9d9d9",
+  white: "#ffffff", // brand --white / --text-heading-dark; --quaternary in the Dark scheme
+  // Dark-scheme card surface (BDEV-269). Resolved from brand tokens — keep in sync with
+  // common/color_definitions.scss. INTERIM values; canonical espresso ramp tracked in BRA-35.
+  darkCardFill: "#2a271f", // = color-mix(in srgb, brass-light 8%, espresso)
+  darkCardBody: "#c0bdb9", // = cream @ .72 alpha composited over darkCardFill (Dark card body copy)
 };
 
 const srgb = (c) => {
@@ -86,6 +91,19 @@ const COMBOS = [
   [HEX.brassLight, HEX.espresso, 4.5, "dark: link (brass-light/espresso)"],
   [HEX.green, HEX.espresso, 4.5, "dark: success text (green/espresso)"],
   [HEX.lightGrey, HEX.espresso, 4.5, "dark: meta (light-grey/espresso)"],
+  // Dark cards: espresso-derived surface (BDEV-269) — title + body on the card fill.
+  [
+    HEX.white,
+    HEX.darkCardFill,
+    4.5,
+    "dark card: title (white) on espresso card fill",
+  ],
+  [
+    HEX.darkCardBody,
+    HEX.darkCardFill,
+    4.5,
+    "dark card: body (cream/72) on espresso card fill",
+  ],
   // --- Header (navy bar, all schemes) ---
   [HEX.cream, HEX.navy, 4.5, "header: cream text on navy"],
 ];
