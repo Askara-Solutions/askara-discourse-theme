@@ -20,7 +20,7 @@ jobs:
           node-version: 20
 
       - name: Prettier (formatting)
-        run: npx --yes prettier@3 --check "about.json" "common/**/*.scss" "*.md" "agent_docs/*.md" ".github/**/*.yml" "scripts/*.mjs"
+        run: npx --yes prettier@3 --check "about.json" "common/**/*.scss" "*.md" "agent_docs/*.md" ".github/**/*.yml" "scripts/*.mjs" "javascripts/**/*.js"
 
       - name: Validate about.json
         run: node -e "JSON.parse(require('fs').readFileSync('about.json','utf8')); console.log('about.json is valid JSON')"
