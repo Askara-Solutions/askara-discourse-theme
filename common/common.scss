@@ -367,6 +367,26 @@ body.signup-page .d-header {
   margin: 0;
 }
 
+/* ---- Category intro: title + description rendered above the per-category cards (BDEV-250), in
+   the discovery-list-controls-above outlet, so a category page reads
+   title -> description -> cards -> nav -> topic list. Uses SCHEME-AWARE palette vars, not fixed
+   brand hex: this text sits on the page canvas (var(--secondary)), which flips per colour scheme,
+   so --quaternary gives brand navy on Light/Parchment and white on Dark; the cards can hardcode
+   navy only because their parchment fill is fixed. ---- */
+.category-intro {
+  margin: 0 0 20px;
+}
+.category-intro__title {
+  color: var(--quaternary);
+  font-weight: 700;
+  margin: 0 0 6px;
+}
+.category-intro__description {
+  color: var(--primary-medium);
+  max-width: 70ch;
+  margin: 0;
+}
+
 /* ---- Curated homepage: the meta-style landing view rendered in the custom-homepage outlet
    (BDEV-236). Reuses the brand tokens + card treatment above so it reads as one system across
    Light / Dark / Parchment; no invented colours, no phosphor (the hero CTA reuses .btn-primary,

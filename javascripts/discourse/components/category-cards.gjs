@@ -1,8 +1,9 @@
 import Component from "@glimmer/component";
 import { cardCopyFor } from "../lib/card-copy";
 
-// Per-category solution cards (BDEV-250, option ii-b). Renders above a category's topic list —
-// one card per tag configured for that category's slug in the `category_cards` theme setting
+// Per-category solution cards (BDEV-250, option ii-b). Above the category nav it renders the
+// category title + description, then one card per tag configured for that category's slug in the
+// `category_cards` theme setting
 // (seeded from askara-community structure/taxonomy.yaml's `category_card_mapping`). It is a theme
 // SETTING, not `allowed_tags`, so it never restricts tagging — it only decides which cards show.
 // Reuses the BDEV-247 `.solution-card` treatment verbatim (brand styling is fixed — never restyle
@@ -30,12 +31,19 @@ function categoryCardMap() {
 }
 
 export default class CategoryCards extends Component {
+  // renderInOutlet has exposed outlet args as `@outletArgs` (current) and as direct args (older)
+  // across Discourse versions — read both so a version shift can't silently blank the intro/cards.
+  // This component is verified live (deploy + eyeball), not in an offline build.
+  get category() {
+    return this.args.outletArgs?.category ?? this.args.category ?? null;
+  }
+
+  get tag() {
+    return this.args.outletArgs?.tag ?? this.args.tag ?? null;
+  }
+
   get cards() {
-    // renderInOutlet has exposed outlet args as `@outletArgs` (current) and as direct args
-    // (older) across Discourse versions — read both so a version shift can't silently blank
-    // the cards. This component is verified live (deploy + eyeball), not in an offline build.
-    const outletArgs = this.args.outletArgs;
-    const category = outletArgs?.category ?? this.args.category;
+    const category = this.category;
     if (!category?.slug) {
       return [];
     }
@@ -43,7 +51,7 @@ export default class CategoryCards extends Component {
     // This outlet also fires on category-scoped tag routes (`/tags/c/<slug>/<id>/<tag>`) — the very
     // pages these cards link to, with a tag filter active. Don't render the card row there, so a
     // card never points at the page the reader is already on.
-    if (outletArgs?.tag ?? this.args.tag) {
+    if (this.tag) {
       return [];
     }
 
@@ -69,6 +77,12 @@ export default class CategoryCards extends Component {
 
   <template>
     {{#if this.cards.length}}
+      <div class="category-intro">
+        <h2 class="category-intro__title">{{this.category.name}}</h2>
+        {{#if this.category.description_text}}
+          <p class="category-intro__description">{{this.category.description_text}}</p>
+        {{/if}}
+      </div>
       <section class="solution-cards">
         {{#each this.cards as |card|}}
           <a class="solution-card" href={{card.href}}>
