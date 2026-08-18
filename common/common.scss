@@ -367,6 +367,24 @@ body.signup-page .d-header {
   margin: 0;
 }
 
+/* ---- Category intro: title + description rendered above the per-category cards (BDEV-250), in
+   the discovery-list-controls-above outlet, so a category page reads
+   title -> description -> cards -> nav -> topic list. Brand tokens only (navy title, navy/70
+   body) — no invented values. ---- */
+.category-intro {
+  margin: 0 0 20px;
+}
+.category-intro__title {
+  color: $navy;
+  font-weight: 700;
+  margin: 0 0 6px;
+}
+.category-intro__description {
+  color: $card-body;
+  max-width: 70ch;
+  margin: 0;
+}
+
 /* ---- Curated homepage: the meta-style landing view rendered in the custom-homepage outlet
    (BDEV-236). Reuses the brand tokens + card treatment above so it reads as one system across
    Light / Dark / Parchment; no invented colours, no phosphor (the hero CTA reuses .btn-primary,
