@@ -50,8 +50,9 @@ homepage_show_category_browse:
 # cards -> topics. A theme SETTING, not `allowed_tags`, so it never restricts tagging — it only
 # decides which cards appear. Seeded from askara-community structure/taxonomy.yaml's
 # `category_card_mapping`; a slug that is absent or maps to [] shows no cards. Card copy
-# (title/subtitle) lives in components/category-cards.gjs, keyed by tag, with a prettified-tag
-# fallback. JSON string; an unparseable value fails soft to no cards.
+# (title/subtitle) lives in javascripts/discourse/lib/card-copy.js (shared with the homepage
+# cards), keyed by tag, with a prettified-tag fallback. JSON string; an unparseable or non-list
+# value fails soft to no cards.
 category_cards:
   type: string
   default: '{"start-here":["tutorial","how-to","reference","explanation"],"questions":["nis2","iso27001","ai-agents"],"feedback-and-ideas":["bug","feature-request","enhancement"],"general":[]}'

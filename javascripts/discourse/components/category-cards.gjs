@@ -1,5 +1,5 @@
 import Component from "@glimmer/component";
-import { CARD_COPY } from "../lib/card-copy";
+import { cardCopyFor } from "../lib/card-copy";
 
 // Per-category solution cards (BDEV-250, option ii-b). Renders above a category's topic list —
 // one card per tag configured for that category's slug in the `category_cards` theme setting
@@ -11,11 +11,22 @@ import { CARD_COPY } from "../lib/card-copy";
 // curated homepage keeps its own direct <SolutionCards /> embed; this component only occupies the
 // shared discovery-list outlet, where it must be category-aware.
 
-function prettify(tag) {
-  return tag
-    .split("-")
-    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-    .join(" ");
+// The theme setting is static per page load, so parse it once per distinct raw value rather than on
+// every getter evaluation. This is also the single place the fail-soft JSON handling lives: an
+// invalid or hand-broken setting yields an empty map, never an exception.
+let cachedRaw;
+let cachedMap;
+function categoryCardMap() {
+  const raw = settings.category_cards;
+  if (raw !== cachedRaw) {
+    cachedRaw = raw;
+    try {
+      cachedMap = JSON.parse(raw);
+    } catch {
+      cachedMap = {};
+    }
+  }
+  return cachedMap;
 }
 
 export default class CategoryCards extends Component {
@@ -28,18 +39,11 @@ export default class CategoryCards extends Component {
       return [];
     }
 
-    let map;
-    try {
-      map = JSON.parse(settings.category_cards);
-    } catch {
-      // A hand-edited setting can be invalid JSON — fail soft to no cards rather than error.
-      return [];
-    }
-
-    // Keep only usable tag names: a structurally valid setting can still carry non-strings or
-    // empties (e.g. {"general":[1,null]}), which would throw in prettify/href and blank the route
-    // instead of failing soft. Filter them out to honour the fail-soft contract above.
-    const tags = (map?.[category.slug] ?? []).filter(
+    // Only treat an actual list of non-empty tag strings as cards. A plain value (a single tag
+    // written without brackets), non-strings, or empties would otherwise throw and blank the whole
+    // category page instead of failing soft to no cards.
+    const configured = categoryCardMap()?.[category.slug];
+    const tags = (Array.isArray(configured) ? configured : []).filter(
       (tag) => typeof tag === "string" && tag.length > 0
     );
     if (tags.length === 0) {
@@ -48,10 +52,10 @@ export default class CategoryCards extends Component {
 
     return tags.map((tag) => ({
       tag,
-      // Scope the link to this category (`/tags/c/<slug>/<id>/<tag>`) so a card keeps the reader
-      // in context rather than jumping to the site-wide tag list.
-      href: `/tags/c/${category.slug}/${category.id}/${tag}`,
-      ...(CARD_COPY[tag] ?? { title: prettify(tag), subtitle: null }),
+      // Scope the link to this category (`/tags/c/<slug>/<id>/<tag>`) so a card keeps the reader in
+      // context; encode the operator-controlled tag segment so an odd tag name can't break the URL.
+      href: `/tags/c/${category.slug}/${category.id}/${encodeURIComponent(tag)}`,
+      ...cardCopyFor(tag),
     }));
   }
 
