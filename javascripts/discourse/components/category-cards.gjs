@@ -1,27 +1,15 @@
 import Component from "@glimmer/component";
+import { CARD_COPY } from "../lib/card-copy";
 
 // Per-category solution cards (BDEV-250, option ii-b). Renders above a category's topic list —
 // one card per tag configured for that category's slug in the `category_cards` theme setting
 // (seeded from askara-community structure/taxonomy.yaml's `category_card_mapping`). It is a theme
 // SETTING, not `allowed_tags`, so it never restricts tagging — it only decides which cards show.
 // Reuses the BDEV-247 `.solution-card` treatment verbatim (brand styling is fixed — never restyle
-// here). No category, no mapping, an empty list, or an unparseable setting => nothing renders. The
-// curated homepage keeps its own direct <SolutionCards /> embed (the Frameworks set); this
-// component only occupies the shared discovery-list outlet, where it must be category-aware.
-
-// Curated copy per tag; unknown tags fall back to a prettified tag name and no subtitle.
-const CARD_COPY = {
-  nis2: { title: "NIS2", subtitle: "Meet NIS2 obligations" },
-  iso27001: { title: "ISO 27001", subtitle: "Certify and maintain ISO 27001" },
-  "ai-agents": { title: "AI Agents", subtitle: "Agentic security and compliance" },
-  tutorial: { title: "Tutorials", subtitle: "Learn the ground, step by step" },
-  "how-to": { title: "How-to guides", subtitle: "Get a specific task done" },
-  reference: { title: "Reference", subtitle: "Look up the details" },
-  explanation: { title: "Explanation", subtitle: "Understand how and why" },
-  bug: { title: "Bugs", subtitle: "Report something broken" },
-  "feature-request": { title: "Feature requests", subtitle: "Ask for something new" },
-  enhancement: { title: "Enhancements", subtitle: "Improve what's already there" },
-};
+// here) and shares its display copy with the homepage Frameworks cards via lib/card-copy.js. No
+// category, no mapping, an empty list, or an unparseable/malformed setting => nothing renders. The
+// curated homepage keeps its own direct <SolutionCards /> embed; this component only occupies the
+// shared discovery-list outlet, where it must be category-aware.
 
 function prettify(tag) {
   return tag
@@ -48,14 +36,21 @@ export default class CategoryCards extends Component {
       return [];
     }
 
-    const tags = map?.[category.slug];
-    if (!Array.isArray(tags) || tags.length === 0) {
+    // Keep only usable tag names: a structurally valid setting can still carry non-strings or
+    // empties (e.g. {"general":[1,null]}), which would throw in prettify/href and blank the route
+    // instead of failing soft. Filter them out to honour the fail-soft contract above.
+    const tags = (map?.[category.slug] ?? []).filter(
+      (tag) => typeof tag === "string" && tag.length > 0
+    );
+    if (tags.length === 0) {
       return [];
     }
 
     return tags.map((tag) => ({
       tag,
-      href: `/tag/${tag}`,
+      // Scope the link to this category (`/tags/c/<slug>/<id>/<tag>`) so a card keeps the reader
+      // in context rather than jumping to the site-wide tag list.
+      href: `/tags/c/${category.slug}/${category.id}/${tag}`,
       ...(CARD_COPY[tag] ?? { title: prettify(tag), subtitle: null }),
     }));
   }
