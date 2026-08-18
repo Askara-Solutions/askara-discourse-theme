@@ -34,8 +34,16 @@ export default class CategoryCards extends Component {
     // renderInOutlet has exposed outlet args as `@outletArgs` (current) and as direct args
     // (older) across Discourse versions — read both so a version shift can't silently blank
     // the cards. This component is verified live (deploy + eyeball), not in an offline build.
-    const category = this.args.outletArgs?.category ?? this.args.category;
+    const outletArgs = this.args.outletArgs;
+    const category = outletArgs?.category ?? this.args.category;
     if (!category?.slug) {
+      return [];
+    }
+
+    // This outlet also fires on category-scoped tag routes (`/tags/c/<slug>/<id>/<tag>`) — the very
+    // pages these cards link to, with a tag filter active. Don't render the card row there, so a
+    // card never points at the page the reader is already on.
+    if (outletArgs?.tag ?? this.args.tag) {
       return [];
     }
 
