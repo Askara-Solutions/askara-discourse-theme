@@ -121,7 +121,7 @@ export default class AskaraHomepage extends Component {
 
       {{#if this.showSolutionCards}}
         <section class="askara-homepage__section">
-          <h2 class="askara-homepage__section-title">Explore by solution</h2>
+          <h2 class="askara-homepage__section-title">Frameworks</h2>
           <SolutionCards />
         </section>
       {{/if}}
