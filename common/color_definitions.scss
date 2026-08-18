@@ -25,8 +25,10 @@
  * ========================================================================== */
 
 // Dark-scheme card surfaces: brass-light warmed into the espresso canvas. The two
-// mix ratios are the "steps" — fill a subtle nudge, border a larger one — mirroring
-// the parchment-1 → -2 → -3 progression. Eyeball-tunable on the live Dark deploy.
+// mix ratios are the "steps" — fill a subtle nudge, border a larger one — echoing (not
+// exactly reproducing) the parchment-1 → -2 → -3 progression: parchment is hand-tuned,
+// this is a uniform mix. Eyeball-tunable on the live Dark deploy — if you change these
+// ratios, update scripts/check-contrast.mjs (darkCardFill / darkCardBody) to match.
 $dark-card-fill: color-mix(in srgb, var(--tertiary) 8%, var(--secondary));
 $dark-card-border: color-mix(in srgb, var(--tertiary) 20%, var(--secondary));
 

@@ -1,8 +1,9 @@
 #!/usr/bin/env node
 // WCAG contrast guard for the committed colour combinations.
 //
-// Every colour below is an existing Askara brand or website (Design System 3.0) token — no
-// invented values. This asserts each foreground/background pair we ship clears its WCAG target:
+// Every colour below is an existing Askara brand or website (Design System 3.0) token, or a
+// value derived from those tokens (the dark-card constants — see their per-line notes), never
+// an ad-hoc colour. This asserts each foreground/background pair we ship clears its WCAG target:
 //   text  >= 4.5:1 (AA normal)
 //   large/UI (headings, big text, borders) >= 3.0:1 (AA large)
 // Fails the build if any committed pair drops below target.
