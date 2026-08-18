@@ -38,6 +38,10 @@ export default class CategoryCards extends Component {
     return this.args.outletArgs?.category ?? this.args.category ?? null;
   }
 
+  get tag() {
+    return this.args.outletArgs?.tag ?? this.args.tag ?? null;
+  }
+
   get cards() {
     const category = this.category;
     if (!category?.slug) {
@@ -47,7 +51,7 @@ export default class CategoryCards extends Component {
     // This outlet also fires on category-scoped tag routes (`/tags/c/<slug>/<id>/<tag>`) — the very
     // pages these cards link to, with a tag filter active. Don't render the card row there, so a
     // card never points at the page the reader is already on.
-    if (this.args.outletArgs?.tag ?? this.args.tag) {
+    if (this.tag) {
       return [];
     }
 
