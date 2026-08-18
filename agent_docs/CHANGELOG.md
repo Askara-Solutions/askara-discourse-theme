@@ -6,6 +6,16 @@ entries — if an entry turns out wrong, add a new one correcting it, don't rewr
 
 Trigger: [CLAUDE.md § Rules](../CLAUDE.md).
 
+## [2026-08-18] docs | Devin now reviews this repo; added a `/code-review` fallback when Devin isn't auto-triggered (BDEV-270)
+
+Corrects the BDEV-248 gate: this repo's CLAUDE.md said **Devin does not review this repo** (public →
+self/human review only). That's now false — Devin was enabled for this repo 2026-08-18 and reviewed
+PRs #26–28. Updated § Rules (Merge gate) + Workflow to say Devin auto-reviews here (at PR open; don't
+bank on a re-review of later pushes). Also added a **`/code-review` fallback**: when Devin isn't
+auto-triggered (out of credits, an un-re-reviewed push, or the connection lapses), run the
+`/code-review` skill — log every finding (ignore the confidence-score cutoff), each as an individual PR
+comment, as Devin does. Mirrors the same change in `askara-community` (BDEV-270).
+
 ## [2026-08-17] docs | Added a pre-merge gate: CI green + Devin review addressed before any merge (BDEV-248)
 
 Mirrors the same rule added to `askara-community` in the same issue. No PR may be merged until CI is
