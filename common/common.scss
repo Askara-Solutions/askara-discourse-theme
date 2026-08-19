@@ -174,6 +174,13 @@ kbd,
   font-size: 0.78em;
 }
 
+/* ---- Button corners: a little more rounded than Discourse's near-square default,
+   harmonising with the 8px container radius used elsewhere in this theme. Applies to
+   every .btn variant site-wide — primary, default, and icon buttons (BDEV-282). ---- */
+.btn {
+  border-radius: 8px;
+}
+
 /* ---- Primary CTA: green fill + navy label + icon, phosphor on hover ---- */
 .btn-primary {
   background: $green;

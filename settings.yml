@@ -9,7 +9,7 @@ homepage_hero_heading:
 
 homepage_hero_subheading:
   type: string
-  default: "Practical security and compliance — NIS2, ISO 27001, and agentic AI — worked through together."
+  default: "Practical cybersecurity and compliance: NIS2, ISO 27001, and agentic AI, worked through together."
 
 homepage_hero_cta_label:
   type: string
