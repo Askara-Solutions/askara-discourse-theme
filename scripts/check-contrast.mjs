@@ -29,6 +29,14 @@ const HEX = {
   // common/color_definitions.scss. INTERIM values; canonical espresso ramp tracked in BRA-35.
   darkCardFill: "#2a271f", // = color-mix(in srgb, brass-light 8%, espresso)
   darkCardBody: "#c0bdb9", // = cream @ .72 alpha composited over darkCardFill (Dark card body copy)
+  // Hero background scrim (BDEV-282). The hero text sits over a brass-warm radial scrim (#554024 =
+  // 50% brass + 50% espresso) at 0.51 centre opacity, laid over the photo. The hero text is
+  // intentionally LARGE (heading 2.75rem, subheading 1.5rem = 24px) so the WCAG bar is 3.0:1. These
+  // two hexes are the ACTUAL composited backgrounds at the brightest patch under the text on the two
+  // toughest scenes — the real floor, measured via dev/hero-preview. Re-derive there if the bundled
+  // hero_bg_img_* images change.
+  heroScrimExhibition: "#968b71", // #554024 @0.51 over the exhibition-hall brightest text patch (worst)
+  heroScrimColonnade: "#927754", // #554024 @0.51 over the colonnade brightest text patch
 };
 
 const srgb = (c) => {
@@ -107,6 +115,19 @@ const COMBOS = [
   ],
   // --- Header (navy bar, all schemes) ---
   [HEX.cream, HEX.navy, 4.5, "header: cream text on navy"],
+  // --- Hero background scrim (BDEV-282): cream (large) text over the brass-warm scrim, 2 worst scenes ---
+  [
+    HEX.cream,
+    HEX.heroScrimExhibition,
+    3.0,
+    "hero-bg: cream large text over brass-warm scrim on the exhibition hall (worst scene)",
+  ],
+  [
+    HEX.cream,
+    HEX.heroScrimColonnade,
+    3.0,
+    "hero-bg: cream large text over brass-warm scrim on the colonnade",
+  ],
 ];
 
 let failed = 0;
