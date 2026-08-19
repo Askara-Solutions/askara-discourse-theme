@@ -14,15 +14,20 @@ import SolutionCards from "./solution-cards";
 // error (or an empty list) they render a "browse" link instead of blanking, so a data hiccup
 // can never leave the homepage empty (an empty outlet would show Discourse's admin-only alert).
 //
-// Per-category icons for the Browse-categories cards, keyed by live Discourse slug (from
-// askara-community structure/taxonomy.yaml). A slug not listed falls back to `folder`. All names
-// here are in Discourse's default SVG sprite except `compass`, which is registered in about.json
-// `modifiers.svg_icons` — keep the two in sync when adding a non-default category icon.
+// Per-category icons for the Browse-categories cards, keyed by live Discourse slug — both the
+// Askara taxonomy categories (from askara-community structure/taxonomy.yaml) and Discourse's stock
+// categories (site-feedback / staff / general). A slug not listed falls back to `folder`. All names
+// here are in Discourse's default SVG sprite except `compass` and `comment-dots`, which are
+// registered in about.json `modifiers.svg_icons` — keep the two in sync when adding a non-default
+// category icon.
 const CATEGORY_ICONS = {
   "start-here": "compass",
   questions: "circle-question",
   "feedback-and-ideas": "comments",
   "client-workspaces": "briefcase",
+  "site-feedback": "comment-dots",
+  staff: "user-shield",
+  general: "hashtag",
 };
 const CATEGORY_FALLBACK_ICON = "folder";
 
