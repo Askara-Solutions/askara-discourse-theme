@@ -1,4 +1,5 @@
 import Component from "@glimmer/component";
+import icon from "discourse/helpers/d-icon";
 import { cardCopyFor } from "../lib/card-copy";
 
 // Frameworks solution cards — tag-sourced entry points into the three founding solution areas.
@@ -22,10 +23,15 @@ export default class SolutionCards extends Component {
     <section class="solution-cards">
       {{#each this.cards as |card|}}
         <a class="solution-card" href={{card.href}}>
-          <h3 class="solution-card__title">{{card.title}}</h3>
-          {{#if card.subtitle}}
-            <p class="solution-card__subtitle">{{card.subtitle}}</p>
-          {{/if}}
+          <span class="solution-card__icon" aria-hidden="true">
+            {{icon card.icon}}
+          </span>
+          <div class="solution-card__text">
+            <h3 class="solution-card__title">{{card.title}}</h3>
+            {{#if card.subtitle}}
+              <p class="solution-card__subtitle">{{card.subtitle}}</p>
+            {{/if}}
+          </div>
         </a>
       {{/each}}
     </section>

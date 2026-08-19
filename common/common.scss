@@ -355,9 +355,29 @@ body.signup-page .d-header {
   gap: 20px;
   margin: 0 0 24px;
 }
+/* Icon column left of the title+description block (BDEV-283). The shared card treatment (fill,
+   border, radius, hover glow) is inherited from the core card style above and left untouched —
+   only the internal layout changes to a flex row. */
 #main-outlet .solution-card {
-  display: block;
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
   text-decoration: none;
+}
+// Decorative icon (aria-hidden in the template — title/subtitle carry the meaning). Brass accent
+// via the scheme-aware --tertiary token; never phosphor (reserved for hover/CTA per brand rules).
+.solution-card__icon {
+  flex: 0 0 auto;
+  display: inline-flex;
+  color: var(--tertiary);
+
+  .d-icon {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+}
+.solution-card__text {
+  min-width: 0; // let a long title wrap rather than overflow the flex row
 }
 .solution-card__title {
   margin: 0 0 6px;
@@ -463,9 +483,10 @@ body.signup-page .d-header {
     margin-bottom: 16px;
   }
   &__category {
+    // Icon column left of the name+count stack (BDEV-283); card treatment unchanged.
     display: flex;
-    flex-direction: column;
-    gap: 6px;
+    align-items: center;
+    gap: 16px;
     background: var(--card-fill);
     border: 1px solid var(--card-border);
     border-radius: 16px;
@@ -479,6 +500,24 @@ body.signup-page .d-header {
       border-color: $card-hover-border;
       box-shadow: $card-hover-glow;
     }
+  }
+  &__category-icon {
+    flex: 0 0 auto;
+    display: inline-flex;
+    color: var(
+      --tertiary
+    ); // brass accent, scheme-aware; never phosphor (hover/CTA only)
+
+    .d-icon {
+      width: 1.35rem;
+      height: 1.35rem;
+    }
+  }
+  &__category-text {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    min-width: 0; // let a long category name wrap rather than overflow the row
   }
   &__category-name {
     color: var(--quaternary); // navy on light/parchment, white on dark
