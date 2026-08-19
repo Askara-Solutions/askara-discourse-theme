@@ -37,14 +37,14 @@
     background:var(--card); box-shadow:var(--shadow);}
   .hero__img{position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center; z-index:0;}
   .hero__scrim{position:absolute; inset:0; z-index:1; pointer-events:none;}
-  .hero.shape-ellipse .hero__scrim{background:radial-gradient(ellipse 74% 66% at 50% 50%,
+  .hero.shape-ellipse .hero__scrim{background:radial-gradient(ellipse 96% 80% at 50% 50%,
     rgba(var(--scrim-rgb),var(--scrim-a)) 0%, rgba(var(--scrim-rgb),var(--scrim-a)) 30%,
     rgba(var(--scrim-rgb),calc(var(--scrim-a)*.5)) 54%, rgba(var(--scrim-rgb),0) 78%);}
   .hero.shape-full .hero__scrim{background:linear-gradient(180deg,
     rgba(var(--scrim-rgb),calc(var(--scrim-a)*.78)), rgba(var(--scrim-rgb),var(--scrim-a)));}
   .hero__content{position:relative; z-index:2;}
-  .hero__heading{color:var(--cream); font-size:2.75rem; line-height:1.15; margin:0 0 12px; text-wrap:balance; text-shadow:0 1px 3px rgba(0,0,0,.38);}
-  .hero__sub{color:var(--cream); font-size:1.15rem; font-weight:400; max-width:640px; margin:0 auto 28px; text-shadow:0 1px 2px rgba(0,0,0,.34);}
+  .hero__heading{color:var(--cream); font-size:2.75rem; line-height:1.15; margin:0 0 12px; text-wrap:balance; text-shadow:0 1px 3px rgba(0,0,0,.6), 0 0 14px rgba(0,0,0,.5);}
+  .hero__sub{color:var(--cream); font-size:1.15rem; font-weight:400; max-width:640px; margin:0 auto 28px; text-shadow:0 1px 2px rgba(0,0,0,.55), 0 0 10px rgba(0,0,0,.45);}
   .hero__cta{display:inline-block; background:var(--green); color:#003049; font-weight:600; text-decoration:none; padding:12px 28px; border-radius:8px; transition:background .15s ease;}
   .hero__cta:hover,.hero__cta:focus-visible{background:var(--phosphor); outline:none;}
   /* CTA variants (BDEV-282 button study) */
@@ -87,13 +87,13 @@
 
 <div class="wrap">
   <p class="eyebrow">BDEV-282 · homepage hero · minimal-scrim studio</p>
-  <h1 class="page-title">The Askara Assembly — dial the minimum scrim</h1>
+  <h1 class="page-title">The Askara Assembly — tune for comfortable readability</h1>
   <p class="page-sub">Contrast is measured from the brightest patch under the text on each of the four
     scenes (the true worst case), and the pass bar drops to 3.0:1 automatically when the subheading
     qualifies as WCAG "large" text. Goal: the least scrim that still passes on all four.</p>
 
   <section class="hero shape-ellipse" id="hero" aria-label="Homepage hero preview"
-    style="--scrim-rgb:85,64,36; --scrim-a:0.51;">
+    style="--scrim-rgb:85,64,36; --scrim-a:0.65;">
     <img class="hero__img" id="heroImg" alt="" crossorigin="anonymous" />
     <div class="hero__scrim"></div>
     <div class="hero__content">
@@ -125,8 +125,8 @@
     <button class="btn scrimcol" data-rgb="0,0,0" type="button" aria-pressed="false"><span class="swatch" style="background:#000"></span>Black</button>
     <span class="spacer"></span>
     <span class="label">Opacity</span>
-    <input type="range" id="opacity" min="0" max="0.9" step="0.01" value="0.51" />
-    <span class="val" id="opacityVal">0.51</span>
+    <input type="range" id="opacity" min="0" max="0.9" step="0.01" value="0.65" />
+    <span class="val" id="opacityVal">0.65</span>
   </div>
 
   <div class="bar">
@@ -205,7 +205,7 @@
     if(ir>cr){sh=image.naturalHeight; sw=sh*cr; sx=(image.naturalWidth-sw)/2; sy=0;}
     else{sw=image.naturalWidth; sh=sw/cr; sx=0; sy=(image.naturalHeight-sh)/2;}
     ctx.drawImage(image,sx,sy,sw,sh,0,0,cw,ch);
-    const bx0=Math.floor(cw*.18),bx1=Math.floor(cw*.82),by0=Math.floor(ch*.27),by1=Math.floor(ch*.73);
+    const bx0=Math.floor(cw*.08),bx1=Math.floor(cw*.92),by0=Math.floor(ch*.28),by1=Math.floor(ch*.72);
     const bw=Math.floor((bx1-bx0)/cols), bh=Math.floor((by1-by0)/rows);
     let best=null, bestL=-1;
     for(let cy=0;cy<rows;cy++) for(let cx=0;cx<cols;cx++){
