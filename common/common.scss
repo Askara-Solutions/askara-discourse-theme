@@ -357,10 +357,11 @@ body.signup-page .d-header {
 }
 /* Icon column left of the title+description block (BDEV-283). The shared card treatment (fill,
    border, radius, hover glow) is inherited from the core card style above and left untouched —
-   only the internal layout changes to a flex row. */
+   only the internal layout changes to a flex row. Icon is centre-aligned to the text block
+   (BDEV-288), matching the Browse-categories cards below. */
 #main-outlet .solution-card {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   gap: 16px;
   text-decoration: none;
 }
