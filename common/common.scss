@@ -503,9 +503,26 @@ body.signup-page .d-header {
     margin: 0 auto 28px;
   }
   &__hero-cta {
-    // .btn-primary carries the green fill + navy label + phosphor hover already.
     font-size: 1rem;
     padding: 12px 28px;
+  }
+
+  // Hero CTA colour treatment (BDEV-289). Brand-approved phosphor CTA (per Simon), scoped to the
+  // hero only — NOT site-wide. Rest = phosphor fill + navy label (~12:1); hover/focus = Compliance
+  // Green so the button still reacts (~5.6:1). Both pairs are already asserted in check-contrast.mjs.
+  // The .btn.btn-primary chain lifts specificity above Discourse core, which otherwise paints this
+  // anchor button's label white at rest (~2.66:1) — the washed-out look this fixes.
+  &__hero-cta.btn.btn-primary {
+    background: $phosphor;
+    border-color: $phosphor;
+    color: $navy;
+  }
+  &__hero-cta.btn.btn-primary:hover,
+  &__hero-cta.btn.btn-primary:focus,
+  &__hero-cta.btn.btn-primary:active {
+    background: $green;
+    border-color: $green;
+    color: $navy;
   }
 
   &__section {

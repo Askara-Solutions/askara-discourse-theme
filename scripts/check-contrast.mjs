@@ -92,9 +92,19 @@ const COMBOS = [
   [HEX.slate, HEX.parchment2, 4.5, "parchment: meta (slate/parchment-2)"],
   // --- Cards (glossary style: parchment-3 fill) ---
   [HEX.navy, HEX.parchment3, 4.5, "card: navy heading on parchment-3"],
-  // --- CTA button ---
-  [HEX.navy, HEX.green, 4.5, "cta: navy text on green fill"],
-  [HEX.navy, HEX.phosphor, 4.5, "cta-hover: navy text on phosphor fill"],
+  // --- CTA button (navy label on both brand greens; rest/hover swap for the hero CTA — BDEV-289) ---
+  [
+    HEX.navy,
+    HEX.green,
+    4.5,
+    "cta: navy text on green fill (primary rest / hero hover)",
+  ],
+  [
+    HEX.navy,
+    HEX.phosphor,
+    4.5,
+    "cta: navy text on phosphor fill (primary hover / hero rest)",
+  ],
   // --- Askara Dark (bg espresso) ---
   [HEX.cream, HEX.espresso, 4.5, "dark: body (cream/espresso)"],
   [HEX.brassLight, HEX.espresso, 4.5, "dark: link (brass-light/espresso)"],

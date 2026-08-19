@@ -47,6 +47,10 @@
   .hero__sub{color:var(--cream); font-size:1.15rem; font-weight:400; max-width:640px; margin:0 auto 28px; text-shadow:0 1px 2px rgba(0,0,0,.34);}
   .hero__cta{display:inline-block; background:var(--green); color:#003049; font-weight:600; text-decoration:none; padding:12px 28px; border-radius:8px; transition:background .15s ease;}
   .hero__cta:hover,.hero__cta:focus-visible{background:var(--phosphor); outline:none;}
+  /* CTA variants (BDEV-282 button study) */
+  .hero__cta.v-white{color:#fff;}                       /* current LIVE render (bug): white on green */
+  .hero__cta.v-glow{box-shadow:0 0 0 1px rgba(141,255,53,.55), 0 6px 22px rgba(141,255,53,.5);}
+  .hero__cta.v-phosphor{background:#8dff35;}            /* phosphor fill, navy label */
 
   .bar{display:flex; flex-wrap:wrap; align-items:center; gap:9px; margin-top:14px;}
   .label{font-family:ui-monospace,Menlo,monospace; text-transform:uppercase; letter-spacing:.08em; font-size:.64rem; color:var(--brass); margin-right:2px;}
@@ -96,7 +100,7 @@
       <h1 class="hero__heading">Welcome to The Askara Assembly</h1>
       <p class="hero__sub" id="heroSub" style="font-size:1.5rem; font-weight:500;">Practical
         cybersecurity and compliance: NIS2, ISO 27001, and agentic AI, worked through together.</p>
-      <a class="hero__cta" href="#" onclick="return false">Browse categories</a>
+      <a class="hero__cta v-phosphor" href="#" onclick="return false">Browse categories</a>
     </div>
   </section>
 
@@ -137,6 +141,16 @@
     <button class="btn subwt" data-wt="500" type="button" aria-pressed="true">500</button>
     <button class="btn subwt" data-wt="600" type="button" aria-pressed="false">600</button>
     <button class="btn subwt" data-wt="700" type="button" aria-pressed="false">700</button>
+  </div>
+
+  <div class="bar">
+    <span class="label">CTA</span>
+    <button class="btn ctavar" data-v="v-white" type="button" aria-pressed="false">White label (live bug)</button>
+    <button class="btn ctavar" data-v="" type="button" aria-pressed="false">Navy label</button>
+    <button class="btn ctavar" data-v="v-glow" type="button" aria-pressed="false">Navy + phosphor glow</button>
+    <button class="btn ctavar" data-v="v-phosphor" type="button" aria-pressed="true">Phosphor fill</button>
+    <span class="spacer"></span>
+    <span class="tag" id="ctaContrast">label –</span>
   </div>
 
   <div class="readout" aria-live="polite">
@@ -262,6 +276,19 @@
 
   const opacity=$("opacity");
   opacity.addEventListener("input",()=>{ hero.style.setProperty("--scrim-a",opacity.value); $("opacityVal").textContent=parseFloat(opacity.value).toFixed(2); paint(); });
+
+  // CTA study: label contrast is fill-vs-label (button is opaque), independent of the image.
+  const heroCta=document.querySelector(".hero__cta");
+  const hexRgb=(h)=>{const n=parseInt(h.slice(1),16);return [(n>>16)&255,(n>>8)&255,n&255];};
+  const CTA_LABEL={ "":["#003049","#3db54a","navy on green"], "v-glow":["#003049","#3db54a","navy on green"],
+    "v-white":["#ffffff","#3db54a","white on green"], "v-phosphor":["#003049","#8dff35","navy on phosphor"] };
+  function setCta(v){
+    heroCta.className="hero__cta"+(v?" "+v:"");
+    const [fg,bg,name]=CTA_LABEL[v]; const c=contrast(hexRgb(fg),hexRgb(bg)); const ok=c>=4.5;
+    $("ctaContrast").textContent=`label: ${name} ${c.toFixed(2)}:1 ${ok?"AA":"FAIL"}`;
+  }
+  document.querySelectorAll(".ctavar").forEach(b=>b.addEventListener("click",()=>{ pressGroup(".ctavar",b); setCta(b.dataset.v); }));
+  setCta("v-phosphor");
 
   $("minBtn").addEventListener("click",()=>{ const s=scrimRGB(), shapeK=hero.classList.contains("shape-full")?0.88:1, { thr }=subThreshold();
     let best=null;
