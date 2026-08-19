@@ -49,6 +49,15 @@
     }
   },
   "modifiers": {
-    "custom_homepage": true
+    "custom_homepage": true,
+    "svg_icons": [
+      "graduation-cap",
+      "book-open",
+      "lightbulb",
+      "bug",
+      "wand-magic-sparkles",
+      "arrow-up-right-dots",
+      "compass"
+    ]
   }
 }

@@ -13,6 +13,19 @@ import SolutionCards from "./solution-cards";
 // without a code change. The two topic-list sections fetch via the store and fail soft: on any
 // error (or an empty list) they render a "browse" link instead of blanking, so a data hiccup
 // can never leave the homepage empty (an empty outlet would show Discourse's admin-only alert).
+//
+// Per-category icons for the Browse-categories cards, keyed by live Discourse slug (from
+// askara-community structure/taxonomy.yaml). A slug not listed falls back to `folder`. All names
+// here are in Discourse's default SVG sprite except `compass`, which is registered in about.json
+// `modifiers.svg_icons` — keep the two in sync when adding a non-default category icon.
+const CATEGORY_ICONS = {
+  "start-here": "compass",
+  questions: "circle-question",
+  "feedback-and-ideas": "comments",
+  "client-workspaces": "briefcase",
+};
+const CATEGORY_FALLBACK_ICON = "folder";
+
 export default class AskaraHomepage extends Component {
   @service store;
   @service site;
@@ -69,7 +82,11 @@ export default class AskaraHomepage extends Component {
   get browseCategories() {
     return (this.site.categories || [])
       .filter((c) => !c.parent_category_id && !c.isUncategorizedCategory)
-      .slice(0, 6);
+      .slice(0, 6)
+      .map((category) => ({
+        category,
+        icon: CATEGORY_ICONS[category.slug] ?? CATEGORY_FALLBACK_ICON,
+      }));
   }
 
   async loadRecent() {
@@ -173,15 +190,26 @@ export default class AskaraHomepage extends Component {
         <section class="askara-homepage__section">
           <h2 class="askara-homepage__section-title">Browse categories</h2>
           <div class="askara-homepage__categories">
-            {{#each this.browseCategories as |category|}}
-              <a class="askara-homepage__category" href={{category.url}}>
+            {{#each this.browseCategories as |entry|}}
+              <a
+                class="askara-homepage__category"
+                href={{entry.category.url}}
+              >
                 <span
-                  class="askara-homepage__category-name"
-                >{{category.name}}</span>
-                <span class="askara-homepage__category-count">
-                  {{category.topic_count}}
-                  topics
+                  class="askara-homepage__category-icon"
+                  aria-hidden="true"
+                >
+                  {{icon entry.icon}}
                 </span>
+                <div class="askara-homepage__category-text">
+                  <span
+                    class="askara-homepage__category-name"
+                  >{{entry.category.name}}</span>
+                  <span class="askara-homepage__category-count">
+                    {{entry.category.topic_count}}
+                    topics
+                  </span>
+                </div>
               </a>
             {{/each}}
           </div>
