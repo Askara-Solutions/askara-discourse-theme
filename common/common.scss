@@ -16,6 +16,7 @@
 $phosphor: #8dff35; // CTA hover only
 $green: #3db54a; // CTA fill
 $navy: #003049;
+$cream: #faf8f5; // brand cream — light text over a dark backdrop (e.g. hero image scrim)
 
 // Brass-token tints (scheme-aware: --tertiary is brass on light, brass-light on dark).
 $brass-outline: color-mix(in srgb, var(--tertiary) 45%, var(--secondary));
@@ -403,12 +404,61 @@ body.signup-page .d-header {
   padding: 32px 20px 64px;
 
   &__hero {
-    background: $warm-hover; // faint warm tint of the page canvas (scheme-aware)
+    position: relative;
+    overflow: hidden; // clip the background image + scrim to the 16px radius
+    background: $warm-hover; // faint warm tint (scheme-aware) — the fallback when no image is set
     border: 1px solid $warm-hairline;
     border-radius: 16px;
     padding: 48px 40px;
     text-align: center;
     margin-bottom: 48px;
+  }
+
+  // Cycling hero background (BDEV-282): a real <img>, not a CSS background, so it carries alt/title
+  // for SEO + screen readers and can be prioritised as the LCP element. object-fit: cover mimics
+  // background-size: cover; it sits at the back, beneath the scrim and the hero content.
+  &__hero-bg-img {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  // When an image is present, a navy scrim over the photo holds the (now light) hero text at WCAG
+  // AA in every scheme, and the content lifts above it. Worst-case legibility — light text over the
+  // scrim's lightest point on a bright image — is asserted in scripts/check-contrast.mjs.
+  &__hero--has-bg {
+    border-color: transparent;
+
+    &::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      background: linear-gradient(
+        180deg,
+        rgba(0, 48, 73, 0.62),
+        rgba(0, 48, 73, 0.82)
+      );
+    }
+
+    .askara-homepage__hero-heading,
+    .askara-homepage__hero-subheading,
+    .askara-homepage__hero-cta {
+      position: relative;
+      z-index: 2;
+    }
+    .askara-homepage__hero-heading {
+      color: $cream;
+      text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+    }
+    .askara-homepage__hero-subheading {
+      color: rgba(250, 248, 245, 0.94); // brand cream, slightly softened
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
+    }
   }
   &__hero-heading {
     color: var(--quaternary); // navy on light/parchment, white on dark

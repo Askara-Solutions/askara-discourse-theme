@@ -5,6 +5,29 @@ import icon from "discourse/helpers/d-icon";
 import List from "discourse/components/topic-list/list";
 import SolutionCards from "./solution-cards";
 
+// Alt/title copy for the bundled hero background images, keyed by their about.json asset key
+// (assets/hero/hero_bg_img_*.webp). Meaningful alt text (not empty) because these are brand/content
+// imagery, not purely decorative — so they carry real descriptions for SEO + screen readers. An
+// unmapped image falls back to empty alt (decorative) rather than a guessed description (BDEV-282).
+const HERO_IMAGE_META = {
+  hero_bg_img_1_assembly: {
+    alt: "The Askara Assembly gathered in a retro-futurist amphitheatre around a glowing atomic model.",
+    title: "The Askara Assembly",
+  },
+  hero_bg_img_2_exhibition_hall: {
+    alt: "Community members comparing notes in a vaulted glass hall of vintage green-screen computers.",
+    title: "The Exhibition Hall",
+  },
+  hero_bg_img_3_reflecting_pool: {
+    alt: "A neoclassical courtyard at dusk with a reflecting pool, a monorail, and green neon light.",
+    title: "The Reflecting Pool at dusk",
+  },
+  hero_bg_img_4_colonnade: {
+    alt: "Community members walking and gathering in a sunlit colonnade of silver-and-gold columns.",
+    title: "The Colonnade",
+  },
+};
+
 // Curated, meta-style landing view for community.askara.solutions (BDEV-236). Rendered into
 // the core `custom-homepage` wrapper outlet, which the `custom_homepage` theme modifier
 // (about.json) activates in place of the raw /latest list. /latest stays reachable directly.
@@ -24,6 +47,7 @@ export default class AskaraHomepage extends Component {
 
   constructor() {
     super(...arguments);
+    this.heroImage = this.pickHeroImage();
     if (this.showRecentActivity) {
       this.loadRecent();
     }
@@ -44,6 +68,41 @@ export default class AskaraHomepage extends Component {
   }
   get heroCtaUrl() {
     return settings.homepage_hero_cta_url;
+  }
+
+  // Bundled hero background images (about.json `assets`, keys hero_bg_img_*) paired with their
+  // alt/title copy, sorted by key so the numbered files cycle in order. Empty when none are
+  // bundled → the hero keeps its flat warm tint.
+  get heroImages() {
+    const uploads = settings.theme_uploads || {};
+    return Object.keys(uploads)
+      .filter((key) => key.startsWith("hero_bg_img_"))
+      .sort()
+      .map((key) => ({
+        url: uploads[key],
+        alt: HERO_IMAGE_META[key]?.alt ?? "",
+        title: HERO_IMAGE_META[key]?.title ?? null,
+      }));
+  }
+
+  // Sequential rotation: show the image one step past the last one shown (index persisted in
+  // localStorage), so each page load cycles to a DIFFERENT image, in order. Falls back to the first
+  // image when storage is unavailable (private mode, etc.).
+  pickHeroImage() {
+    const images = this.heroImages;
+    if (!images.length) {
+      return null;
+    }
+    let index = 0;
+    try {
+      const key = "askara_hero_bg_index";
+      const previous = parseInt(window.localStorage.getItem(key), 10);
+      index = Number.isNaN(previous) ? 0 : (previous + 1) % images.length;
+      window.localStorage.setItem(key, String(index));
+    } catch {
+      index = 0;
+    }
+    return images[index];
   }
   get showSolutionCards() {
     return settings.homepage_show_solution_cards;
@@ -108,7 +167,23 @@ export default class AskaraHomepage extends Component {
 
   <template>
     <div class="askara-homepage">
-      <section class="askara-homepage__hero">
+      <section
+        class="askara-homepage__hero{{if
+            this.heroImage
+            ' askara-homepage__hero--has-bg'
+          }}"
+      >
+        {{#if this.heroImage}}
+          <img
+            class="askara-homepage__hero-bg-img"
+            src={{this.heroImage.url}}
+            alt={{this.heroImage.alt}}
+            title={{this.heroImage.title}}
+            loading="eager"
+            decoding="async"
+            fetchpriority="high"
+          />
+        {{/if}}
         <h1 class="askara-homepage__hero-heading">{{this.heroHeading}}</h1>
         <p class="askara-homepage__hero-subheading">{{this.heroSubheading}}</p>
         {{#if this.heroCtaLabel}}

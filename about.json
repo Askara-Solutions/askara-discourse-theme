@@ -11,7 +11,11 @@
     "pjs": "assets/plus-jakarta-sans.woff2",
     "pjs_italic": "assets/plus-jakarta-sans-italic.woff2",
     "plex_mono_regular": "assets/ibm-plex-mono-regular.woff2",
-    "plex_mono_medium": "assets/ibm-plex-mono-medium.woff2"
+    "plex_mono_medium": "assets/ibm-plex-mono-medium.woff2",
+    "hero_bg_img_1_assembly": "assets/hero/hero_bg_img_1_assembly.webp",
+    "hero_bg_img_2_exhibition_hall": "assets/hero/hero_bg_img_2_exhibition_hall.webp",
+    "hero_bg_img_3_reflecting_pool": "assets/hero/hero_bg_img_3_reflecting_pool.webp",
+    "hero_bg_img_4_colonnade": "assets/hero/hero_bg_img_4_colonnade.webp"
   },
   "color_schemes": {
     "Askara Light": {
