@@ -1,0 +1,275 @@
+<title>Askara hero preview — BDEV-282</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<style>
+  @font-face {
+    font-family: "Plus Jakarta Sans";
+    src: url("__PJS__") format("woff2");
+    font-weight: 300 800; font-style: normal; font-display: swap;
+  }
+  :root {
+    --canvas:#fdf7ed; --ink:#1a1814; --heading:#003049; --brass:#906835; --brass-hairline:#e7d9bf;
+    --card:#f7efe0; --green:#3db54a; --phosphor:#8dff35; --cream:#faf8f5; --panel:#fbf5ea;
+    --ok:#267632; --bad:#b23b3b; --shadow:0 1px 2px rgba(26,24,20,.06),0 8px 30px rgba(26,24,20,.06);
+  }
+  @media (prefers-color-scheme: dark){:root{
+    --canvas:#1a1814; --ink:#d9d5cf; --heading:#fff; --brass:#e8d0a0; --brass-hairline:#3a342a;
+    --card:#242019; --green:#3db54a; --phosphor:#8dff35; --cream:#faf8f5; --panel:#221e17;
+    --ok:#6bbf59; --bad:#e77; --shadow:0 1px 2px rgba(0,0,0,.4),0 10px 34px rgba(0,0,0,.4);}}
+  :root[data-theme="dark"]{
+    --canvas:#1a1814; --ink:#d9d5cf; --heading:#fff; --brass:#e8d0a0; --brass-hairline:#3a342a;
+    --card:#242019; --green:#3db54a; --phosphor:#8dff35; --cream:#faf8f5; --panel:#221e17;
+    --ok:#6bbf59; --bad:#e77; --shadow:0 1px 2px rgba(0,0,0,.4),0 10px 34px rgba(0,0,0,.4);}
+  :root[data-theme="light"]{
+    --canvas:#fdf7ed; --ink:#1a1814; --heading:#003049; --brass:#906835; --brass-hairline:#e7d9bf;
+    --card:#f7efe0; --green:#3db54a; --phosphor:#8dff35; --cream:#faf8f5; --panel:#fbf5ea;
+    --ok:#267632; --bad:#b23b3b; --shadow:0 1px 2px rgba(26,24,20,.06),0 8px 30px rgba(26,24,20,.06);}
+
+  *{box-sizing:border-box;}
+  body{margin:0; background:var(--canvas); color:var(--ink);
+    font-family:"Plus Jakarta Sans",system-ui,-apple-system,"Segoe UI",sans-serif; line-height:1.5; -webkit-font-smoothing:antialiased;}
+  .wrap{max-width:1100px; margin:0 auto; padding:40px 20px 72px;}
+  .eyebrow{font-family:ui-monospace,Menlo,monospace; text-transform:uppercase; letter-spacing:.12em; font-size:.72rem; color:var(--brass); margin:0 0 8px;}
+  .page-title{font-size:1.35rem; font-weight:700; color:var(--heading); margin:0 0 4px; text-wrap:balance;}
+  .page-sub{margin:0 0 24px; color:var(--ink); opacity:.82; max-width:64ch;}
+
+  .hero{position:relative; overflow:hidden; border-radius:16px; padding:56px 40px; min-height:300px;
+    display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center;
+    background:var(--card); box-shadow:var(--shadow);}
+  .hero__img{position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center; z-index:0;}
+  .hero__scrim{position:absolute; inset:0; z-index:1; pointer-events:none;}
+  .hero.shape-ellipse .hero__scrim{background:radial-gradient(ellipse 74% 66% at 50% 50%,
+    rgba(var(--scrim-rgb),var(--scrim-a)) 0%, rgba(var(--scrim-rgb),var(--scrim-a)) 30%,
+    rgba(var(--scrim-rgb),calc(var(--scrim-a)*.5)) 54%, rgba(var(--scrim-rgb),0) 78%);}
+  .hero.shape-full .hero__scrim{background:linear-gradient(180deg,
+    rgba(var(--scrim-rgb),calc(var(--scrim-a)*.78)), rgba(var(--scrim-rgb),var(--scrim-a)));}
+  .hero__content{position:relative; z-index:2;}
+  .hero__heading{color:var(--cream); font-size:2.75rem; line-height:1.15; margin:0 0 12px; text-wrap:balance; text-shadow:0 1px 3px rgba(0,0,0,.38);}
+  .hero__sub{color:var(--cream); font-size:1.15rem; font-weight:400; max-width:640px; margin:0 auto 28px; text-shadow:0 1px 2px rgba(0,0,0,.34);}
+  .hero__cta{display:inline-block; background:var(--green); color:#003049; font-weight:600; text-decoration:none; padding:12px 28px; border-radius:8px; transition:background .15s ease;}
+  .hero__cta:hover,.hero__cta:focus-visible{background:var(--phosphor); outline:none;}
+
+  .bar{display:flex; flex-wrap:wrap; align-items:center; gap:9px; margin-top:14px;}
+  .label{font-family:ui-monospace,Menlo,monospace; text-transform:uppercase; letter-spacing:.08em; font-size:.64rem; color:var(--brass); margin-right:2px;}
+  .btn{font:inherit; font-size:.85rem; font-weight:600; color:var(--heading); background:transparent;
+    border:1px solid color-mix(in srgb,var(--brass) 55%,transparent); border-radius:8px; padding:6px 12px; cursor:pointer; transition:background .15s ease,border-color .15s ease;}
+  .btn:hover{background:color-mix(in srgb,var(--brass) 12%,transparent);}
+  .btn:focus-visible{outline:none; box-shadow:0 0 0 2px var(--canvas),0 0 0 4px var(--green);}
+  .btn[aria-pressed="true"]{background:color-mix(in srgb,var(--brass) 20%,transparent); border-color:var(--brass);}
+  .swatch{width:12px; height:12px; border-radius:50%; display:inline-block; margin-right:6px; vertical-align:-1px; border:1px solid rgba(0,0,0,.15);}
+  .dots{display:flex; gap:8px;}
+  .dot{width:9px; height:9px; border-radius:50%; border:none; padding:0; cursor:pointer; background:color-mix(in srgb,var(--brass) 35%,transparent);}
+  .dot[aria-current="true"]{background:var(--green);}
+  .spacer{flex:1 1 auto; min-width:8px;}
+  input[type="range"]{accent-color:var(--green); width:150px;}
+  .val{font-family:ui-monospace,Menlo,monospace; font-size:.82rem; min-width:3ch; font-variant-numeric:tabular-nums;}
+
+  .readout{margin-top:16px; background:var(--panel); border:1px solid var(--brass-hairline); border-radius:12px; padding:14px 18px; display:flex; flex-wrap:wrap; gap:10px 22px; align-items:center;}
+  .metric{display:flex; align-items:baseline; gap:8px;}
+  .metric .k{font-family:ui-monospace,Menlo,monospace; text-transform:uppercase; letter-spacing:.07em; font-size:.64rem; color:var(--brass);}
+  .metric .v{font-family:ui-monospace,Menlo,monospace; font-size:1rem; font-weight:600; font-variant-numeric:tabular-nums;}
+  .pill{font-size:.7rem; font-weight:700; padding:2px 8px; border-radius:999px;}
+  .pill.pass{color:var(--ok); background:color-mix(in srgb,var(--ok) 16%,transparent);}
+  .pill.fail{color:var(--bad); background:color-mix(in srgb,var(--bad) 16%,transparent);}
+  .tag{font-family:ui-monospace,Menlo,monospace; font-size:.72rem; padding:2px 8px; border-radius:6px; background:color-mix(in srgb,var(--brass) 14%,transparent); color:var(--ink);}
+
+  .panel{margin-top:16px; background:var(--panel); border:1px solid var(--brass-hairline); border-radius:12px; padding:16px 20px;}
+  .kv{display:grid; grid-template-columns:92px 1fr; gap:6px 16px; align-items:baseline; margin:0;}
+  .kv dt{font-family:ui-monospace,Menlo,monospace; text-transform:uppercase; letter-spacing:.08em; font-size:.64rem; color:var(--brass); padding-top:2px;}
+  .kv dd{margin:0; color:var(--ink);} .kv dd.file{font-family:ui-monospace,Menlo,monospace; font-size:.84rem;}
+  .note{margin-top:18px; font-size:.83rem; opacity:.72; max-width:72ch;}
+  code{font-family:ui-monospace,Menlo,monospace; font-size:.85em; background:color-mix(in srgb,var(--brass) 14%,transparent); padding:1px 6px; border-radius:5px;}
+  @media (prefers-reduced-motion: reduce){.hero__cta,.btn{transition:none;}}
+</style>
+
+<div class="wrap">
+  <p class="eyebrow">BDEV-282 · homepage hero · minimal-scrim studio</p>
+  <h1 class="page-title">The Askara Assembly — dial the minimum scrim</h1>
+  <p class="page-sub">Contrast is measured from the brightest patch under the text on each of the four
+    scenes (the true worst case), and the pass bar drops to 3.0:1 automatically when the subheading
+    qualifies as WCAG "large" text. Goal: the least scrim that still passes on all four.</p>
+
+  <section class="hero shape-ellipse" id="hero" aria-label="Homepage hero preview"
+    style="--scrim-rgb:85,64,36; --scrim-a:0.51;">
+    <img class="hero__img" id="heroImg" alt="" crossorigin="anonymous" />
+    <div class="hero__scrim"></div>
+    <div class="hero__content">
+      <h1 class="hero__heading">Welcome to The Askara Assembly</h1>
+      <p class="hero__sub" id="heroSub" style="font-size:1.5rem; font-weight:500;">Practical
+        cybersecurity and compliance: NIS2, ISO 27001, and agentic AI, worked through together.</p>
+      <a class="hero__cta" href="#" onclick="return false">Browse categories</a>
+    </div>
+  </section>
+
+  <div class="bar">
+    <span class="label">Scene</span>
+    <button class="btn" id="prev" type="button">←</button>
+    <div class="dots" id="dots" role="tablist" aria-label="Choose scene"></div>
+    <button class="btn" id="next" type="button">→</button>
+    <button class="btn" id="auto" type="button" aria-pressed="false">▶ Auto</button>
+    <span class="spacer"></span>
+    <span class="label">Shape</span>
+    <button class="btn" id="ellipse" type="button" aria-pressed="true">Ellipse</button>
+    <button class="btn" id="full" type="button" aria-pressed="false">Full</button>
+  </div>
+
+  <div class="bar">
+    <span class="label">Colour</span>
+    <button class="btn scrimcol" data-rgb="26,24,20" type="button" aria-pressed="false"><span class="swatch" style="background:#1a1814"></span>Espresso</button>
+    <button class="btn scrimcol" data-rgb="85,64,36" type="button" aria-pressed="true"><span class="swatch" style="background:#554024"></span>Brass·warm</button>
+    <button class="btn scrimcol" data-rgb="0,48,73" type="button" aria-pressed="false"><span class="swatch" style="background:#003049"></span>Navy</button>
+    <button class="btn scrimcol" data-rgb="144,104,53" type="button" aria-pressed="false"><span class="swatch" style="background:#906835"></span>Brass</button>
+    <button class="btn scrimcol" data-rgb="0,0,0" type="button" aria-pressed="false"><span class="swatch" style="background:#000"></span>Black</button>
+    <span class="spacer"></span>
+    <span class="label">Opacity</span>
+    <input type="range" id="opacity" min="0" max="0.9" step="0.01" value="0.51" />
+    <span class="val" id="opacityVal">0.51</span>
+  </div>
+
+  <div class="bar">
+    <span class="label">Subhead&nbsp;size</span>
+    <button class="btn subsize" data-rem="1.15" type="button" aria-pressed="false">1.15</button>
+    <button class="btn subsize" data-rem="1.2" type="button" aria-pressed="false">1.20</button>
+    <button class="btn subsize" data-rem="1.35" type="button" aria-pressed="false">1.35</button>
+    <button class="btn subsize" data-rem="1.5" type="button" aria-pressed="true">1.50rem</button>
+    <span class="spacer"></span>
+    <span class="label">Weight</span>
+    <button class="btn subwt" data-wt="400" type="button" aria-pressed="false">400</button>
+    <button class="btn subwt" data-wt="500" type="button" aria-pressed="true">500</button>
+    <button class="btn subwt" data-wt="600" type="button" aria-pressed="false">600</button>
+    <button class="btn subwt" data-wt="700" type="button" aria-pressed="false">700</button>
+  </div>
+
+  <div class="readout" aria-live="polite">
+    <span class="tag" id="thrTag">–</span>
+    <div class="metric"><span class="k">Heading</span><span class="v" id="cHead">–</span><span class="pill" id="pHead">–</span></div>
+    <div class="metric"><span class="k">Subhead</span><span class="v" id="cBody">–</span><span class="pill" id="pBody">–</span></div>
+    <div class="metric"><span class="k">Worst of 4</span><span class="v" id="cWorst">–</span><span class="pill" id="pWorst">–</span></div>
+    <span class="spacer"></span>
+    <button class="btn" id="minBtn" type="button">Set minimum opacity</button>
+  </div>
+
+  <dl class="panel kv" aria-live="polite">
+    <dt>Image</dt><dd class="file" id="capFile"></dd>
+    <dt>Title</dt><dd id="capTitle"></dd>
+    <dt>Alt text</dt><dd id="capAlt"></dd>
+  </dl>
+
+  <p class="note">Worst case = brightest sub-region under the text, per scene, composited with your
+    scrim, compared to cream (#faf8f5). "Large text" = ≥24px, or ≥18.66px at weight 700 → 3.0:1 bar;
+    otherwise 4.5:1. Once you approve a combo (colour · shape · opacity · subhead size/weight) I'll
+    apply it to the theme SCSS and lock the CI contrast guard to the two worst scenes. Toggle your
+    theme to check light/dark.</p>
+</div>
+
+<script>
+  const IMAGES = [
+    { src:"__IMG1__", file:"hero_bg_img_1_assembly.webp", title:"The Askara Assembly",
+      alt:"The Askara Assembly gathered in a retro-futurist amphitheatre around a glowing atomic model." },
+    { src:"__IMG2__", file:"hero_bg_img_2_exhibition_hall.webp", title:"The Exhibition Hall",
+      alt:"Community members comparing notes in a vaulted glass hall of vintage green-screen computers." },
+    { src:"__IMG3__", file:"hero_bg_img_3_reflecting_pool.webp", title:"The Reflecting Pool at dusk",
+      alt:"A neoclassical courtyard at dusk with a reflecting pool, a monorail, and green neon light." },
+    { src:"__IMG4__", file:"hero_bg_img_4_colonnade.webp", title:"The Colonnade",
+      alt:"Community members walking and gathering in a sunlit colonnade of silver-and-gold columns." },
+  ];
+  const CREAM = [250, 248, 245];
+  const $ = (id) => document.getElementById(id);
+  const hero = $("hero"), img = $("heroImg"), heroSub = $("heroSub"), dotsWrap = $("dots");
+  let index = 0, timer = null;
+  const patch = new Array(IMAGES.length).fill(null); // brightest-patch rgb per scene
+
+  const lin = (c) => { c/=255; return c<=0.03928 ? c/12.92 : ((c+0.055)/1.055)**2.4; };
+  const lum = ([r,g,b]) => 0.2126*lin(r)+0.7152*lin(g)+0.0722*lin(b);
+  const contrast = (a,b) => { const [hi,lo]=[lum(a),lum(b)].sort((x,y)=>y-x); return (hi+0.05)/(lo+0.05); };
+
+  // Brightest local patch under the text band — the true worst case for light text.
+  function worstPatch(image) {
+    const cw=240, ch=120, cols=12, rows=6;
+    const cv=document.createElement("canvas"); cv.width=cw; cv.height=ch;
+    const ctx=cv.getContext("2d",{willReadFrequently:true});
+    const ir=image.naturalWidth/image.naturalHeight, cr=cw/ch; let sw,sh,sx,sy;
+    if(ir>cr){sh=image.naturalHeight; sw=sh*cr; sx=(image.naturalWidth-sw)/2; sy=0;}
+    else{sw=image.naturalWidth; sh=sw/cr; sx=0; sy=(image.naturalHeight-sh)/2;}
+    ctx.drawImage(image,sx,sy,sw,sh,0,0,cw,ch);
+    const bx0=Math.floor(cw*.18),bx1=Math.floor(cw*.82),by0=Math.floor(ch*.27),by1=Math.floor(ch*.73);
+    const bw=Math.floor((bx1-bx0)/cols), bh=Math.floor((by1-by0)/rows);
+    let best=null, bestL=-1;
+    for(let cy=0;cy<rows;cy++) for(let cx=0;cx<cols;cx++){
+      const d=ctx.getImageData(bx0+cx*bw, by0+cy*bh, bw, bh).data;
+      let r=0,g=0,b=0,n=0; for(let i=0;i<d.length;i+=4){r+=d[i];g+=d[i+1];b+=d[i+2];n++;}
+      const m=[r/n,g/n,b/n], L=lum(m); if(L>bestL){bestL=L; best=m;}
+    }
+    return best;
+  }
+
+  const scrimRGB = () => hero.style.getPropertyValue("--scrim-rgb").split(",").map(Number);
+  const scrimA = () => parseFloat($("opacity").value);
+  const centreA = () => hero.classList.contains("shape-full") ? scrimA()*0.88 : scrimA();
+  const comp = (s,a,base) => [0,1,2].map((i)=>a*s[i]+(1-a)*base[i]);
+
+  function subThreshold() {
+    const px = parseFloat(heroSub.style.fontSize) * 16;      // rem → px (root 16)
+    const wt = parseInt(heroSub.style.fontWeight,10) || 400;
+    const large = px >= 24 || (wt >= 700 && px >= 18.66);
+    return { thr: large ? 3.0 : 4.5, large, px };
+  }
+  function contrastFor(i){ return patch[i] ? contrast(CREAM, comp(scrimRGB(), centreA(), patch[i])) : null; }
+
+  function paint() {
+    const { thr, large, px } = subThreshold();
+    $("thrTag").textContent = large
+      ? `large text (${px.toFixed(0)}px @700) → 3.0:1`
+      : `normal text (${px.toFixed(0)}px) → 4.5:1`;
+    const cur = contrastFor(index);
+    const set = (v,p,ratio,min) => {
+      $(v).textContent = ratio ? ratio.toFixed(2)+":1" : "–";
+      const el=$(p), ok=ratio&&ratio>=min;
+      el.textContent = ratio ? (ok?"AA":"low") : ""; el.className="pill "+(ratio?(ok?"pass":"fail"):"");
+    };
+    set("cHead","pHead",cur,3.0);        // heading is 2.25rem → always large → 3.0
+    set("cBody","pBody",cur,thr);
+    let worst=Infinity; for(let i=0;i<IMAGES.length;i++){const c=contrastFor(i); if(c) worst=Math.min(worst,c);}
+    set("cWorst","pWorst", isFinite(worst)?worst:null, thr);
+  }
+
+  function show(i) {
+    index=(i+IMAGES.length)%IMAGES.length; const it=IMAGES[index];
+    img.src=it.src; img.alt=it.alt; img.title=it.title;
+    $("capFile").textContent=it.file; $("capTitle").textContent=it.title; $("capAlt").textContent=it.alt;
+    [...dotsWrap.children].forEach((d,j)=>d.setAttribute("aria-current", j===index?"true":"false"));
+    if(img.complete && img.naturalWidth){ if(!patch[index]) patch[index]=worstPatch(img); paint(); }
+  }
+  img.addEventListener("load", ()=>{ if(!patch[index]) patch[index]=worstPatch(img); paint(); });
+
+  IMAGES.forEach((_,i)=>{ const d=document.createElement("button"); d.className="dot"; d.type="button";
+    d.setAttribute("role","tab"); d.setAttribute("aria-label","Scene "+(i+1)); d.addEventListener("click",()=>show(i)); dotsWrap.appendChild(d); });
+  $("prev").addEventListener("click",()=>show(index-1));
+  $("next").addEventListener("click",()=>show(index+1));
+  const autoBtn=$("auto");
+  autoBtn.addEventListener("click",()=>{ const on=autoBtn.getAttribute("aria-pressed")==="true";
+    if(on){clearInterval(timer);timer=null;autoBtn.setAttribute("aria-pressed","false");autoBtn.textContent="▶ Auto";}
+    else{timer=setInterval(()=>show(index+1),2200);autoBtn.setAttribute("aria-pressed","true");autoBtn.textContent="❚❚ Pause";} });
+
+  function setShape(full){ hero.classList.toggle("shape-full",full); hero.classList.toggle("shape-ellipse",!full);
+    $("full").setAttribute("aria-pressed",full?"true":"false"); $("ellipse").setAttribute("aria-pressed",full?"false":"true"); paint(); }
+  $("ellipse").addEventListener("click",()=>setShape(false));
+  $("full").addEventListener("click",()=>setShape(true));
+
+  function pressGroup(sel, el){ document.querySelectorAll(sel).forEach(o=>o.setAttribute("aria-pressed","false")); el.setAttribute("aria-pressed","true"); }
+  document.querySelectorAll(".scrimcol").forEach(b=>b.addEventListener("click",()=>{ pressGroup(".scrimcol",b); hero.style.setProperty("--scrim-rgb",b.dataset.rgb); paint(); }));
+  document.querySelectorAll(".subsize").forEach(b=>b.addEventListener("click",()=>{ pressGroup(".subsize",b); heroSub.style.fontSize=b.dataset.rem+"rem"; paint(); }));
+  document.querySelectorAll(".subwt").forEach(b=>b.addEventListener("click",()=>{ pressGroup(".subwt",b); heroSub.style.fontWeight=b.dataset.wt; paint(); }));
+
+  const opacity=$("opacity");
+  opacity.addEventListener("input",()=>{ hero.style.setProperty("--scrim-a",opacity.value); $("opacityVal").textContent=parseFloat(opacity.value).toFixed(2); paint(); });
+
+  $("minBtn").addEventListener("click",()=>{ const s=scrimRGB(), shapeK=hero.classList.contains("shape-full")?0.88:1, { thr }=subThreshold();
+    let best=null;
+    for(let a=0;a<=0.9001;a+=0.01){ const ca=a*shapeK; let worst=Infinity, ok=true;
+      for(let i=0;i<IMAGES.length;i++){ if(!patch[i]){ok=false;break;} worst=Math.min(worst,contrast(CREAM,comp(s,ca,patch[i]))); }
+      if(ok && worst>=thr){best=a;break;} }
+    if(best!==null){ opacity.value=best.toFixed(2); hero.style.setProperty("--scrim-a",best.toFixed(2)); $("opacityVal").textContent=best.toFixed(2); paint(); } });
+
+  IMAGES.forEach((it,i)=>{ const im=new Image(); im.onload=()=>{ if(!patch[i]){patch[i]=worstPatch(im); paint();} }; im.src=it.src; });
+  show(0);
+</script>

@@ -29,13 +29,14 @@ const HEX = {
   // common/color_definitions.scss. INTERIM values; canonical espresso ramp tracked in BRA-35.
   darkCardFill: "#2a271f", // = color-mix(in srgb, brass-light 8%, espresso)
   darkCardBody: "#c0bdb9", // = cream @ .72 alpha composited over darkCardFill (Dark card body copy)
-  // Hero background scrim (BDEV-282). The hero-with-image text sits over a navy gradient scrim
-  // (rgba(0,48,73, .62 → .82)) laid over the photo. These model the WORST case — the scrim's
-  // lighter points composited over a fully WHITE image — so any image (incl. ones added later)
-  // stays legible. scrimTop = navy @ .62 over #fff (heading zone); scrimMid = navy @ .70 over #fff
-  // (subheading zone). Real images are darker than white, so real contrast is always better.
-  scrimTop: "#617f8e", // round(.62*navy + .38*255) per channel
-  scrimMid: "#4d6e80", // round(.70*navy + .30*255) per channel
+  // Hero background scrim (BDEV-282). The hero text sits over a brass-warm radial scrim (#554024 =
+  // 50% brass + 50% espresso) at 0.51 centre opacity, laid over the photo. The hero text is
+  // intentionally LARGE (heading 2.75rem, subheading 1.5rem = 24px) so the WCAG bar is 3.0:1. These
+  // two hexes are the ACTUAL composited backgrounds at the brightest patch under the text on the two
+  // toughest scenes — the real floor, measured via dev/hero-preview. Re-derive there if the bundled
+  // hero_bg_img_* images change.
+  heroScrimExhibition: "#968b71", // #554024 @0.51 over the exhibition-hall brightest text patch (worst)
+  heroScrimColonnade: "#927754", // #554024 @0.51 over the colonnade brightest text patch
 };
 
 const srgb = (c) => {
@@ -114,18 +115,18 @@ const COMBOS = [
   ],
   // --- Header (navy bar, all schemes) ---
   [HEX.cream, HEX.navy, 4.5, "header: cream text on navy"],
-  // --- Hero background scrim (BDEV-282): light text over the navy scrim, worst case (white image) ---
+  // --- Hero background scrim (BDEV-282): cream (large) text over the brass-warm scrim, 2 worst scenes ---
   [
     HEX.cream,
-    HEX.scrimTop,
+    HEX.heroScrimExhibition,
     3.0,
-    "hero-bg: heading (cream, large) over scrim top on a worst-case white image",
+    "hero-bg: cream large text over brass-warm scrim on the exhibition hall (worst scene)",
   ],
   [
     HEX.cream,
-    HEX.scrimMid,
-    4.5,
-    "hero-bg: subheading (cream) over scrim mid on a worst-case white image",
+    HEX.heroScrimColonnade,
+    3.0,
+    "hero-bg: cream large text over brass-warm scrim on the colonnade",
   ],
 ];
 

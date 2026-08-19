@@ -17,6 +17,8 @@ $phosphor: #8dff35; // CTA hover only
 $green: #3db54a; // CTA fill
 $navy: #003049;
 $cream: #faf8f5; // brand cream — light text over a dark backdrop (e.g. hero image scrim)
+$hero-scrim: #554024; // brass-warm: 50% brass (#906835) + 50% espresso (#1a1814) — dark enough for
+// cream text at WCAG AA over the hero images, warm enough to read as brass, not navy (BDEV-282)
 
 // Brass-token tints (scheme-aware: --tertiary is brass on light, brass-light on dark).
 $brass-outline: color-mix(in srgb, var(--tertiary) 45%, var(--secondary));
@@ -427,9 +429,12 @@ body.signup-page .d-header {
     object-position: center;
   }
 
-  // When an image is present, a navy scrim over the photo holds the (now light) hero text at WCAG
-  // AA in every scheme, and the content lifts above it. Worst-case legibility — light text over the
-  // scrim's lightest point on a bright image — is asserted in scripts/check-contrast.mjs.
+  // When an image is present, a brass-warm radial scrim (a "pool" behind the text, not a full wash)
+  // holds the (now light) hero text at WCAG AA in every scheme, and the content lifts above it. The
+  // hero text is intentionally large (heading 2.75rem, subheading 1.5rem = 24px), so the applicable
+  // bar is 3.0:1 and the peak opacity 0.51 sits just above the measured 0.49 floor. Worst-case
+  // legibility (brightest patch under the text on the two toughest scenes) is asserted in
+  // scripts/check-contrast.mjs.
   &__hero--has-bg {
     border-color: transparent;
 
@@ -438,10 +443,12 @@ body.signup-page .d-header {
       position: absolute;
       inset: 0;
       z-index: 1;
-      background: linear-gradient(
-        180deg,
-        rgba(0, 48, 73, 0.62),
-        rgba(0, 48, 73, 0.82)
+      background: radial-gradient(
+        ellipse 74% 66% at 50% 50%,
+        rgba($hero-scrim, 0.51) 0%,
+        rgba($hero-scrim, 0.51) 30%,
+        rgba($hero-scrim, 0.255) 54%,
+        rgba($hero-scrim, 0) 78%
       );
     }
 
@@ -462,14 +469,15 @@ body.signup-page .d-header {
   }
   &__hero-heading {
     color: var(--quaternary); // navy on light/parchment, white on dark
-    font-size: 2.25rem;
+    font-size: 2.75rem; // larger than the 1.5rem subheading for a clear title/tagline hierarchy
     line-height: 1.15;
     margin: 0 0 12px;
   }
   &__hero-subheading {
     color: var(--primary);
-    font-size: 1.15rem;
-    line-height: 1.5;
+    font-size: 1.5rem; // 24px — also qualifies as WCAG "large text" (3.0:1 bar) over the hero image
+    font-weight: 500; // medium — a touch heavier reads better over imagery (BDEV-282)
+    line-height: 1.45;
     max-width: 640px;
     margin: 0 auto 28px;
   }
