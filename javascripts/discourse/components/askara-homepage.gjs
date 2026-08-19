@@ -45,6 +45,9 @@ export default class AskaraHomepage extends Component {
   @tracked featuredTopics = null;
   @tracked featuredReady = false;
 
+  // Chosen once in the constructor (see pickHeroImage); fixed for the page load, so not reactive.
+  heroImage = null;
+
   constructor() {
     super(...arguments);
     this.heroImage = this.pickHeroImage();
@@ -77,7 +80,8 @@ export default class AskaraHomepage extends Component {
     const uploads = settings.theme_uploads || {};
     return Object.keys(uploads)
       .filter((key) => key.startsWith("hero_bg_img_"))
-      .sort()
+      // numeric-aware so hero_bg_img_2 sorts before hero_bg_img_10, not lexicographically
+      .sort((a, b) => a.localeCompare(b, undefined, { numeric: true }))
       .map((key) => ({
         url: uploads[key],
         alt: HERO_IMAGE_META[key]?.alt ?? "",
