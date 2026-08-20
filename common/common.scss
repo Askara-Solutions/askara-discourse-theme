@@ -376,7 +376,8 @@ body.signup-page .d-header {
 
    Also adds top whitespace so the banner no longer butts against the question post's .cooked. ---- */
 .accepted-answers.d-post-accordion {
-  margin-top: var(--space-5); // breathing room between the question post and the banner
+  // Breathing room between the question post and the banner.
+  margin-top: var(--space-5);
   // Header: brand green fill + navy label (overrides the plugin's --success/--secondary header).
   --d-post-accordion-header-background: #{$green};
   --d-post-accordion-header-border-color: #{$green};
