@@ -131,6 +131,17 @@ export default class AskaraFooter extends Component {
             {{this.year}}
             Askara Solutions OÜ
           </p>
+          {{! Reinstates Discourse's "Powered by Discourse" (its native full-width strip is hidden in
+              common.scss) inside the copyright bar — same link + logo, right-aligned. }}
+          <a
+            class="askara-footer__powered"
+            href="https://discourse.org/powered-by"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            {{icon "fab-discourse"}}
+            <span>Powered by Discourse</span>
+          </a>
         </div>
       </footer>
     {{/if}}
