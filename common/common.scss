@@ -382,7 +382,10 @@ body.signup-page .d-header {
   --d-post-accordion-header-background: #{$green};
   --d-post-accordion-header-border-color: #{$green};
   --d-post-accordion-header-color: #{$navy};
-  // Meta row: scheme-aware AA meta colour in place of the plugin's failing grey.
+  // Meta row: scheme-aware AA meta colour in place of the plugin's failing grey. item-header-color
+  // covers the row's bare text — the "accepted by" prefix + dot separators — which inherit it and
+  // otherwise stay the plugin's faint --primary-low-mid (~1.45:1 on the item surface, BDEV-315).
+  --d-post-accordion-item-header-color: var(--solved-meta);
   --d-post-accordion-item-link-color: var(--solved-meta);
   --d-post-accordion-item-username-color: var(--solved-meta);
   --d-post-accordion-item-control-color: var(--solved-meta);
