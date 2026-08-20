@@ -25,6 +25,13 @@ const HEX = {
   cream: "#faf8f5",
   lightGrey: "#d9d9d9",
   white: "#ffffff", // brand --white / --text-heading-dark; --quaternary in the Dark scheme
+  // Solved-banner meta row sits inside .d-post-accordion-item__header, whose background is
+  // --primary-very-low = this theme's $warm-hairline = color-mix(--tertiary 16%, --secondary).
+  // Precomputed per scheme — keep in sync with the theme mapping (BDEV-313): Light = brass-mid over
+  // parchment-1, Parchment = brass-deep over parchment-2, Dark = brass-light over espresso.
+  solvedMetaBgLight: "#ece0d0",
+  solvedMetaBgParchment: "#e1d4ba",
+  solvedMetaBgDark: "#3b352a",
   // Dark-scheme card surface (BDEV-269). Resolved from brand tokens — keep in sync with
   // common/color_definitions.scss. INTERIM values; canonical espresso ramp tracked in BRA-35.
   darkCardFill: "#2a271f", // = color-mix(in srgb, brass-light 8%, espresso)
@@ -128,19 +135,25 @@ const COMBOS = [
   [HEX.cream, HEX.navy, 4.5, "header: cream text on navy"],
   // --- Solved accepted-answer banner (BDEV-313). Header reuses the CTA green fill + navy label in
   //     every scheme; the meta row uses --solved-meta = slate (light/parchment) / light-grey (Dark)
-  //     on the item background (parchment-2 is the tighter light case; espresso is the Dark one). ---
+  //     on the item-header surface (--primary-very-low = warm-hairline), asserted per scheme. ---
   [HEX.navy, HEX.green, 4.5, "solved banner: navy label on green fill"],
   [
     HEX.slate,
-    HEX.parchment2,
+    HEX.solvedMetaBgLight,
     4.5,
-    "solved meta: slate on parchment-2 (light item bg)",
+    "solved meta: slate on the Light item-header surface",
+  ],
+  [
+    HEX.slate,
+    HEX.solvedMetaBgParchment,
+    4.5,
+    "solved meta: slate on the Parchment item-header surface",
   ],
   [
     HEX.lightGrey,
-    HEX.espresso,
+    HEX.solvedMetaBgDark,
     4.5,
-    "solved meta: light-grey on espresso (Dark item bg)",
+    "solved meta: light-grey on the Dark item-header surface",
   ],
   // --- Hero background scrim (BDEV-291): cream text over the brass-warm scrim @0.65, 2 worst scenes.
   //     Asserted at the 4.5 COMFORT target (above the 3.0 large-text minimum) after reader feedback. ---

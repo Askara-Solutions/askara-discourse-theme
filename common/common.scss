@@ -393,6 +393,11 @@ body.signup-page .d-header {
 .accepted-answers .accepted-answers__solution-count {
   color: $navy;
 }
+// Icon fill too — Discourse can recolour .d-icon fill independently of `color` (see the
+// .btn-primary .d-icon rule above), so pin the check glyph's fill to navy as well.
+.accepted-answers .accepted-answers__title .d-icon {
+  fill: $navy;
+}
 // Meta links (username, date, accepter) darken to the brand heading colour on hover, matching the
 // theme's .cooked link-hover affordance — navy on light/parchment, cream/white on Dark.
 .accepted-answers .d-post-accordion-item__metadata a:hover,
