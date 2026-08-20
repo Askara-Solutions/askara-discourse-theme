@@ -126,6 +126,12 @@ const COMBOS = [
   ],
   // --- Header (navy bar, all schemes) ---
   [HEX.cream, HEX.navy, 4.5, "header: cream text on navy"],
+  // --- Solved accepted-answer banner (BDEV-313). Header reuses the CTA green fill + navy label in
+  //     every scheme; the meta row uses --solved-meta = slate (light/parchment) / light-grey (Dark)
+  //     on the item background (parchment-2 is the tighter light case; espresso is the Dark one). ---
+  [HEX.navy, HEX.green, 4.5, "solved banner: navy label on green fill"],
+  [HEX.slate, HEX.parchment2, 4.5, "solved meta: slate on parchment-2 (light item bg)"],
+  [HEX.lightGrey, HEX.espresso, 4.5, "solved meta: light-grey on espresso (Dark item bg)"],
   // --- Hero background scrim (BDEV-291): cream text over the brass-warm scrim @0.65, 2 worst scenes.
   //     Asserted at the 4.5 COMFORT target (above the 3.0 large-text minimum) after reader feedback. ---
   [

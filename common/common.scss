@@ -357,6 +357,48 @@ body.signup-page .d-header {
   background-color: $navy;
 }
 
+/* ---- Solved accepted-answer banner (discourse-solved plugin, .accepted-answers on the
+   question post). Two brand fixes over the plugin defaults (BDEV-313):
+
+   1) HEADER contrast. The plugin paints the "Solved" header with --success as the fill and
+      --secondary as the text, but the theme's global `h3 { color: var(--quaternary) }` rule wins
+      on the .accepted-answers__title h3 — so the label rendered in --quaternary (navy on
+      light/parchment, WHITE on Dark) over --success (deep green #267632 on light/parchment, bright
+      green #3db54a on Dark). Both fail WCAG AA (~2.7:1 and ~2.4:1). Fix: the brand CTA pairing —
+      $green fill + $navy label/icon — the exact combo .btn-primary ships and check-contrast.mjs
+      asserts at ≥4.5:1 (~5.2:1), applied in every scheme so it's scheme-independent. The
+      .accepted-answers__title selector (2 classes) beats the global element-level h3 rule.
+
+   2) META row contrast. The username · date · "accepted by …" row inherits core's
+      --primary-medium / --primary-low-mid, a warm grey that fails AA on the parchment item
+      surface. Point the accordion's meta CSS vars at --solved-meta (scheme-aware slate/light-grey,
+      already vetted — see common/color_definitions.scss).
+
+   Also adds top whitespace so the banner no longer butts against the question post's .cooked. ---- */
+.accepted-answers.d-post-accordion {
+  margin-top: var(--space-5); // breathing room between the question post and the banner
+  // Header: brand green fill + navy label (overrides the plugin's --success/--secondary header).
+  --d-post-accordion-header-background: #{$green};
+  --d-post-accordion-header-border-color: #{$green};
+  --d-post-accordion-header-color: #{$navy};
+  // Meta row: scheme-aware AA meta colour in place of the plugin's failing grey.
+  --d-post-accordion-item-link-color: var(--solved-meta);
+  --d-post-accordion-item-username-color: var(--solved-meta);
+  --d-post-accordion-item-control-color: var(--solved-meta);
+}
+// "SOLVED" label + its check icon: force navy to beat the theme's global h3 colour rule.
+.accepted-answers .accepted-answers__title,
+.accepted-answers .accepted-answers__title .d-icon,
+.accepted-answers .accepted-answers__solution-count {
+  color: $navy;
+}
+// Meta links (username, date, accepter) darken to the brand heading colour on hover, matching the
+// theme's .cooked link-hover affordance — navy on light/parchment, cream/white on Dark.
+.accepted-answers .d-post-accordion-item__metadata a:hover,
+.accepted-answers .d-post-accordion-item__metadata .user-link:hover {
+  color: var(--quaternary);
+}
+
 /* ---- Solution cards: tag-sourced entry points above the discovery list (BDEV-237).
    Visual treatment is the shared core card style above; only layout specifics here. ---- */
 .solution-cards {

@@ -42,4 +42,10 @@ $dark-card-border: color-mix(in srgb, var(--tertiary) 20%, var(--secondary));
       rgba(0, 48, 73, 0.7),
       rgba(250, 248, 245, 0.72)
     )};
+  // Solved-banner meta row (username · date · "accepted by …") — scheme-aware AA meta colour:
+  // slate on the light/parchment item background, light-grey on the Dark espresso one. Both pairs
+  // are already asserted in scripts/check-contrast.mjs (the "meta" combos). The Solved plugin's
+  // defaults (--primary-medium / --primary-low-mid) resolve to a warm grey that fails AA on the
+  // parchment surface — this replaces them (BDEV-313).
+  --solved-meta: #{dark-light-choose(#4a5163, #d9d9d9)};
 }

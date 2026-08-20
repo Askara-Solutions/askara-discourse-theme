@@ -10,5 +10,9 @@
 # Loop runtime state (ralph-loop / askara-workflow) — local only, never committed.
 .loop/
 
+# Feature-work worktrees — the isolation hook creates these under .claude/worktrees/; they are
+# linked working trees, never committed from the primary checkout.
+.claude/worktrees/
+
 # Generated hero preview (dev tool) — rebuild with dev/hero-preview/build.py; never committed.
 dev/hero-preview/*.built.html
