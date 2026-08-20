@@ -56,3 +56,18 @@ homepage_show_category_browse:
 category_cards:
   type: string
   default: '{"start-here":["tutorial","how-to","reference","explanation"],"questions":["nis2","iso27001","ai-agents"],"feedback-and-ideas":["bug","feature-request","enhancement"],"general":[]}'
+
+# Community footer (BDEV-320). Ported + trimmed from the askara-web marketing footer, rendered in the
+# `main-outlet-bottom` outlet (content column). Homepage-only by default; flip `footer_site_wide` to
+# show it on every route — that is the Path A -> site-wide promotion, and it needs no code change.
+homepage_show_footer:
+  type: bool
+  default: true
+
+footer_site_wide:
+  type: bool
+  default: false
+
+footer_tagline:
+  type: string
+  default: "Cyber compliance, minus the theater."

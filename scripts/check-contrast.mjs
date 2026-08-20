@@ -45,6 +45,9 @@ const HEX = {
   // Re-derive there if the bundled hero_bg_img_* images or the scrim opacity change.
   heroScrimExhibition: "#806f53", // #554024 @0.65 over the exhibition-hall brightest text patch (worst)
   heroScrimColonnade: "#7f6646", // #554024 @0.65 over the colonnade brightest text patch
+  // Community footer (BDEV-320): secondary text (links, tagline, address, copyright) is cream @0.72
+  // over the navy footer band. Precomputed composite — keep in sync with $footer-muted in common.scss.
+  footerMuted: "#b4c0c5", // = cream #faf8f5 @0.72 alpha over navy #003049
 };
 
 const srgb = (c) => {
@@ -133,6 +136,14 @@ const COMBOS = [
   ],
   // --- Header (navy bar, all schemes) ---
   [HEX.cream, HEX.navy, 4.5, "header: cream text on navy"],
+  // --- Community footer (navy band, all schemes — BDEV-320). Headings + hovered links use full cream
+  //     (covered by the header cream/navy row above); secondary text is cream @0.72 over navy. ---
+  [
+    HEX.footerMuted,
+    HEX.navy,
+    4.5,
+    "footer: secondary text (cream @0.72) on navy",
+  ],
   // --- Solved accepted-answer banner (BDEV-313). Header reuses the CTA green fill + navy label in
   //     every scheme; the meta row uses --solved-meta = slate (light/parchment) / light-grey (Dark)
   //     on the item-header surface (--primary-very-low = warm-hairline), asserted per scheme. ---
