@@ -62,7 +62,10 @@
       "wand-magic-sparkles",
       "arrow-up-right-dots",
       "compass",
-      "comment-dots"
+      "comment-dots",
+      "fab-linkedin",
+      "fab-github",
+      "fab-youtube"
     ]
   }
 }

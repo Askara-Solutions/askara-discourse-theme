@@ -682,3 +682,130 @@ body.signup-page .d-header {
 .sidebar-sections .sidebar-section-wrapper[data-section-name="askara-home"] {
   order: -1;
 }
+
+/* ---- Community footer (BDEV-320): ported from the askara-web marketing footer, trimmed for the
+   community. Rendered in the `main-outlet-bottom` outlet, which sits inside #main-outlet (the content
+   column) — so the navy band is content-width and never spans under the sidebar (the reason we use it
+   over the full-width below-footer/above-footer outlets).
+
+   Colour: navy backdrop in EVERY scheme (reuses $navy, exactly like the login/signup header above),
+   with cream text — the same white-on-navy pairing the site header ships, so it reads as one system
+   across Light / Dark / Parchment and needs no scheme-aware branching. Secondary text is cream @0.72
+   (asserted in scripts/check-contrast.mjs). No phosphor (brand governance: hover/CTA/logo only). ---- */
+$footer-muted: rgba($cream, 0.72);
+$footer-hairline: rgba($cream, 0.12);
+
+.askara-footer {
+  background: $navy;
+  color: $cream;
+  margin-top: 48px;
+  padding: 48px 20px 32px;
+  border-top: 1px solid $footer-hairline;
+
+  // Links: muted cream at rest, full cream on hover/focus (mirrors the askara-web footer). Scoped
+  // overrides here beat the theme's brass --d-link-color default — never use --quaternary on this
+  // navy band (it resolves to navy on the light schemes and would vanish).
+  a {
+    color: $footer-muted;
+    text-decoration: none;
+
+    &:hover,
+    &:focus {
+      color: $cream;
+    }
+  }
+
+  &__inner {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 40px;
+    max-width: 1100px; // aligns with the .askara-homepage content width
+    margin: 0 auto;
+  }
+
+  &__logo {
+    height: 40px;
+    width: auto;
+    margin-bottom: 12px;
+  }
+  &__logo-text {
+    display: inline-block;
+    color: $cream;
+    font-weight: 700;
+    font-size: 1.25rem;
+    margin-bottom: 12px;
+  }
+
+  &__tagline {
+    color: $footer-muted;
+    max-width: 42ch;
+    margin: 0 0 16px;
+  }
+
+  &__address {
+    color: $footer-muted;
+    font-style: normal;
+    font-size: 0.875rem;
+    line-height: 1.7;
+    margin-bottom: 16px;
+  }
+
+  &__social {
+    display: flex;
+    gap: 8px;
+  }
+  &__social-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+
+    .d-icon {
+      width: 1.15rem;
+      height: 1.15rem;
+    }
+  }
+
+  // Column headings: the brand eyebrow (mono, uppercase, tracked) — matches the metadata-label
+  // treatment used elsewhere. The class beats the global `h2 { color: var(--quaternary) }` rule,
+  // which would otherwise render navy-on-navy here.
+  &__col-title {
+    color: $cream;
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-size: 0.78rem;
+    margin: 0 0 16px;
+  }
+
+  &__links {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
+    li {
+      margin-bottom: 8px;
+    }
+  }
+
+  &__bar {
+    max-width: 1100px;
+    margin: 32px auto 0;
+    padding-top: 20px;
+    border-top: 1px solid $footer-hairline;
+  }
+  &__copyright {
+    color: $footer-muted;
+    font-size: 0.8rem;
+    margin: 0;
+  }
+
+  // Stack the columns on narrow viewports.
+  @media (max-width: 767px) {
+    &__inner {
+      grid-template-columns: 1fr;
+      gap: 32px;
+    }
+  }
+}
