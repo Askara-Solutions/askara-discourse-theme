@@ -48,6 +48,13 @@ const HEX = {
   // Community footer (BDEV-320): secondary text (links, tagline, address, copyright) is cream @0.72
   // over the navy footer band. Precomputed composite — keep in sync with $footer-muted in common.scss.
   footerMuted: "#b4c0c5", // = cream #faf8f5 @0.72 alpha over navy #003049
+  // Secondary body copy — --card-body (BDEV-352): card/section descriptions, subtitles, and
+  // topic-list excerpts. Light schemes = navy #003049 @0.80 (darkened from @0.70); Dark = cream
+  // #faf8f5 @0.72. Precomputed composite over each scheme's page/card background — keep in sync
+  // with --card-body in common/color_definitions.scss.
+  cardBodyOnP1: "#33586a", // navy @0.80 over parchment-1 (Askara Light page bg)
+  cardBodyOnP2: "#315565", // navy @0.80 over parchment-2 (Askara Parchment page bg + card fill)
+  cardBodyOnEspresso: "#bbb9b6", // cream @0.72 over espresso (Askara Dark page bg)
 };
 
 const srgb = (c) => {
@@ -103,6 +110,26 @@ const COMBOS = [
   [HEX.slate, HEX.parchment2, 4.5, "parchment: meta (slate/parchment-2)"],
   // --- Cards (glossary style: parchment-3 fill) ---
   [HEX.navy, HEX.parchment3, 4.5, "card: navy heading on parchment-3"],
+  // --- Secondary body copy: --card-body (descriptions, subtitles, topic-list excerpts — BDEV-352).
+  //     Light schemes navy@0.80, Dark cream@0.72, over each scheme's page/card background. ---
+  [
+    HEX.cardBodyOnP1,
+    HEX.parchment1,
+    4.5,
+    "card-body: secondary text (navy@.80) on parchment-1 (Light page)",
+  ],
+  [
+    HEX.cardBodyOnP2,
+    HEX.parchment2,
+    4.5,
+    "card-body: secondary text (navy@.80) on parchment-2 (Parchment page / card fill)",
+  ],
+  [
+    HEX.cardBodyOnEspresso,
+    HEX.espresso,
+    4.5,
+    "card-body: secondary text (cream@.72) on espresso (Dark page)",
+  ],
   // --- CTA button (navy label on both brand greens; rest/hover swap for the hero CTA — BDEV-289) ---
   [
     HEX.navy,

@@ -37,9 +37,12 @@ $dark-card-border: color-mix(in srgb, var(--tertiary) 20%, var(--secondary));
   --card-fill: #{dark-light-choose(#f5ead4, $dark-card-fill)};
   // Card hairline — light schemes keep parchment-3; Dark gets the warmer espresso step.
   --card-border: #{dark-light-choose(#e8d4ad, $dark-card-border)};
-  // Card body copy — light schemes keep navy / 70; Dark uses cream / 72 (brand --text-body-dark).
+  // Card + secondary body copy (descriptions, subtitles, topic-list excerpts). Light schemes use
+  // navy / 80 — darkened from / 70 so soft slate secondary text reads more present while staying
+  // brand navy (7.18:1 on parchment-1, 6.72:1 on parchment-2; asserted in check-contrast.mjs).
+  // Dark keeps cream / 72 (brand --text-body-dark); darkening it would lower contrast on espresso.
   --card-body: #{dark-light-choose(
-      rgba(0, 48, 73, 0.7),
+      rgba(0, 48, 73, 0.8),
       rgba(250, 248, 245, 0.72)
     )};
   // Solved-banner meta row (username · date · "accepted by …") — scheme-aware AA meta colour:

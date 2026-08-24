@@ -256,6 +256,20 @@ textarea:focus-visible {
   color: var(--quaternary);
 }
 
+/* ---- Topic-list legibility (BDEV-352). Read vs unread otherwise differ only by core's muted
+   visited colour; weight carries the distinction. `.visited` is Discourse's per-user read-state
+   class on the title link, so :not(.visited) = unread/new (and anon, who have no read-state, see
+   all titles heavier — fine). Read/visited titles keep core's weight + colour untouched.
+   Plus Jakarta Sans is variable (300 800), so 600 is a real weight, not faux-bold. ---- */
+.topic-list-item .title:not(.visited) {
+  font-weight: 600;
+}
+// Excerpt/summary → the shared secondary body colour (navy/80 light, cream/72 dark) used by the
+// card descriptions, instead of core's fainter muted primary. Guarded in check-contrast.mjs.
+.topic-list-item .topic-excerpt {
+  color: var(--card-body);
+}
+
 /* ---- Cards: the blog "Source Journal" treatment (askara-web packages/tokens/src/theme.css):
    parchment-2 fill + a 1px parchment-3 hairline, NO shadow at rest; on hover the border warms
    to brass and a soft 3-layer brass glow appears. Toned down from the previous always-on glow.
