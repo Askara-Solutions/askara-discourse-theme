@@ -226,9 +226,12 @@ kbd,
 }
 
 // Dropdowns / filters (category, tags, select-kit) — consistent brass outline + warm hover, not grey.
+// border-radius matches the 8px .btn corners (BDEV-282): core's higher-specificity
+// .select-kit.combo-box .select-kit-header rule otherwise keeps them near-square (BDEV-351).
 .select-kit.combo-box .select-kit-header,
 .select-kit-header.btn {
   border: 1px solid $brass-outline;
+  border-radius: 8px;
 }
 .select-kit.combo-box .select-kit-header:hover {
   background: $warm-hover;
