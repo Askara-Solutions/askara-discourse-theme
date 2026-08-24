@@ -256,12 +256,17 @@ textarea:focus-visible {
   color: var(--quaternary);
 }
 
-/* ---- Topic-list legibility (BDEV-352). Read vs unread otherwise differ only by core's muted
-   visited colour; weight carries the distinction. `.visited` is Discourse's per-user read-state
-   class on the title link, so :not(.visited) = unread/new (and anon, who have no read-state, see
-   all titles heavier — fine). Read/visited titles keep core's weight + colour untouched.
-   Plus Jakarta Sans is variable (300 800), so 600 is a real weight, not faux-bold. ---- */
-.topic-list-item .title:not(.visited) {
+/* ---- Topic-list legibility (BDEV-352, selector corrected BDEV-354). Read vs unread otherwise
+   differ only by core's muted visited colour; weight carries the distinction. `.visited` is
+   Discourse's per-user read-state class on the title link, so :not(.visited) = unread/new (and
+   anon, who have no read-state, see all titles heavier — fine). Read/visited titles keep core's
+   weight + colour untouched. Plus Jakarta Sans is variable (300 800), so 600 is a real weight.
+   Must mirror core's own selectors — core sets the weight via
+   `.topic-list-main-link a.title, .topic-list .main-link a.title { font-weight: var(--topic-title-font-weight) }`
+   (specificity 0,3,1); a plainer `.topic-list-item .title` (0,3,0) loses the cascade and the change
+   silently no-ops (the BDEV-352 bug). Appending :not(.visited) here keeps us above core. ---- */
+.topic-list-main-link a.title:not(.visited),
+.topic-list .main-link a.title:not(.visited) {
   font-weight: 600;
 }
 // Excerpt/summary → the shared secondary body colour (navy/80 light, cream/72 dark) used by the
