@@ -8,10 +8,12 @@ import { cardCopyFor } from "../lib/card-copy";
 // (seeded from askara-community structure/taxonomy.yaml's `category_card_mapping`). It is a theme
 // SETTING, not `allowed_tags`, so it never restricts tagging — it only decides which cards show.
 // Reuses the BDEV-247 `.solution-card` treatment verbatim (brand styling is fixed — never restyle
-// here) and shares its display copy with the homepage Frameworks cards via lib/card-copy.js. No
-// category, no mapping, an empty list, or an unparseable/malformed setting => nothing renders. The
-// curated homepage keeps its own direct <SolutionCards /> embed; this component only occupies the
-// shared discovery-list outlet, where it must be category-aware.
+// here) and shares its display copy with the homepage Frameworks cards via lib/card-copy.js. A
+// mapped category renders the title + description intro even when its tag list is empty (a card-less
+// category like General still gets its themed description, BDEV-355); cards render only for the tags
+// listed. No category, no mapping, a tag route, or an unparseable/malformed setting => nothing
+// renders. The curated homepage keeps its own direct <SolutionCards /> embed; this component only
+// occupies the shared discovery-list outlet, where it must be category-aware.
 
 // The theme setting is static per page load, so parse it once per distinct raw value rather than on
 // every getter evaluation. This is also the single place the fail-soft JSON handling lives: an
@@ -76,29 +78,44 @@ export default class CategoryCards extends Component {
     }));
   }
 
+  // The intro (title + description) shows for any category that has a mapping ENTRY — including an
+  // empty list, so a card-less category (e.g. General) still gets its themed description (BDEV-355).
+  // Cards then render only when that entry actually lists tags (`this.cards`). Never on tag routes
+  // or for unmapped categories, so an unrelated category page stays untouched.
+  get showIntro() {
+    const category = this.category;
+    if (!category?.slug || this.tag) {
+      return false;
+    }
+    const map = categoryCardMap();
+    return !!map && Object.prototype.hasOwnProperty.call(map, category.slug);
+  }
+
   <template>
-    {{#if this.cards.length}}
+    {{#if this.showIntro}}
       <div class="category-intro">
         <h2 class="category-intro__title">{{this.category.name}}</h2>
         {{#if this.category.description_text}}
           <p class="category-intro__description">{{this.category.description_text}}</p>
         {{/if}}
       </div>
-      <section class="solution-cards">
-        {{#each this.cards as |card|}}
-          <a class="solution-card" href={{card.href}}>
-            <span class="solution-card__icon" aria-hidden="true">
-              {{icon card.icon}}
-            </span>
-            <div class="solution-card__text">
-              <h3 class="solution-card__title">{{card.title}}</h3>
-              {{#if card.subtitle}}
-                <p class="solution-card__subtitle">{{card.subtitle}}</p>
-              {{/if}}
-            </div>
-          </a>
-        {{/each}}
-      </section>
+      {{#if this.cards.length}}
+        <section class="solution-cards">
+          {{#each this.cards as |card|}}
+            <a class="solution-card" href={{card.href}}>
+              <span class="solution-card__icon" aria-hidden="true">
+                {{icon card.icon}}
+              </span>
+              <div class="solution-card__text">
+                <h3 class="solution-card__title">{{card.title}}</h3>
+                {{#if card.subtitle}}
+                  <p class="solution-card__subtitle">{{card.subtitle}}</p>
+                {{/if}}
+              </div>
+            </a>
+          {{/each}}
+        </section>
+      {{/if}}
     {{/if}}
   </template>
 }
