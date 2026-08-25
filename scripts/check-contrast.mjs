@@ -193,6 +193,22 @@ const COMBOS = [
     4.5,
     "solved meta: light-grey on the Dark item-header surface",
   ],
+  // --- Askara-team identity pill (BDEV-362). Scheme-aware: navy fill + cream text on the two
+  //     LIGHT schemes, brass-light fill + navy text on Dark. Assert the text-on-pill interiors
+  //     (AA 4.5); the chip-on-canvas separation reuses navy/parchment (headings) and
+  //     brass-light/espresso (dark link), already asserted above. ---
+  [
+    HEX.cream,
+    HEX.navy,
+    4.5,
+    "askara-team pill (Light/Parchment): cream text on navy fill",
+  ],
+  [
+    HEX.navy,
+    HEX.brassLight,
+    4.5,
+    "askara-team pill (Dark): navy text on brass-light fill",
+  ],
   // --- Hero background scrim (BDEV-291): cream text over the brass-warm scrim @0.65, 2 worst scenes.
   //     Asserted at the 4.5 COMFORT target (above the 3.0 large-text minimum) after reader feedback. ---
   [
