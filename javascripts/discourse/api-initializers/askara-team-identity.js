@@ -25,7 +25,7 @@ export default apiInitializer((api) => {
   refreshAskaraTeamMembers(settings.askara_team_group_name);
 
   // Surfaces 1 + 2 — add classes to the poster-name <span> for team members. One transformer
-  // drives both the logo badge (::before image) and the username pill, gated independently in
+  // drives both the Askara mark (a ::after image) and the username pill, gated independently in
   // SCSS. `context` carries the poster's `user`, so membership is decided per post.
   if (
     settings.askara_team_show_flair ||
@@ -49,18 +49,28 @@ export default apiInitializer((api) => {
   // Surface 3 — pill @mentions of team members. Mentions render as a.mention[href="/u/<name>"];
   // the username isn't in any group data, so match the href against the same Set.
   if (settings.askara_team_show_mention_pill) {
-    api.decorateCookedElement((element) => {
-      element.querySelectorAll("a.mention[href*='/u/']").forEach((anchor) => {
-        const href = anchor.getAttribute("href") || "";
-        const raw = href.split("/u/")[1];
-        if (!raw) {
-          return;
-        }
-        const username = decodeURIComponent(raw.split(/[/?#]/)[0]);
-        if (isAskaraTeamMember(username)) {
-          anchor.classList.add("askara-team-mention");
-        }
-      });
-    });
+    api.decorateCookedElement(
+      (element) => {
+        element.querySelectorAll("a.mention[href*='/u/']").forEach((anchor) => {
+          const href = anchor.getAttribute("href") || "";
+          const raw = href.split("/u/")[1];
+          if (!raw) {
+            return;
+          }
+          // decodeURIComponent throws on a malformed % sequence — never let that break the
+          // cooked render (a real username never needs decoding, but the href is untrusted).
+          let username;
+          try {
+            username = decodeURIComponent(raw.split(/[/?#]/)[0]);
+          } catch {
+            return;
+          }
+          if (isAskaraTeamMember(username)) {
+            anchor.classList.add("askara-team-mention");
+          }
+        });
+      },
+      { id: "askara-team-mentions" },
+    );
   }
 });
