@@ -60,6 +60,13 @@ const HEX = {
   // --askara-team-pill-bg in common/color_definitions.scss.
   teamPillLight: "#eee1c8",
   teamPillDark: "#3b352a",
+  // Staff-color / askara-team post panel (BDEV-363): a parchment-step panel = color-mix(--highlight
+  // 25%, --secondary) per scheme. Composited from each scheme's own tokens — keep in sync with
+  // --staff-panel-bg in common/color_definitions.scss (mix ratio + tokens). In-panel links use
+  // --staff-panel-link = brass-deep (light schemes) / brass-light (Dark).
+  staffPanelLight: "#f8edda", // = color-mix(highlight #e8d0a0 25%, secondary #fdf7ed)  [Askara Light]
+  staffPanelParchment: "#f2e5ca", // = color-mix(highlight #e8d4ad 25%, secondary #f5ead4)  [Askara Parchment]
+  staffPanelDark: "#382c1c", // = color-mix(highlight #906835 25%, secondary #1a1814)  [Askara Dark]
 };
 
 const srgb = (c) => {
@@ -226,6 +233,44 @@ const COMBOS = [
     HEX.heroScrimColonnade,
     4.5,
     "hero-bg: cream text over brass-warm scrim on the colonnade",
+  ],
+  // --- Staff-color / askara-team post panel (BDEV-363). Parchment-step panel per scheme; assert the
+  //     cooked BODY text and the in-panel LINK colour on the composited panel background. ---
+  [
+    HEX.espresso,
+    HEX.staffPanelLight,
+    4.5,
+    "staff panel (Light): body text (espresso) on the parchment-step panel",
+  ],
+  [
+    HEX.espresso,
+    HEX.staffPanelParchment,
+    4.5,
+    "staff panel (Parchment): body text (espresso) on the parchment-step panel",
+  ],
+  [
+    HEX.cream,
+    HEX.staffPanelDark,
+    4.5,
+    "staff panel (Dark): body text (cream) on the parchment-step panel",
+  ],
+  [
+    HEX.brassDeep,
+    HEX.staffPanelLight,
+    4.5,
+    "staff panel (Light): in-panel link (brass-deep) on the parchment-step panel",
+  ],
+  [
+    HEX.brassDeep,
+    HEX.staffPanelParchment,
+    4.5,
+    "staff panel (Parchment): in-panel link (brass-deep) on the parchment-step panel",
+  ],
+  [
+    HEX.brassLight,
+    HEX.staffPanelDark,
+    4.5,
+    "staff panel (Dark): in-panel link (brass-light) on the parchment-step panel",
   ],
 ];
 

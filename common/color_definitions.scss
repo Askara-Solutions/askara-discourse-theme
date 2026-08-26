@@ -66,3 +66,24 @@ $dark-card-border: color-mix(in srgb, var(--tertiary) 20%, var(--secondary));
     )};
   --askara-team-pill-fg: #{dark-light-choose(#003049, #faf8f5)};
 }
+
+/* Staff-color / askara-team post panel (BDEV-363). Re-themes Discourse's native "Add Staff Color"
+ * post highlight (core paints `.moderator .regular > .cooked` with --highlight-bg and NO padding)
+ * and drives the same treatment onto askara-team-authored posts. A subtle PARCHMENT-step panel,
+ * derived per scheme from that scheme's OWN tokens: color-mix() nudges 25% of --highlight into
+ * --secondary (the page canvas). --highlight is the LIGHT end of each scheme's brass ramp
+ * (parchment-3-ish: #e8d0a0 Light, #e8d4ad Parchment) and, in Dark, a mid brass that is lighter than
+ * the espresso canvas — so this reads as one parchment step DARKER on the light schemes and one step
+ * LIGHTER on Dark, never the dark brass of --tertiary (which read too heavy). Same runtime color-mix
+ * idiom as the warm hairlines.
+ *
+ * The panel still needs its own link colour on ONE scheme: Askara Light's default link (brass-mid)
+ * clears AA on the page by only 0.17, so any darkening drops in-panel links below 4.5:1.
+ * --staff-panel-link deepens links to brass-deep on the LIGHT schemes (AA-safe on the tint — a no-op
+ * for Parchment, whose links are already brass-deep) and keeps brass-light on Dark. Body text + the
+ * in-panel link are asserted in scripts/check-contrast.mjs (the "staff panel" combos); keep the mix
+ * ratio and these tokens in sync with the composite hexes asserted there. */
+:root {
+  --staff-panel-bg: color-mix(in srgb, var(--highlight) 25%, var(--secondary));
+  --staff-panel-link: #{dark-light-choose(#7a6030, #e8d0a0)};
+}

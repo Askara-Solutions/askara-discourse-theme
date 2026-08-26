@@ -916,3 +916,25 @@ a.mention.askara-team-mention {
   border-radius: 0.9em;
   padding: 0.15em 0.5em;
 }
+
+/* =============================================================================
+ * Staff-color / askara-team post panel (BDEV-363). Two entry points, one treatment:
+ *   .moderator .regular > .cooked  — core's native "Add Staff Color" toggle (any staff post)
+ *   .cooked.askara-team-post       — auto-applied to askara-team authors in
+ *                                    api-initializers/askara-team-identity.js (surface 4)
+ * Core paints the native highlight with --highlight-bg and NO padding; we replace that with a
+ * subtle scheme-aware parchment-step panel + real padding. Colours (incl. the AA-driven in-panel
+ * link) are the scheme-aware tokens in color_definitions.scss.
+ * ========================================================================== */
+.moderator .regular > .cooked,
+.cooked.askara-team-post {
+  background: var(--staff-panel-bg);
+  padding: 1rem 1.25rem;
+  border-radius: 8px; // match the theme's 8px corners (nav/buttons, BDEV-351)
+
+  // In-panel links deepen to an AA-safe brass on the tinted background (see color_definitions.scss).
+  // Exclude mentions and hashtags — they carry their own cooked styling (the askara-team mention pill).
+  a:not(.mention):not(.hashtag-cooked):not(.lightbox) {
+    color: var(--staff-panel-link);
+  }
+}
