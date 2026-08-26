@@ -58,7 +58,7 @@ export async function refreshAskaraTeamMembers(groupName) {
     for (;;) {
       const res = await fetch(
         `/groups/${encodeURIComponent(name)}/members.json?limit=${limit}&offset=${offset}`,
-        { headers: { Accept: "application/json" } }
+        { headers: { Accept: "application/json" } },
       );
       if (!res.ok) {
         return; // e.g. 403 if the roster isn't public — no-op; marks just don't show.
@@ -81,7 +81,7 @@ export async function refreshAskaraTeamMembers(groupName) {
     try {
       window.localStorage.setItem(
         CACHE_KEY,
-        JSON.stringify({ usernames, at: cachedAt })
+        JSON.stringify({ usernames, at: cachedAt }),
       );
     } catch {
       // Best-effort cache write; membership still works from the in-memory Set.

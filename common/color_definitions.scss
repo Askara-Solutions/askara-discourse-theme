@@ -60,6 +60,9 @@ $dark-card-border: color-mix(in srgb, var(--tertiary) 20%, var(--secondary));
  * on the composited tint is guarded in scripts/check-contrast.mjs (navy on #eee1c8 light, cream on
  * #3b352a dark). */
 :root {
-  --askara-team-pill-bg: #{dark-light-choose(rgba(200, 168, 104, 0.28), rgba(232, 208, 160, 0.16))};
+  --askara-team-pill-bg: #{dark-light-choose(
+      rgba(200, 168, 104, 0.28),
+      rgba(232, 208, 160, 0.16)
+    )};
   --askara-team-pill-fg: #{dark-light-choose(#003049, #faf8f5)};
 }
