@@ -55,10 +55,10 @@ const HEX = {
   cardBodyOnP1: "#33586a", // navy @0.80 over parchment-1 (Askara Light page bg)
   cardBodyOnP2: "#315565", // navy @0.80 over parchment-2 (Askara Parchment page bg + card fill)
   cardBodyOnEspresso: "#bbb9b6", // cream @0.72 over espresso (Askara Dark page bg)
-  // Askara-team pill (BDEV-362): the composited LOW-CONTRAST tint the bold name sits on. Light =
-  // navy @0.10 over parchment-1; Dark = brass-light @0.16 over espresso. Keep in sync with
+  // Askara-team pill (BDEV-362): the composited LOW-CONTRAST warm tint the bold name sits on. Light =
+  // brass @0.28 over parchment-1; Dark = brass-light @0.16 over espresso. Keep in sync with
   // --askara-team-pill-bg in common/color_definitions.scss.
-  teamPillLight: "#e4e3dd",
+  teamPillLight: "#eee1c8",
   teamPillDark: "#3b352a",
 };
 
@@ -205,7 +205,7 @@ const COMBOS = [
     HEX.navy,
     HEX.teamPillLight,
     4.5,
-    "askara-team pill (Light/Parchment): navy text on the soft navy-tint pill",
+    "askara-team pill (Light/Parchment): navy text on the soft parchment-tint pill",
   ],
   [
     HEX.cream,

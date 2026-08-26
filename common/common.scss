@@ -868,8 +868,9 @@ $footer-hairline: rgba($cream, 0.12);
  * from color_definitions.scss.
  * ========================================================================== */
 
-/* Subtle pill on a team member's bold name. The name and the core staff shield sit inside it; the
- * Askara mark is appended to the right (::after). A low-contrast brand tint, not a heavy fill. */
+/* Subtle PARCHMENT pill on a team member's bold name. Name + flair icons sit inside it (the core
+ * staff shield is rendered by Discourse inside the name link, so it can't cleanly sit outside).
+ * A low-contrast warm tint, not a heavy fill. */
 article .names span.first.askara-team--pill {
   background: var(--askara-team-pill-bg);
   border-radius: 0.9em;
@@ -881,21 +882,29 @@ article .names span.first.askara-team--pill {
   }
 }
 
-/* The Askara mark: the system-avatar image (logo on solid white), a small circle to the RIGHT of
- * the name, sized + aligned to sit beside the core staff-shield flair icon. */
-article .names span.first.askara-team--flair::after {
+/* Lay the name link out as one vertically-centred row so the name and both flair icons align:
+ * [ name ] [ Askara mark ] [ shield ]. flex + align-items centre fixes the icon baseline. */
+article .names span.first.askara-team--flair > a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.32em;
+}
+
+/* The Askara mark: system-avatar logo (on solid white) as a small circle, sized to the shield and
+ * placed FIRST among the flair icons (order 1); the core shield is pushed after it (order 2). */
+article .names span.first.askara-team--flair > a::after {
   content: "";
-  display: inline-block;
+  order: 1;
+  flex: 0 0 auto;
   width: 1em;
   height: 1em;
-  margin-left: 0.35em;
-  vertical-align: -0.18em;
   background: url($askara_team_flair) center / cover no-repeat;
   border-radius: 50%;
 }
-
-/* Match the core staff-shield glyph to the Askara mark's size, so the two flair icons balance. */
-article .names span.first.askara-team--flair svg.d-icon-shield-halved {
+article .names span.first.askara-team--flair > a .svg-icon-title {
+  order: 2;
+}
+article .names span.first.askara-team--flair > a svg.d-icon-shield-halved {
   width: 1em;
   height: 1em;
 }
