@@ -869,7 +869,7 @@ $footer-hairline: rgba($cream, 0.12);
 
 /* Surface 1 — full-colour Askara logo (on white, matching the system avatar) before a
  * team member's name. The shield glyph stays where core renders it, so both marks show. */
-.topic-post .names span.first.askara-team--flair::before {
+article .names span.first.askara-team--flair::before {
   content: "";
   display: inline-block;
   width: 1.15em;
@@ -881,7 +881,7 @@ $footer-hairline: rgba($cream, 0.12);
 }
 
 /* Surface 2 — username pill on the poster's own name, mirroring the @mention chip. */
-.topic-post .names span.first.askara-team--pill {
+article .names span.first.askara-team--pill {
   background: var(--askara-team-pill-bg);
   border-radius: 1em;
   padding: 0.1em 0.55em;
