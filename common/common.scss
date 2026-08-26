@@ -856,3 +856,63 @@ $footer-hairline: rgba($cream, 0.12);
 .powered-by-discourse {
   display: none;
 }
+
+/* =============================================================================
+ * Askara-team identity marks (BDEV-362). Classes are added in
+ * javascripts/discourse/api-initializers/askara-team-identity.js:
+ *   span.first.askara-team--flair  -> Askara mark (::after) to the right of the name
+ *   span.first.askara-team--pill   -> subtle pill on the poster's bold name
+ *   a.mention.askara-team-mention  -> matching subtle pill on @mentions of team members
+ * The native staff shield is never touched — it renders inside the name link (staff only), so the
+ * shield + Askara mark sit side by side. Pill colours are the scheme-aware, low-contrast tints
+ * from color_definitions.scss.
+ * ========================================================================== */
+
+/* Subtle PARCHMENT pill on a team member's bold name. Name + flair icons sit inside it (the core
+ * staff shield is rendered by Discourse inside the name link, so it can't cleanly sit outside).
+ * A low-contrast warm tint, not a heavy fill. */
+article .names span.first.askara-team--pill {
+  background: var(--askara-team-pill-bg);
+  border-radius: 0.9em;
+  padding: 0.15em 0.55em;
+
+  a,
+  a:visited {
+    color: var(--askara-team-pill-fg);
+  }
+}
+
+/* Lay the name link out as one vertically-centred row so the name and both flair icons align:
+ * [ name ] [ Askara mark ] [ shield ]. flex + align-items centre fixes the icon baseline. */
+article .names span.first.askara-team--flair > a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.32em;
+}
+
+/* The Askara mark: system-avatar logo (on solid white) as a small circle, sized to the shield and
+ * placed FIRST among the flair icons (order 1); the core shield is pushed after it (order 2). */
+article .names span.first.askara-team--flair > a::after {
+  content: "";
+  order: 1;
+  flex: 0 0 auto;
+  width: 1em;
+  height: 1em;
+  background: url($askara_team_flair) center / cover no-repeat;
+  border-radius: 50%;
+}
+article .names span.first.askara-team--flair > a .svg-icon-title {
+  order: 2;
+}
+article .names span.first.askara-team--flair > a svg.d-icon-shield-halved {
+  width: 1em;
+  height: 1em;
+}
+
+/* Mention pill — same subtle tint; equal top/bottom padding, proportionate to the name pill. */
+a.mention.askara-team-mention {
+  background: var(--askara-team-pill-bg);
+  color: var(--askara-team-pill-fg);
+  border-radius: 0.9em;
+  padding: 0.15em 0.5em;
+}

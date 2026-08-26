@@ -71,3 +71,28 @@ footer_site_wide:
 footer_tagline:
   type: string
   default: "Cyber compliance, minus the theater."
+
+# Askara-team identity marks (BDEV-362). Show the Askara logo beside a team member's name
+# (alongside the native staff shield) and pill their username + @mentions of them. Client-side,
+# driven by the public askara-team roster (BDEV-361). Each surface toggles independently; the
+# master switch turns the whole feature off. Group name is configurable so the feature isn't
+# hard-wired to one group.
+askara_team_marks_enabled:
+  type: bool
+  default: true
+
+askara_team_group_name:
+  type: string
+  default: "askara-team"
+
+askara_team_show_flair:
+  type: bool
+  default: true
+
+askara_team_show_username_pill:
+  type: bool
+  default: true
+
+askara_team_show_mention_pill:
+  type: bool
+  default: true

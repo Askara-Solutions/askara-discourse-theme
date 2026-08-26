@@ -15,7 +15,8 @@
     "hero_bg_img_1_assembly": "assets/hero/hero_bg_img_1_assembly.webp",
     "hero_bg_img_2_exhibition_hall": "assets/hero/hero_bg_img_2_exhibition_hall.webp",
     "hero_bg_img_3_reflecting_pool": "assets/hero/hero_bg_img_3_reflecting_pool.webp",
-    "hero_bg_img_4_colonnade": "assets/hero/hero_bg_img_4_colonnade.webp"
+    "hero_bg_img_4_colonnade": "assets/hero/hero_bg_img_4_colonnade.webp",
+    "askara_team_flair": "assets/askara-team-flair.png"
   },
   "color_schemes": {
     "Askara Light": {

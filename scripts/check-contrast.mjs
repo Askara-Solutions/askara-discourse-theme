@@ -55,6 +55,11 @@ const HEX = {
   cardBodyOnP1: "#33586a", // navy @0.80 over parchment-1 (Askara Light page bg)
   cardBodyOnP2: "#315565", // navy @0.80 over parchment-2 (Askara Parchment page bg + card fill)
   cardBodyOnEspresso: "#bbb9b6", // cream @0.72 over espresso (Askara Dark page bg)
+  // Askara-team pill (BDEV-362): the composited LOW-CONTRAST warm tint the bold name sits on. Light =
+  // brass @0.28 over parchment-1; Dark = brass-light @0.16 over espresso. Keep in sync with
+  // --askara-team-pill-bg in common/color_definitions.scss.
+  teamPillLight: "#eee1c8",
+  teamPillDark: "#3b352a",
 };
 
 const srgb = (c) => {
@@ -192,6 +197,21 @@ const COMBOS = [
     HEX.solvedMetaBgDark,
     4.5,
     "solved meta: light-grey on the Dark item-header surface",
+  ],
+  // --- Askara-team identity pill (BDEV-362). Scheme-aware LOW-CONTRAST tint (owner call): a soft
+  //     navy tint + navy text on the two LIGHT schemes, a soft brass tint + cream text on Dark.
+  //     Assert the bold-name text on the COMPOSITED tint background it actually sits on. ---
+  [
+    HEX.navy,
+    HEX.teamPillLight,
+    4.5,
+    "askara-team pill (Light/Parchment): navy text on the soft parchment-tint pill",
+  ],
+  [
+    HEX.cream,
+    HEX.teamPillDark,
+    4.5,
+    "askara-team pill (Dark): cream text on the soft brass-tint pill",
   ],
   // --- Hero background scrim (BDEV-291): cream text over the brass-warm scrim @0.65, 2 worst scenes.
   //     Asserted at the 4.5 COMFORT target (above the 3.0 large-text minimum) after reader feedback. ---
