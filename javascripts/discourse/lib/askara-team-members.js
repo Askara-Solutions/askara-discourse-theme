@@ -48,6 +48,9 @@ export async function refreshAskaraTeamMembers(groupName) {
     return;
   }
 
+  // TEMP diagnostic (BDEV-362) — remove before merge
+  // eslint-disable-next-line no-console
+  console.log("[askara-team] refresh start; group=", name);
   try {
     const usernames = [];
     const limit = 100;
@@ -78,6 +81,9 @@ export async function refreshAskaraTeamMembers(groupName) {
 
     members = new Set(usernames);
     cachedAt = Date.now();
+    // TEMP diagnostic (BDEV-362) — remove before merge
+    // eslint-disable-next-line no-console
+    console.log("[askara-team] fetched members:", usernames.length, usernames);
     try {
       window.localStorage.setItem(
         CACHE_KEY,

@@ -16,6 +16,14 @@ import {
 } from "../lib/askara-team-members";
 
 export default apiInitializer((api) => {
+  // TEMP diagnostic (BDEV-362) — remove before merge
+  // eslint-disable-next-line no-console
+  console.log(
+    "[askara-team] init; settings?",
+    typeof settings,
+    "enabled?",
+    typeof settings !== "undefined" ? settings.askara_team_marks_enabled : "N/A"
+  );
   if (!settings.askara_team_marks_enabled) {
     return;
   }
