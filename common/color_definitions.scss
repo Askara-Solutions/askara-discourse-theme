@@ -53,12 +53,12 @@ $dark-card-border: color-mix(in srgb, var(--tertiary) 20%, var(--secondary));
   --solved-meta: #{dark-light-choose(#4a5163, #d9d9d9)};
 }
 
-/* Askara-team identity pill (BDEV-362) — scheme-aware fill/text. dark-light-choose()
- * resolves per compiled scheme (see the header note): Navy fill + cream text on the two
- * LIGHT schemes (Light, Parchment), brass-light fill + navy text on Dark. Both pass WCAG AA
- * for text-on-pill and pill-on-canvas; a green fill was ruled out (fails chip-vs-light-canvas
- * at 2.5:1, see askara-community configuration/askara-team-identity.yaml). */
+/* Askara-team identity pill (BDEV-362) — scheme-aware, LOW-CONTRAST tint (owner call: no heavy
+ * navy fill). dark-light-choose() resolves per compiled scheme (see the header note): a soft navy
+ * tint + navy text on the two LIGHT schemes, a soft brass-light tint + cream text on Dark. The bold
+ * name reads as a gentle highlight, not a solid chip. Text contrast on the composited tint is
+ * guarded in scripts/check-contrast.mjs (navy on #e4e3dd light, cream on #3b352a dark). */
 :root {
-  --askara-team-pill-bg: #{dark-light-choose(#003049, #e8d0a0)};
-  --askara-team-pill-fg: #{dark-light-choose(#faf8f5, #003049)};
+  --askara-team-pill-bg: #{dark-light-choose(rgba(0, 48, 73, 0.1), rgba(232, 208, 160, 0.16))};
+  --askara-team-pill-fg: #{dark-light-choose(#003049, #faf8f5)};
 }
