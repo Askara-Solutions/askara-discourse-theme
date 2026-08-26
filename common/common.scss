@@ -933,8 +933,9 @@ a.mention.askara-team-mention {
   border-radius: 8px; // match the theme's 8px corners (nav/buttons, BDEV-351)
 
   // In-panel links deepen to an AA-safe brass on the tinted background (see color_definitions.scss).
-  // Exclude mentions and hashtags — they carry their own cooked styling (the askara-team mention pill).
-  a:not(.mention):not(.hashtag-cooked):not(.lightbox) {
+  // Exclude mentions (user AND group), hashtags, and lightbox links — they carry their own cooked
+  // styling (the askara-team mention pill; core's group-mention pill uses --primary, not a link colour).
+  a:not(.mention):not(.mention-group):not(.hashtag-cooked):not(.lightbox) {
     color: var(--staff-panel-link);
   }
 }

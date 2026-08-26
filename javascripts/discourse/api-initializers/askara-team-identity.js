@@ -80,17 +80,20 @@ export default apiInitializer((api) => {
 
   // Surface 4 (BDEV-363) — auto-apply the staff-color panel to team-authored posts. The decorated
   // element is the post's `.cooked`; the helper exposes the post model (absent when decorating
-  // non-post cooked content, e.g. previews or user bios — guarded). Tag it so common.scss paints
-  // the same panel as core's manual `.moderator .regular > .cooked` toggle.
+  // non-post cooked content — guarded). Newer Discourse exposes it as `helper.model` (a property),
+  // older core as `helper.getModel()`; read `.model` first and fall back, so this survives an upgrade
+  // either way. `onlyStream: true` keeps the heavy panel (bg + padding) inside the topic stream —
+  // not user-activity/search excerpts, whose narrower containers it isn't designed for.
   if (settings.askara_team_auto_staff_color) {
     api.decorateCookedElement(
       (element, helper) => {
-        const username = helper?.getModel?.()?.username;
+        const username =
+          helper?.model?.username ?? helper?.getModel?.()?.username;
         if (isAskaraTeamMember(username)) {
           element.classList.add("askara-team-post");
         }
       },
-      { id: "askara-team-staff-color" },
+      { id: "askara-team-staff-color", onlyStream: true },
     );
   }
 });

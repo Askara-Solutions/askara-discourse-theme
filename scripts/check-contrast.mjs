@@ -67,6 +67,12 @@ const HEX = {
   staffPanelLight: "#f8edda", // = color-mix(highlight #e8d0a0 25%, secondary #fdf7ed)  [Askara Light]
   staffPanelParchment: "#f2e5ca", // = color-mix(highlight #e8d4ad 25%, secondary #f5ead4)  [Askara Parchment]
   staffPanelDark: "#382c1c", // = color-mix(highlight #906835 25%, secondary #1a1814)  [Askara Dark]
+  // A BDEV-362 mention pill (semi-transparent --askara-team-pill-bg) sits on the NEW BDEV-363 panel
+  // when a team member is @mentioned inside a staff-colored/team-authored post — so its real backdrop
+  // is the pill tint composited over --staff-panel-bg, not over the plain page. Precomputed composites:
+  teamPillOnPanelLight: "#ebdaba", // brass @0.28 over staffPanelLight  (navy text)
+  teamPillOnPanelParchment: "#e6d4af", // brass @0.28 over staffPanelParchment  (navy text)
+  teamPillOnPanelDark: "#544631", // brass-light @0.16 over staffPanelDark  (cream text)
 };
 
 const srgb = (c) => {
@@ -271,6 +277,26 @@ const COMBOS = [
     HEX.staffPanelDark,
     4.5,
     "staff panel (Dark): in-panel link (brass-light) on the parchment-step panel",
+  ],
+  // --- BDEV-362 mention pill nested on the BDEV-363 panel (team @mention inside a staff/team post).
+  //     The pill fg (navy light / cream dark) on the pill tint composited over the panel bg. ---
+  [
+    HEX.navy,
+    HEX.teamPillOnPanelLight,
+    4.5,
+    "team pill on panel (Light): navy text on the pill tint over the panel",
+  ],
+  [
+    HEX.navy,
+    HEX.teamPillOnPanelParchment,
+    4.5,
+    "team pill on panel (Parchment): navy text on the pill tint over the panel",
+  ],
+  [
+    HEX.cream,
+    HEX.teamPillOnPanelDark,
+    4.5,
+    "team pill on panel (Dark): cream text on the pill tint over the panel",
   ],
 ];
 
