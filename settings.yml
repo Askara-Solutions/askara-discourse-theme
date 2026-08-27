@@ -96,3 +96,10 @@ askara_team_show_username_pill:
 askara_team_show_mention_pill:
   type: bool
   default: true
+
+# Auto-apply the staff-color post panel (BDEV-363) to askara-team authors, so their posts carry the
+# same brand highlight as core's manual "Add Staff Color" toggle without per-post action. Gated by the
+# master switch above; turn this off to keep the marks but leave post backgrounds to the manual toggle.
+askara_team_auto_staff_color:
+  type: bool
+  default: true

@@ -1,4 +1,4 @@
-// Askara-team identity marks (BDEV-362).
+// Askara-team identity marks (BDEV-362; staff-color panel added BDEV-363).
 //
 // Show the Askara logo beside a team member's name — ALONGSIDE the native staff shield,
 // never replacing it — and pill their username and any @mention of them. Full design
@@ -8,6 +8,10 @@
 //
 // The native flair is preserved structurally: we never set the group's flair or make it a
 // primary/flair group. We only ADD our own class-driven marks.
+//
+// Surface 4 (BDEV-363): auto-apply the "staff color" post panel to askara-team authors, so their
+// posts get the same brand highlight as core's manual Add-Staff-Color toggle without anyone having
+// to click it per post. Same roster source; the panel treatment lives in common.scss.
 
 import { apiInitializer } from "discourse/lib/api";
 import {
@@ -71,6 +75,25 @@ export default apiInitializer((api) => {
         });
       },
       { id: "askara-team-mentions" },
+    );
+  }
+
+  // Surface 4 (BDEV-363) — auto-apply the staff-color panel to team-authored posts. The decorated
+  // element is the post's `.cooked`; the helper exposes the post model (absent when decorating
+  // non-post cooked content — guarded). Newer Discourse exposes it as `helper.model` (a property),
+  // older core as `helper.getModel()`; read `.model` first and fall back, so this survives an upgrade
+  // either way. `onlyStream: true` keeps the heavy panel (bg + padding) inside the topic stream —
+  // not user-activity/search excerpts, whose narrower containers it isn't designed for.
+  if (settings.askara_team_auto_staff_color) {
+    api.decorateCookedElement(
+      (element, helper) => {
+        const username =
+          helper?.model?.username ?? helper?.getModel?.()?.username;
+        if (isAskaraTeamMember(username)) {
+          element.classList.add("askara-team-post");
+        }
+      },
+      { id: "askara-team-staff-color", onlyStream: true },
     );
   }
 });
