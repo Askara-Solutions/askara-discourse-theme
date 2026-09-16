@@ -16,7 +16,7 @@ Discourse theme installed via git import (`POST /admin/themes/import` → the re
 - `about.json` — `component: false` (full theme — a component does NOT register `color_schemes` on current Discourse), three named `color_schemes` (Askara Light / Dark / Parchment), and the `assets` map (SCSS var → font file).
 - `common/common.scss` — `@font-face` declarations, `--font-family`/`--heading-font-family` overrides, and the phosphor hover/CTA rules.
 - `assets/` — self-hosted WOFF2 fonts + their `OFL.txt` licenses.
-- `.github/workflows/discourse-theme.yml` — the official `discourse/.github` reusable CI (Prettier/Stylelint/locale lint; self-skips JS/Ruby).
+- `.github/workflows/lint.yml` — CI that lints what the theme actually ships: Prettier, `about.json` JSON validation, and the phosphor + WCAG-contrast checks. Third-party actions are pinned to a commit SHA (BDEV-450). Replaced the official `discourse/.github` reusable workflow, which gates on a JS package manager and lints nothing here.
 - **Dev loop:** `gem install discourse_theme` then `discourse_theme watch .` against a dev/test site.
 
 ## Brand source (canonical — do not re-derive)
