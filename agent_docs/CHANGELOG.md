@@ -6,6 +6,16 @@ entries — if an entry turns out wrong, add a new one correcting it, don't rewr
 
 Trigger: [CLAUDE.md § Rules](../CLAUDE.md).
 
+## [2026-10-20] docs | The `askara-pr-review` plugin replaces Devin and the `/code-review` fallback as the merge-gate review (BDEV-499)
+
+Supersedes BDEV-248 and BDEV-270 (entries below stay as history). Devin is discontinued, so § Rules
+(Merge gate) and Workflow now say the user runs `/askara-pr-review:pr-review <PR> --force` on every PR
+and every finding gets a tagged reply (`[defect]`, `[improvement]`, `[noise]`, `[won't-fix]`). `--force`
+is always passed: the plugin skips PRs that only touch `.md .mdx .rst .txt .json .yml .yaml` or
+lockfiles as trivial, which covers docs, `about.json` and `settings.yml` PRs here, and it has no effect
+on PRs with code. Enabled `askara-pr-review@askara-solutions` in `.claude/settings.json`. Mirrors
+BDEV-498 in `askara-community`.
+
 ## [2026-08-18] docs | Devin now reviews this repo; added a `/code-review` fallback when Devin isn't auto-triggered (BDEV-270)
 
 Corrects the BDEV-248 gate: this repo's CLAUDE.md said **Devin does not review this repo** (public →

@@ -8,7 +8,8 @@
     }
   },
   "enabledPlugins": {
-    "askara-workflow@askara-solutions": true
+    "askara-workflow@askara-solutions": true,
+    "askara-pr-review@askara-solutions": true
   },
   "hooks": {
     "PreToolUse": [
