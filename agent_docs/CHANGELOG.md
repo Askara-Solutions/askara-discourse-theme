@@ -6,6 +6,14 @@ entries — if an entry turns out wrong, add a new one correcting it, don't rewr
 
 Trigger: [CLAUDE.md § Rules](../CLAUDE.md).
 
+## [2026-10-20] docs | Drop the "ignore any Devin Review check" note now the Devin GitHub app is suspended (BDEV-500)
+
+The `devin-ai-integration` GitHub app (installation 93266240) was suspended for the org on 2026-10-20, so its
+skipped "Devin Review" check no longer posts on PRs here or in `askara-community`. Removed the "ignore it"
+sentence that BDEV-499 added to § Rules (Merge gate); the rest of the gate wording is unchanged. Suspension is
+reversible: if the app is reinstated, restore a note that its check is not a review. Mirrors BDEV-500 in
+`askara-community`.
+
 ## [2026-10-20] docs | The `askara-pr-review` plugin replaces Devin and the `/code-review` fallback as the merge-gate review (BDEV-499)
 
 Supersedes BDEV-248 and BDEV-270 (entries below stay as history). Devin is discontinued, so § Rules
