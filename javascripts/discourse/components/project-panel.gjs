@@ -38,7 +38,18 @@ const ROWS = [
 export default class ProjectPanel extends Component {
   // The outlet component outlives a category change within the list route, so the fetch is driven by
   // the render modifiers below (insert + update on topicId), not by the constructor.
-  @tracked fields = null;
+  //
+  // `loaded` remembers which topic the values belong to. `fields` only returns them while that is
+  // still the current topic, so values never render under another category's name: moving to an
+  // unmapped category or a tag route (which removes the modifier span, so `load` doesn't run) shows
+  // nothing straight away.
+  @tracked loaded = null;
+
+  get fields() {
+    return this.loaded && this.loaded.topicId === this.topicId
+      ? this.loaded.fields
+      : null;
+  }
 
   // renderInOutlet has exposed outlet args as `@outletArgs` (current) and as direct args (older)
   // across Discourse versions, so read both. Verified live (deploy + eyeball), not offline.
@@ -81,7 +92,7 @@ export default class ProjectPanel extends Component {
   // dropped, so a slow request can't paint the wrong category's values.
   load = async () => {
     const topicId = this.topicId;
-    this.fields = null;
+    this.loaded = null;
     if (!topicId) {
       return;
     }
@@ -98,7 +109,7 @@ export default class ProjectPanel extends Component {
       fields = null;
     }
     if (topicId === this.topicId && !this.isDestroying && !this.isDestroyed) {
-      this.fields = fields;
+      this.loaded = { topicId, fields };
     }
   };
 
