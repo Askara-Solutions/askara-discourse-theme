@@ -490,6 +490,58 @@ body.signup-page .d-header {
   margin: 0;
 }
 
+/* ---- Project panel (BDEV-516): status strip + link buttons above a project category's topic list.
+   Same scheme-aware card tokens as the cards above (--card-fill / --card-border / --card-body,
+   common/color_definitions.scss), so it follows Light / Dark / Parchment with no fixed hex. Text
+   pairs are the ones check-contrast.mjs already guards: --quaternary and --card-body on the card
+   fill. The buttons reuse .btn-default, which owns its own hover. No phosphor here. ---- */
+.project-panel {
+  background: var(--card-fill);
+  border: 1px solid var(--card-border);
+  border-radius: 16px;
+  padding: 24px;
+  margin: 0 0 24px;
+}
+.project-panel__title {
+  color: var(--quaternary);
+  font-weight: 700;
+  margin: 0 0 16px;
+}
+.project-panel__strip {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 16px 24px;
+  margin: 0;
+}
+.project-panel__row {
+  min-width: 0; // let a long value wrap inside its grid cell
+}
+.project-panel__label {
+  color: var(--card-body);
+  font-size: var(--font-down-1);
+  margin: 0 0 2px;
+}
+.project-panel__value {
+  color: var(--quaternary);
+  font-weight: 600;
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+.project-panel__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin: 20px 0 0;
+}
+@media (max-width: 767px) {
+  .project-panel {
+    padding: 16px;
+  }
+  .project-panel__strip {
+    grid-template-columns: 1fr; // stack the rows on a phone
+  }
+}
+
 /* ---- Curated homepage: the meta-style landing view rendered in the custom-homepage outlet
    (BDEV-236). Reuses the brand tokens + card treatment above so it reads as one system across
    Light / Dark / Parchment; no invented colours, no phosphor (the hero CTA reuses .btn-primary,
