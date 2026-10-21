@@ -11,14 +11,17 @@
 // trailing spaces. A missing or malformed line is left out of the result, which hides that row; it
 // never throws. This module carries no project names, links or ids — all of that stays in Discourse.
 
-const TEXT_FIELDS = {
-  phase: "phase",
-  now: "now",
-  "next handover": "nextHandover",
-  "next sync": "nextSync",
-};
-const LINK_FIELDS = { drive: "drive", calendar: "calendar" };
-const DATE_FIELD = { updated: "updated" };
+// A Map, not object literals: a line labelled `Constructor:` must not resolve to an inherited
+// Object member. label (lowercase) -> [result key, kind of value]
+const FIELDS = new Map([
+  ["phase", ["phase", "text"]],
+  ["now", ["now", "text"]],
+  ["next handover", ["nextHandover", "text"]],
+  ["next sync", ["nextSync", "text"]],
+  ["drive", ["drive", "link"]],
+  ["calendar", ["calendar", "link"]],
+  ["updated", ["updated", "date"]],
+]);
 
 // optional list marker, optional bold, label, optional bold, colon, optional bold, value
 const LINE =
@@ -73,16 +76,17 @@ export function parseStatusPost(raw) {
     const label = match[1].toLowerCase().replace(/\s+/g, " ");
     const value = match[2];
 
-    const key = TEXT_FIELDS[label] ?? LINK_FIELDS[label] ?? DATE_FIELD[label];
-    if (!key || seen.has(label)) {
+    const field = FIELDS.get(label);
+    if (!field || seen.has(label)) {
       continue;
     }
     seen.add(label);
 
+    const [key, kind] = field;
     let parsed = null;
-    if (label in TEXT_FIELDS) {
+    if (kind === "text") {
       parsed = value || null;
-    } else if (label in LINK_FIELDS) {
+    } else if (kind === "link") {
       parsed = httpsHref(value);
     } else {
       parsed = isoDate(value);

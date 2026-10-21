@@ -150,6 +150,20 @@ test("ignores unknown labels and prose", () => {
   assert.deepEqual(parseStatusPost(raw), { phase: "Build" });
 });
 
+test("labels named like inherited Object members are ignored", () => {
+  const raw = [
+    "Constructor: x",
+    "toString: y",
+    "valueOf: z",
+    "__proto__: w",
+    "hasOwnProperty: v",
+  ].join("\n");
+  assert.deepEqual(parseStatusPost(raw), {});
+  assert.deepEqual(parseStatusPost(`Constructor: x\nPhase: Build`), {
+    phase: "Build",
+  });
+});
+
 test("values keep colons after the first one", () => {
   assert.deepEqual(parseStatusPost("Next sync: Mon 2 Nov, 12:00"), {
     nextSync: "Mon 2 Nov, 12:00",
