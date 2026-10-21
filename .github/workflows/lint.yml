@@ -30,3 +30,7 @@ jobs:
 
       - name: Contrast (WCAG AA)
         run: node scripts/check-contrast.mjs
+
+      # The flag lets Node 20 load the theme's ESM-syntax .js modules without a package.json.
+      - name: Project panel parser tests
+        run: node --experimental-detect-module --test scripts/project-status.test.mjs
